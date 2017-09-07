@@ -12,5 +12,9 @@
     "postinstall": "./node_modules/.bin/bower install",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brightspace/inspiration-parallelms-ui.git"
+  },
 }
