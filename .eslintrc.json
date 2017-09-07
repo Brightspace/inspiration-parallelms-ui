@@ -1,0 +1,6 @@
+{
+  "extends": "brightspace/polymer-config",
+  "parserOptions": {
+    "ecmaVersion": 6
+  }
+}

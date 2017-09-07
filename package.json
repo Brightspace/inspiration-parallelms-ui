@@ -1,0 +1,16 @@
+{
+  "name": "parallel-lms",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-brightspace": "^0.2.4",
+    "eslint-plugin-html": "^3.0.0"
+  },
+  "scripts": {
+    "lint": "npm run lint:javascript && polymer lint",
+    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
+    "postinstall": "./node_modules/.bin/bower install",
+    "test": "polymer test",
+    "test:integration": "polymer build # test that psk builds without error with the CLI"
+  }
+}
