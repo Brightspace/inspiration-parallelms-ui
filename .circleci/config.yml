@@ -18,4 +18,5 @@ jobs:
           key: bower-dependency-cache-{{ checksum "bower.json" }}
           paths:
             - bower_components*
-      - run: npm test
+      - run: npm run lint
+      - run: npm run test:integration
