@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="discussions-topic-post-list.html">
+
+<dom-module id="d2l-discussions-topics">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<h4>[[topic.properties.name]]</h4>
+		<span>[[topic.properties.description]]<span>
+		<d2l-discussions-topic-post-list href="[[getThreadsHref + '?pageSize=' + getThreadsPageSize + '&pageNumber=1']]"></d2l-discussions-topic-post-list>
+		<slot></slot>
+	</template>
+
+	<script>
+		class DiscussionsTopic extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-discussions-topic'; }
+
+			static get properties() {
+				return {
+					topic: {
+						type: Object,
+						value: {}
+					},
+					getThreadsHref: {
+						type: String
+					},
+					getThreadsPageSize: {
+						type: Number,
+						value: 20
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				]
+			}
+
+			_changed(entity) {
+				this.topic = entity;
+				this.getThreadsHref = entity.actions[0].href;
+			}
+
+		}
+
+		window.customElements.define(DiscussionsTopic.is, DiscussionsTopic);
+	</script>
+</dom-module>
