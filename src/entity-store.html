@@ -6,7 +6,7 @@
 	/*
 		This store is hacked together to develop entity-mixin.
 	*/
-	var EntityStore = {
+	const EntityStore = {
 
 		_store: {
 			'course.1': { 'name': 'Chemical Hydrogeology' },
@@ -21,7 +21,7 @@
 				return;
 			}
 
-			var listeners = this._listeners[entityId];
+			let listeners = this._listeners[entityId];
 			if (listeners) {
 				if (listeners.indexOf(listener) !== -1) {
 					return;
@@ -38,15 +38,8 @@
 			return new Promise((resolve) => {
 
 				// fake it
-				var entity = this._store[entityId];
-				entity = window.D2L.Hypermedia.Siren.Parse(entity);
-
-				var listeners = this._listeners[entityId];
-				if (listeners) {
-					for (var i = 0; i < listeners.length; i++) {
-						listeners[i](entity);
-					}
-				}
+				const entity = this._store[entityId];
+				this._notify(entityId, entity);
 
 				resolve(entity);
 
@@ -58,14 +51,7 @@
 
 				// fake it
 				this._store[entityId] = entity;
-				entity = window.D2L.Hypermedia.Siren.Parse(entity);
-
-				var listeners = this._listeners[entityId];
-				if (listeners) {
-					for (var i = 0; i < listeners.length; i++) {
-						listeners[i](entity);
-					}
-				}
+				this._notify(entityId, entity);
 
 				resolve(entity);
 
@@ -78,8 +64,8 @@
 				return;
 			}
 
-			var listeners = this._listeners[entityId];
-			var index = listeners.indexOf(listener);
+			const listeners = this._listeners[entityId];
+			const index = listeners.indexOf(listener);
 			if (index === -1) {
 				return;
 			}
@@ -87,6 +73,17 @@
 			// maybe just set null and clean up array in requestIdleCallback
 			listeners.splice(index, 1);
 
+		},
+
+		_notify: function(entityId, entity) {
+			entity = window.D2L.Hypermedia.Siren.Parse(entity);
+
+			const listeners = this._listeners[entityId];
+			if (listeners) {
+				for (var i = 0; i < listeners.length; i++) {
+					listeners[i](entity);
+				}
+			}
 		}
 
 	};
