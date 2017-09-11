@@ -2,6 +2,7 @@
 
 <script>
 	/*
+		@polymerMixin
 		A component mixin for HM entity with support for callback for updates
 			- registers for store updates when attached to DOM
 			- unregisters from store updates when removed from DOM
@@ -36,8 +37,11 @@
 			}
 
 			disconnectedCallback() {
+				if (super.disconnectedCallback) {
+					super.disconnectedCallback();
+				}
 				if (this.href) {
-					window.D2L.EntityStore.removeListener(oldhref, this._entityChanged);
+					window.D2L.EntityStore.removeListener(this.href, this._entityChanged);
 				}
 			}
 
@@ -53,6 +57,6 @@
 				this.entity = entity;
 			}
 
-		}
-	}
+		};
+	};
 </script>

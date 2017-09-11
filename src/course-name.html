@@ -13,6 +13,7 @@
 	</template>
 
 	<script>
+		/* @mixes EntityMixin */
 		class CourseName extends EntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-course-name'; }
@@ -20,10 +21,10 @@
 			static get observers() {
 				return [
 					'_changed(entity)'
-				]
+				];
 			}
 
-			_changed(entity) {
+			_changed(/*entity*/) {
 				//console.log('super: entity changed!', entity);
 			}
 
