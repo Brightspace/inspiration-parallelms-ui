@@ -4,7 +4,8 @@
     "es6": true
   },
   "globals": {
-    "EntityMixin": false
+    "EntityMixin": false,
+    "SirenActionMixin": false
   },
   "parserOptions": {
     "ecmaVersion": 6
