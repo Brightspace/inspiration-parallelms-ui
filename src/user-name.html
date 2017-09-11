@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="entity-mixin.html">
+
+<dom-module id="d2l-user-name">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		{{name}}
+		<slot></slot>
+	</template>
+
+	<script>
+		class UserName extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-user-name'; }
+
+			static get properties() {
+				return {
+					name: {
+						type: String
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				]
+			}
+
+			_changed(entity) {
+				this.name = entity.entities[0].properties.name;
+			}
+
+		}
+
+		window.customElements.define(UserName.is, UserName);
+	</script>
+</dom-module>
