@@ -8,8 +8,8 @@
 	var EntityStore = {
 
 		_store: {
-			"course.1": { "name": "Chemical Hydrogeology" },
-			"course.2": { "name": "Plant Physiology" }
+			'course.1': { 'name': 'Chemical Hydrogeology' },
+			'course.2': { 'name': 'Plant Physiology' }
 		},
 
 		_listeners: {},
@@ -34,39 +34,39 @@
 		},
 
 		fetch: function(entityId) {
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 
 				// fake it
 				var entity = this._store[entityId];
 
 				var listeners = this._listeners[entityId];
 				if (listeners) {
-					for(var i=0; i<listeners.length; i++) {
+					for (var i = 0; i < listeners.length; i++) {
 						listeners[i](entity);
 					}
 				}
 
 				resolve(entity);
 
-		 	});
+			});
 		},
 
 		update: function(entityId, entity) {
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 
 				// fake it
 				this._store[entityId] = entity;
 
 				var listeners = this._listeners[entityId];
 				if (listeners) {
-					for(var i=0; i<listeners.length; i++) {
+					for (var i = 0; i < listeners.length; i++) {
 						listeners[i](entity);
 					}
 				}
 
 				resolve(entity);
 
-		 	});
+			});
 		},
 
 		removeListener: function(entityId, listener) {

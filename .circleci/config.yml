@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: npm-dependency-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          key: bower-dependency-cache-{{ checksum "bower.json" }}
+      - run: npm install
+      - save_cache:
+          key: npm-dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - save_cache:
+          key: bower-dependency-cache-{{ checksum "bower.json" }}
+          paths:
+            - bower_components*
+      - run: npm run lint
+      - run: npm run test:integration

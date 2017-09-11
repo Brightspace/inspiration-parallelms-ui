@@ -1,5 +1,11 @@
 {
   "extends": "brightspace/polymer-config",
+  "env": {
+    "es6": true
+  },
+  "globals": {
+    "EntityMixin": false
+  },
   "parserOptions": {
     "ecmaVersion": 6
   }
