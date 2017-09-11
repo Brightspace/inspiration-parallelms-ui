@@ -1,0 +1,95 @@
+<script>
+(function() {
+	'use strict';
+
+	/*
+		This store is hacked together to develop entity-mixin.
+	*/
+	var EntityStore = {
+
+		_store: {
+			"course.1": { "name": "Chemical Hydrogeology" },
+			"course.2": { "name": "Plant Physiology" }
+		},
+
+		_listeners: {},
+
+		addListener: function(entityId, listener) {
+
+			if (!entityId || typeof listener !== 'function') {
+				return;
+			}
+
+			var listeners = this._listeners[entityId];
+			if (listeners) {
+				if (listeners.indexOf(listener) !== -1) {
+					return;
+				}
+			} else {
+				this._listeners[entityId] = listeners = [];
+			}
+
+			listeners.push(listener);
+
+		},
+
+		fetch: function(entityId) {
+			return new Promise((resolve, reject) => {
+
+				// fake it
+				var entity = this._store[entityId];
+
+				var listeners = this._listeners[entityId];
+				if (listeners) {
+					for(var i=0; i<listeners.length; i++) {
+						listeners[i](entity);
+					}
+				}
+
+				resolve(entity);
+
+		 	});
+		},
+
+		update: function(entityId, entity) {
+			return new Promise((resolve, reject) => {
+
+				// fake it
+				this._store[entityId] = entity;
+
+				var listeners = this._listeners[entityId];
+				if (listeners) {
+					for(var i=0; i<listeners.length; i++) {
+						listeners[i](entity);
+					}
+				}
+
+				resolve(entity);
+
+		 	});
+		},
+
+		removeListener: function(entityId, listener) {
+
+			if (!entityId || typeof listener !== 'function') {
+				return;
+			}
+
+			var listeners = this._listeners[entityId];
+			var index = listeners.indexOf(listener);
+			if (index === -1) {
+				return;
+			}
+
+			// maybe just set null and clean up array in requestIdleCallback
+			listeners.splice(index, 1);
+
+		}
+
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.EntityStore = EntityStore;
+
+})();
+</script>

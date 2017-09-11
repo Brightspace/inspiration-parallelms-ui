@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="entity-mixin.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="d2l-course-name">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+		{{entity.name}}
+	</template>
+
+	<script>
+		class CourseName extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-course-name'; }
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				]
+			}
+
+			_changed(entity) {
+				//console.log('super: entity changed!', entity);
+			}
+
+		}
+
+		window.customElements.define(CourseName.is, CourseName);
+	</script>
+</dom-module>

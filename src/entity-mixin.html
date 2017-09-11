@@ -1,0 +1,58 @@
+<link rel="import" href="entity-store.html">
+
+<script>
+	/*
+		A component mixin for HM entity with support for callback for updates
+			- registers for store updates when attached to DOM
+			- unregisters from store updates when removed from DOM
+			- unregisters old, registers new callback when href changes
+			- assumes one entity per component (maybe valid assumption)
+	*/
+	EntityMixin = function(superClass) {
+		return class extends superClass {
+
+			constructor() {
+				super();
+				this._entityChanged = this._entityChanged.bind(this);
+			}
+
+			static get properties() {
+				return {
+					href: {
+						type: String,
+						observer: '_hrefChanged',
+						reflectToAttribute: true
+					},
+					entity: {
+						type: Object
+					}
+				};
+			}
+
+			connectedCallback() {
+				if (super.connectedCallback) {
+					super.connectedCallback();
+				}
+			}
+
+			disconnectedCallback() {
+				if (this.href) {
+					window.D2L.EntityStore.removeListener(oldhref, this._entityChanged);
+				}
+			}
+
+			_hrefChanged(href, oldhref) {
+				if (oldhref) {
+					window.D2L.EntityStore.removeListener(oldhref, this._entityChanged);
+				}
+				window.D2L.EntityStore.addListener(href, this._entityChanged);
+				window.D2L.EntityStore.fetch(href);
+			}
+
+			_entityChanged(entity) {
+				this.entity = entity;
+			}
+
+		}
+	}
+</script>
