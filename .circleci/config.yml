@@ -25,3 +25,12 @@ jobs:
       - checkout
       - run: npm test
       - run: npm run test:integration
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
