@@ -1,5 +1,7 @@
 # Parallel LMS
 
+[![CircleCI](https://circleci.com/gh/Brightspace/inspiration-parallelms-ui.svg?style=svg)](https://circleci.com/gh/Brightspace/inspiration-parallelms-ui)
+
 This is the starting point for a new experimental approach to building a PWA
 using Polymer, PRPL pattern, and hyper-media APIs.
 
@@ -34,7 +36,7 @@ and will be included in the build.
 
 ### Build
 
-The `polymer build` command builds your Polymer application for production, using build configuration options provided by the command line or in your project's `polymer.json` file.  
+The `polymer build` command builds your Polymer application for production, using build configuration options provided by the command line or in your project's `polymer.json` file.
 
 ```shell
 polymer build
