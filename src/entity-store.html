@@ -1,3 +1,4 @@
+<link rel="import" href="siren-parser.html">
 <script>
 (function() {
 	'use strict';
@@ -38,6 +39,7 @@
 
 				// fake it
 				var entity = this._store[entityId];
+				entity = window.D2L.Hypermedia.Siren.Parse(entity);
 
 				var listeners = this._listeners[entityId];
 				if (listeners) {
@@ -56,6 +58,7 @@
 
 				// fake it
 				this._store[entityId] = entity;
+				entity = window.D2L.Hypermedia.Siren.Parse(entity);
 
 				var listeners = this._listeners[entityId];
 				if (listeners) {
