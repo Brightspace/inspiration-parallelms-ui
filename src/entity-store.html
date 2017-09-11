@@ -35,15 +35,9 @@
 		},
 
 		fetch: function(entityId) {
-			return new Promise((resolve) => {
-
-				// fake it
-				const entity = this._store[entityId];
-				this._notify(entityId, entity);
-
-				resolve(entity);
-
-			});
+			// fake it
+			const entity = this._store[entityId];
+			this._notify(entityId, entity);
 		},
 
 		update: function(entityId, entity) {
