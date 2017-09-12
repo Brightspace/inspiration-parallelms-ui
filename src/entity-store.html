@@ -8,10 +8,7 @@
 	*/
 	const EntityStore = {
 
-		_store: {
-			'course.1': { 'name': 'Chemical Hydrogeology' },
-			'course.2': { 'name': 'Plant Physiology' }
-		},
+		_store: {},
 
 		_listeners: {},
 
@@ -35,16 +32,23 @@
 		},
 
 		fetch: function(entityId) {
-			// fake it
 			const entity = this._store[entityId];
-			this._notify(entityId, entity);
+			if (entity) {
+				if (entity.status === 'fetching') {
+					return;
+				}
+				this._notify(entityId, entity.entity);
+			} else {
+				// uh oh... we don't have it... quick, distract them
+				this._store[entityId] = { 'status': 'fetching', 'entity': null };
+			}
 		},
 
 		update: function(entityId, entity) {
 			return new Promise((resolve) => {
 
 				// fake it
-				this._store[entityId] = entity;
+				this._store[entityId] = { 'status': '', 'entity': entity };
 				this._notify(entityId, entity);
 
 				resolve(entity);
@@ -74,7 +78,7 @@
 
 			const listeners = this._listeners[entityId];
 			if (listeners) {
-				for (var i = 0; i < listeners.length; i++) {
+				for (let i = 0; i < listeners.length; i++) {
 					listeners[i](entity);
 				}
 			}
