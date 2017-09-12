@@ -7,9 +7,15 @@
 			:host {
 				display: block;
 			}
+
+			input {
+				margin-left: 20px;
+			}
 		</style>
 
 		[[entity.properties.name]] ([[type]])
+
+		<input id="fileUpload" type="file" hidden="[[!hasAddFileAction]]">
 	</template>
 
 	<script>
@@ -20,6 +26,8 @@
 
 			static get properties() {
 				return {
+					addFileAction: Object,
+					hasAddFileAction: Boolean,
 					type: String
 				};
 			}
@@ -37,6 +45,24 @@
 					this.type = 'Quiz';
 				} else {
 					this.type = 'Unknown Activity Type';
+				}
+
+				this.hasAddFileAction = entity.hasActionByName('submit-file');
+				if (this.hasAddFileAction) {
+					this.addFileAction = entity.getActionByName('submit-file');
+
+					const self = this;
+					this.$.fileUpload.addEventListener('change', /* @this */ function() {
+						const file = this.files[0];
+
+						const formData = new FormData();
+						formData.append('submission', file);
+
+						const xhr = new XMLHttpRequest();
+						xhr.open(self.addFileAction.method, self.addFileAction.href, true);
+						xhr.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjRkYjBlMmY2LTJmMmMtNDVlYi04ZTA3LTIyNzNiMWQ5NTZlMyJ9.eyJzdWIiOiIxNzUiLCJ0ZW5hbnRpZCI6IjI5YzBiODBmLWI4NjgtNDBkNi1hZjVmLThkY2JiYTkzNWRjZSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0OGJkMDUyNS02MDc4LTQ2MzAtYWFlOC1iYjU5MDc4OGMzYmIiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1MzM5ODk5LCJuYmYiOjE1MDUzMzYyOTl9.OInrg2B_72p_x4JCA2qwuzrZ_xeTlDuLH7Ilp9WcE8iX8XcmfKXBOjEACSbDUKdX-aonPkm-hiAiI9ueaiIr4XehLnTkKb2CzRO4xhjlj7oAkt8R2HkBIkftKliBhCFRY7MeAjFoAMWaJFyxg1sJwRjgan9dRB1v-PkLXPrRlFFfAqRUUWzQoQOsAY3LvJmpNq8TXnJHP4yrZ6aKKTcESZDUagr4Cg_OO3U3xXvklZe5KlBOs0F4KmYXH55i_MbKJAT0y93Xhi6cq_SmqssDh1zetGOLhHIKCApRiNwkY_k86v1mnkwBFU8xOC1Pz7kJg8h2rszaZhBRHw7bXgQnkA');
+						xhr.send(formData);
+					});
 				}
 			}
 

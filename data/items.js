@@ -6512,6 +6512,15 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 	],
 	'rel': [
 		'https://assignments.api.brightspace.com/rels/assignment'
+	],
+	'actions': [
+		{
+			'name': 'submit-file',
+			'method': 'POST',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609/folders/3/submit',
+			'title': 'Submit file to folder',
+			'type': 'multipart/form-data'
+		}
 	]
 });
 window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/users/175', token, {
