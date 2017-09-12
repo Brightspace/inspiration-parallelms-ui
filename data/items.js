@@ -1021,6 +1021,1398 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads', '', {
+	'class': [
+		'threads',
+		'collection',
+		'paged'
+	],
+	'entities': [
+		{
+			'class': [
+				'thread',
+				'pinned',
+				'html'
+			],
+			'rel': [
+				'https://discussions.api.brightspace.com/rels/thread'
+			],
+			'properties': {
+				'subject': 'post01',
+				'message': '<p>XXXXXXXXXXXXXXXX</p>\r\n<p>YYYYYYYYYYYYYYYYYYYYYYY</p>\r\n<p>ZZZZZZZZZZZZZZZZZZZZZ</p>',
+				'unread': 0,
+				'replies': 0
+			},
+			'entities': [
+				{
+					'class': [
+						'created',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2012-05-23T13:12:28.693Z'
+					}
+				},
+				{
+					'class': [
+						'active',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2012-05-23T13:12:28.693Z'
+					}
+				}
+			],
+			'actions': [
+				{
+					'name': 'reply',
+					'title': 'Reply',
+					'method': 'POST',
+					'type': 'application/x-www-form-urlencoded',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts/4/reply',
+					'fields': [
+						{
+							'name': 'subject',
+							'type': 'text',
+							'value': 'post01'
+						},
+						{
+							'name': 'message',
+							'type': 'text'
+						},
+						{
+							'name': 'isHtml',
+							'type': 'checkbox'
+						}
+					]
+				},
+				{
+					'name': 'get-all-posts',
+					'title': 'Get All Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'all'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 0
+						}
+					]
+				},
+				{
+					'name': 'get-unread-posts',
+					'title': 'Get Unread Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'unread'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 1
+						}
+					]
+				},
+				{
+					'name': 'mark-thread-read',
+					'title': 'Mark Thread Read',
+					'method': 'POST',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/read'
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2'
+				},
+				{
+					'rel': [
+						'up',
+						'https://discussions.api.brightspace.com/rels/topic'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+				},
+				{
+					'rel': [
+						'https://organizations.api.brightspace.com/rels/orgUnit'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/lms-source'
+					],
+					'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/2/View'
+				},
+				{
+					'rel': [
+						'author'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+				}
+			]
+		},
+		{
+			'class': [
+				'thread',
+				'html'
+			],
+			'rel': [
+				'https://discussions.api.brightspace.com/rels/thread'
+			],
+			'properties': {
+				'subject': 'Knock knock',
+				'message': 'Who&#39;s there?',
+				'unread': 0,
+				'replies': 0
+			},
+			'entities': [
+				{
+					'class': [
+						'created',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T20:07:26.583Z'
+					}
+				},
+				{
+					'class': [
+						'active',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T20:07:26.583Z'
+					}
+				}
+			],
+			'actions': [
+				{
+					'name': 'reply',
+					'title': 'Reply',
+					'method': 'POST',
+					'type': 'application/x-www-form-urlencoded',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts/10034/reply',
+					'fields': [
+						{
+							'name': 'subject',
+							'type': 'text',
+							'value': 'Knock knock'
+						},
+						{
+							'name': 'message',
+							'type': 'text'
+						},
+						{
+							'name': 'isHtml',
+							'type': 'checkbox'
+						}
+					]
+				},
+				{
+					'name': 'get-all-posts',
+					'title': 'Get All Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'all'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 0
+						}
+					]
+				},
+				{
+					'name': 'get-unread-posts',
+					'title': 'Get Unread Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'unread'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 1
+						}
+					]
+				},
+				{
+					'name': 'mark-thread-read',
+					'title': 'Mark Thread Read',
+					'method': 'POST',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/read'
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008'
+				},
+				{
+					'rel': [
+						'up',
+						'https://discussions.api.brightspace.com/rels/topic'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+				},
+				{
+					'rel': [
+						'https://organizations.api.brightspace.com/rels/orgUnit'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/lms-source'
+					],
+					'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10008/View'
+				},
+				{
+					'rel': [
+						'author'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+				}
+			]
+		},
+		{
+			'class': [
+				'thread',
+				'html'
+			],
+			'rel': [
+				'https://discussions.api.brightspace.com/rels/thread'
+			],
+			'properties': {
+				'subject': 'What does question 6 mean?',
+				'message': '9 of the words in that question are totally made up! And there are only 6 words in that question... I don&#39;t get it man',
+				'unread': 0,
+				'replies': 0
+			},
+			'entities': [
+				{
+					'class': [
+						'created',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T20:06:50.033Z'
+					}
+				},
+				{
+					'class': [
+						'active',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T20:06:50.033Z'
+					}
+				}
+			],
+			'actions': [
+				{
+					'name': 'reply',
+					'title': 'Reply',
+					'method': 'POST',
+					'type': 'application/x-www-form-urlencoded',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts/10033/reply',
+					'fields': [
+						{
+							'name': 'subject',
+							'type': 'text',
+							'value': 'What does question 6 mean?'
+						},
+						{
+							'name': 'message',
+							'type': 'text'
+						},
+						{
+							'name': 'isHtml',
+							'type': 'checkbox'
+						}
+					]
+				},
+				{
+					'name': 'get-all-posts',
+					'title': 'Get All Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'all'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 0
+						}
+					]
+				},
+				{
+					'name': 'get-unread-posts',
+					'title': 'Get Unread Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'unread'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 1
+						}
+					]
+				},
+				{
+					'name': 'mark-thread-read',
+					'title': 'Mark Thread Read',
+					'method': 'POST',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/read'
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007'
+				},
+				{
+					'rel': [
+						'up',
+						'https://discussions.api.brightspace.com/rels/topic'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+				},
+				{
+					'rel': [
+						'https://organizations.api.brightspace.com/rels/orgUnit'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/lms-source'
+					],
+					'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10007/View'
+				},
+				{
+					'rel': [
+						'author'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+				}
+			]
+		},
+		{
+			'class': [
+				'thread',
+				'html'
+			],
+			'rel': [
+				'https://discussions.api.brightspace.com/rels/thread'
+			],
+			'properties': {
+				'subject': 'dogs',
+				'message': 'cool',
+				'unread': 0,
+				'replies': 0
+			},
+			'entities': [
+				{
+					'class': [
+						'created',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T19:09:22.690Z'
+					}
+				},
+				{
+					'class': [
+						'active',
+						'date'
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/date'
+					],
+					'properties': {
+						'date': '2017-09-12T19:09:22.690Z'
+					}
+				}
+			],
+			'actions': [
+				{
+					'name': 'reply',
+					'title': 'Reply',
+					'method': 'POST',
+					'type': 'application/x-www-form-urlencoded',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts/10032/reply',
+					'fields': [
+						{
+							'name': 'subject',
+							'type': 'text',
+							'value': 'dogs'
+						},
+						{
+							'name': 'message',
+							'type': 'text'
+						},
+						{
+							'name': 'isHtml',
+							'type': 'checkbox'
+						}
+					]
+				},
+				{
+					'name': 'get-all-posts',
+					'title': 'Get All Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'all'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 0
+						}
+					]
+				},
+				{
+					'name': 'get-unread-posts',
+					'title': 'Get Unread Posts',
+					'method': 'GET',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts',
+					'fields': [
+						{
+							'name': 'pageSize',
+							'type': 'number',
+							'value': 20
+						},
+						{
+							'name': 'pageNumber',
+							'type': 'number',
+							'value': 1
+						},
+						{
+							'name': 'sort',
+							'type': 'text',
+							'value': 'creationdate'
+						},
+						{
+							'name': 'filter',
+							'type': 'text',
+							'value': 'unread'
+						},
+						{
+							'name': 'embedDepth',
+							'type': 'number',
+							'value': 1
+						}
+					]
+				},
+				{
+					'name': 'mark-thread-read',
+					'title': 'Mark Thread Read',
+					'method': 'POST',
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/read'
+				}
+			],
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006'
+				},
+				{
+					'rel': [
+						'up',
+						'https://discussions.api.brightspace.com/rels/topic'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+				},
+				{
+					'rel': [
+						'https://organizations.api.brightspace.com/rels/orgUnit'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/lms-source'
+					],
+					'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10006/View'
+				},
+				{
+					'rel': [
+						'author'
+					],
+					'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+				}
+			]
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads?pageSize=20&pageNumber=1'
+		},
+		{
+			'rel': [
+				'up',
+				'https://discussions.api.brightspace.com/rels/topic'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+		}
+	]
+});
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2', '', {
+	'class': [
+		'thread',
+		'pinned',
+		'html'
+	],
+	'rel': [
+		'https://discussions.api.brightspace.com/rels/thread'
+	],
+	'properties': {
+		'subject': 'post01',
+		'message': '<p>XXXXXXXXXXXXXXXX</p>\r\n<p>YYYYYYYYYYYYYYYYYYYYYYY</p>\r\n<p>ZZZZZZZZZZZZZZZZZZZZZ</p>',
+		'unread': 0,
+		'replies': 0
+	},
+	'entities': [
+		{
+			'class': [
+				'created',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2012-05-23T13:12:28.693Z'
+			}
+		},
+		{
+			'class': [
+				'active',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2012-05-23T13:12:28.693Z'
+			}
+		}
+	],
+	'actions': [
+		{
+			'name': 'reply',
+			'title': 'Reply',
+			'method': 'POST',
+			'type': 'application/x-www-form-urlencoded',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts/4/reply',
+			'fields': [
+				{
+					'name': 'subject',
+					'type': 'text',
+					'value': 'post01'
+				},
+				{
+					'name': 'message',
+					'type': 'text'
+				},
+				{
+					'name': 'isHtml',
+					'type': 'checkbox'
+				}
+			]
+		},
+		{
+			'name': 'get-all-posts',
+			'title': 'Get All Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'all'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 0
+				}
+			]
+		},
+		{
+			'name': 'get-unread-posts',
+			'title': 'Get Unread Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'unread'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 1
+				}
+			]
+		},
+		{
+			'name': 'mark-thread-read',
+			'title': 'Mark Thread Read',
+			'method': 'POST',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2/read'
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2'
+		},
+		{
+			'rel': [
+				'up',
+				'https://discussions.api.brightspace.com/rels/topic'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+		},
+		{
+			'rel': [
+				'https://organizations.api.brightspace.com/rels/orgUnit'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/lms-source'
+			],
+			'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/2/View'
+		},
+		{
+			'rel': [
+				'author'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+		}
+	]
+});
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008', '', {
+	'class': [
+		'thread',
+		'html'
+	],
+	'rel': [
+		'https://discussions.api.brightspace.com/rels/thread'
+	],
+	'properties': {
+		'subject': 'Knock knock',
+		'message': 'Who&#39;s there?',
+		'unread': 0,
+		'replies': 0
+	},
+	'entities': [
+		{
+			'class': [
+				'created',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T20:07:26.583Z'
+			}
+		},
+		{
+			'class': [
+				'active',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T20:07:26.583Z'
+			}
+		}
+	],
+	'actions': [
+		{
+			'name': 'reply',
+			'title': 'Reply',
+			'method': 'POST',
+			'type': 'application/x-www-form-urlencoded',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts/10034/reply',
+			'fields': [
+				{
+					'name': 'subject',
+					'type': 'text',
+					'value': 'Knock knock'
+				},
+				{
+					'name': 'message',
+					'type': 'text'
+				},
+				{
+					'name': 'isHtml',
+					'type': 'checkbox'
+				}
+			]
+		},
+		{
+			'name': 'get-all-posts',
+			'title': 'Get All Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'all'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 0
+				}
+			]
+		},
+		{
+			'name': 'get-unread-posts',
+			'title': 'Get Unread Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'unread'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 1
+				}
+			]
+		},
+		{
+			'name': 'mark-thread-read',
+			'title': 'Mark Thread Read',
+			'method': 'POST',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008/read'
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008'
+		},
+		{
+			'rel': [
+				'up',
+				'https://discussions.api.brightspace.com/rels/topic'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+		},
+		{
+			'rel': [
+				'https://organizations.api.brightspace.com/rels/orgUnit'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/lms-source'
+			],
+			'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10008/View'
+		},
+		{
+			'rel': [
+				'author'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+		}
+	]
+});
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007', '', {
+	'class': [
+		'thread',
+		'html'
+	],
+	'rel': [
+		'https://discussions.api.brightspace.com/rels/thread'
+	],
+	'properties': {
+		'subject': 'What does question 6 mean?',
+		'message': '9 of the words in that question are totally made up! And there are only 6 words in that question... I don&#39;t get it man',
+		'unread': 0,
+		'replies': 0
+	},
+	'entities': [
+		{
+			'class': [
+				'created',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T20:06:50.033Z'
+			}
+		},
+		{
+			'class': [
+				'active',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T20:06:50.033Z'
+			}
+		}
+	],
+	'actions': [
+		{
+			'name': 'reply',
+			'title': 'Reply',
+			'method': 'POST',
+			'type': 'application/x-www-form-urlencoded',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts/10033/reply',
+			'fields': [
+				{
+					'name': 'subject',
+					'type': 'text',
+					'value': 'What does question 6 mean?'
+				},
+				{
+					'name': 'message',
+					'type': 'text'
+				},
+				{
+					'name': 'isHtml',
+					'type': 'checkbox'
+				}
+			]
+		},
+		{
+			'name': 'get-all-posts',
+			'title': 'Get All Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'all'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 0
+				}
+			]
+		},
+		{
+			'name': 'get-unread-posts',
+			'title': 'Get Unread Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'unread'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 1
+				}
+			]
+		},
+		{
+			'name': 'mark-thread-read',
+			'title': 'Mark Thread Read',
+			'method': 'POST',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007/read'
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007'
+		},
+		{
+			'rel': [
+				'up',
+				'https://discussions.api.brightspace.com/rels/topic'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+		},
+		{
+			'rel': [
+				'https://organizations.api.brightspace.com/rels/orgUnit'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/lms-source'
+			],
+			'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10007/View'
+		},
+		{
+			'rel': [
+				'author'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+		}
+	]
+});
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006', '', {
+	'class': [
+		'thread',
+		'html'
+	],
+	'rel': [
+		'https://discussions.api.brightspace.com/rels/thread'
+	],
+	'properties': {
+		'subject': 'dogs',
+		'message': 'cool',
+		'unread': 0,
+		'replies': 0
+	},
+	'entities': [
+		{
+			'class': [
+				'created',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T19:09:22.690Z'
+			}
+		},
+		{
+			'class': [
+				'active',
+				'date'
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/date'
+			],
+			'properties': {
+				'date': '2017-09-12T19:09:22.690Z'
+			}
+		}
+	],
+	'actions': [
+		{
+			'name': 'reply',
+			'title': 'Reply',
+			'method': 'POST',
+			'type': 'application/x-www-form-urlencoded',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts/10032/reply',
+			'fields': [
+				{
+					'name': 'subject',
+					'type': 'text',
+					'value': 'dogs'
+				},
+				{
+					'name': 'message',
+					'type': 'text'
+				},
+				{
+					'name': 'isHtml',
+					'type': 'checkbox'
+				}
+			]
+		},
+		{
+			'name': 'get-all-posts',
+			'title': 'Get All Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'all'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 0
+				}
+			]
+		},
+		{
+			'name': 'get-unread-posts',
+			'title': 'Get Unread Posts',
+			'method': 'GET',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/posts',
+			'fields': [
+				{
+					'name': 'pageSize',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'pageNumber',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'sort',
+					'type': 'text',
+					'value': 'creationdate'
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'unread'
+				},
+				{
+					'name': 'embedDepth',
+					'type': 'number',
+					'value': 1
+				}
+			]
+		},
+		{
+			'name': 'mark-thread-read',
+			'title': 'Mark Thread Read',
+			'method': 'POST',
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006/read'
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006'
+		},
+		{
+			'rel': [
+				'up',
+				'https://discussions.api.brightspace.com/rels/topic'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3'
+		},
+		{
+			'rel': [
+				'https://organizations.api.brightspace.com/rels/orgUnit'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/lms-source'
+			],
+			'href': 'http://KLX1-TJONES:44453/d2l/le/6606/discussions/threads/10006/View'
+		},
+		{
+			'rel': [
+				'author'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU'
+		}
+	]
+});
+
 window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606', '', {
 	'class': [
 		'forums',
@@ -1051,7 +2443,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 						'https://discussions.api.brightspace.com/rels/topic'
 					],
 					'properties': {
-						'name': 'Forum01',
+						'name': 'Topic Thunder',
 						'description': ''
 					},
 					'entities': [],
@@ -2147,7 +3539,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 				'https://discussions.api.brightspace.com/rels/topic'
 			],
 			'properties': {
-				'name': 'Forum01',
+				'name': 'Topic Thunder',
 				'description': ''
 			},
 			'entities': [],
@@ -3750,7 +5142,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		'https://discussions.api.brightspace.com/rels/topic'
 	],
 	'properties': {
-		'name': 'Forum01',
+		'name': 'Topic Thunder',
 		'description': ''
 	},
 	'entities': [],
