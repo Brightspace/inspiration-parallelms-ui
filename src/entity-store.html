@@ -40,6 +40,7 @@
 				this._notify(entityId, entity.entity);
 			} else {
 				// uh oh... we don't have it... quick, distract them
+				// (todo: fetch the data, then update store and notify once we get the data)
 				this._store[entityId] = { 'status': 'fetching', 'entity': null };
 			}
 		},
