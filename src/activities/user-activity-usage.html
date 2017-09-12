@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="activity-card.html">
+
+<dom-module id="d2l-user-activity-usage">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			.info-box {
+				display: flex;
+			}
+
+			.info-box > * {
+				margin-right: 20px;
+			}
+		</style>
+
+		<div class="info-box">
+			<d2l-activity-card href="{{activityHref}}"></d2l-activity-card>
+			<span>Due [[dueDate]]</span>
+			<div>
+				<template is="dom-if" if="{{complete}}">
+					Complete!
+				</template>
+				<template is="dom-if" if="{{!complete}}">
+					Not yet complete
+				</template>
+			</div>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes EntityMixin */
+		class UserActivityUsage extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-user-activity-usage'; }
+
+			static get properties() {
+				return {
+					activityHref: String,
+					complete: Boolean,
+					dueDate: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (entity.hasSubEntityByClass('due-date')) {
+					this.dueDate = entity.getSubEntityByClass('due-date').properties.date;
+				}
+				if (entity.hasLinkByRel('https://api.brightspace.com/rels/assignment')) {
+					this.activityHref = entity.getLinkByRel('https://api.brightspace.com/rels/assignment').href;
+				} else if (entity.hasLinkByRel('https://api.brightspace.com/rels/quiz')) {
+					this.activityHref = entity.getLinkByRel('https://api.brightspace.com/rels/quiz').href;
+				}
+
+				this.complete = entity.hasSubEntityByClass('complete');
+			}
+
+		}
+
+		window.customElements.define(UserActivityUsage.is, UserActivityUsage);
+	</script>
+</dom-module>

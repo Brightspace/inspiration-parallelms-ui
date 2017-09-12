@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../entity-mixin.html">
+
+<dom-module id="d2l-activity-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+
+		[[entity.properties.name]] ([[type]])
+	</template>
+
+	<script>
+		/* @mixes EntityMixin */
+		class ActivityCard extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-activity-card'; }
+
+			static get properties() {
+				return {
+					type: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (entity.hasClass('assignment')) {
+					this.type = 'Assignment';
+				} else if (entity.hasClass('quiz')) {
+					this.type = 'Quiz';
+				} else {
+					this.type = 'Unknown Activity Type';
+				}
+			}
+
+		}
+
+		window.customElements.define(ActivityCard.is, ActivityCard);
+	</script>
+</dom-module>

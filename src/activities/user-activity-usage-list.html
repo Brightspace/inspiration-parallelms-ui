@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="user-activity-usage.html">
+
+<dom-module id="d2l-user-activity-usage-list">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+
+		<div class="card">
+			<template is="dom-repeat" items="{{entity.entities}}">
+				<d2l-user-activity-usage href="[[_getSelfLink(item)]]"></d2l-user-activity-usage>
+			</template>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes EntityMixin */
+		class UserActivityUsageList extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-user-activity-usage-list'; }
+
+			_getSelfLink(entity) {
+				return entity.getLinkByRel('self').href;
+			}
+
+		}
+
+		window.customElements.define(UserActivityUsageList.is, UserActivityUsageList);
+	</script>
+</dom-module>
