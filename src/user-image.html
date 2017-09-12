@@ -32,7 +32,10 @@
 			}
 
 			_changed(entity) {
-				this.imageUrl = entity.entities[2].entities[0].links[0].href;
+				this.imageUrl = entity.getSubEntityByClass('profile')
+					.getSubEntityByClass('image')
+					.getLinkByRel('alternate')
+					.href;
 			}
 
 		}

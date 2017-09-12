@@ -27,7 +27,7 @@
 			}
 
 			_changed(entity) {
-				this.name = entity.entities[0].properties.name;
+				this.name = entity.getSubEntityByClass('display').properties.name;
 			}
 
 		}
