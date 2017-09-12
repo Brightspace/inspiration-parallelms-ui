@@ -56,7 +56,7 @@
 			_changed(entity) {
 				this.post = entity;
 				var uglyAssDate = this.post.entities[0].properties.date;
-				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate))
+				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 			}
 
 		}
