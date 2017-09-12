@@ -11,7 +11,7 @@
 		</style>
 		<span>[[forum.properties.description.Text]]<span>
 		<template is="dom-repeat" items="[[topics]]">
-			<d2l-discussions-topic href="[[getHref(item)]]"></d2l-discussions-topic>
+			<d2l-discussions-topic href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic>
 		</template>
 		<slot></slot>
 	</template>

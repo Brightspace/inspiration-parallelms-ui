@@ -32,7 +32,7 @@
 			</div>
 			<iron-pages selected="{{selected}}">
 				<template is="dom-repeat" items="[[forums]]">
-					<d2l-discussions-forum-item href="[[getHref(item)]]"></d2l-discussions-forum-item>
+					<d2l-discussions-forum-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-forum-item>
 				</template>
 			</iron-pages>
 		</paper-card>
