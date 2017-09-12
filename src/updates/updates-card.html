@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
 
 <dom-module id="d2l-updates-card">
@@ -19,8 +19,8 @@
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class UpdatesCard extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class UpdatesCard extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-updates-card'; }
 
 			_getSelfLink(entity) {
