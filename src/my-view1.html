@@ -25,11 +25,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 		<div class="card">
 			<div class="circle">1</div>
-			<h1><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609"></d2l-course-name></h1>
+			<h1><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609" token="{{token}}"></d2l-course-name></h1>
 			<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
 			<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-			<d2l-user-card href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175"></d2l-user-card>
-			<d2l-user-activity-usage-list href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z"></d2l-user-activity-usage-list>
+			<d2l-user-card href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175" token="{{token}}"></d2l-user-card>
+			<d2l-user-activity-usage-list href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z" token="{{token}}"></d2l-user-activity-usage-list>
 		</div>
 	</template>
 
@@ -37,6 +37,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		class MyView1 extends Polymer.Element {
 
 			static get is() { return 'my-view1'; }
+
+			static get properties() {
+				return {
+					token: {
+						type: String
+					}
+				};
+			}
 
 		}
 

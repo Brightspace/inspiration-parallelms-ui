@@ -13,7 +13,7 @@
 
 		<div class="card">
 			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-user-activity-usage href="[[_getSelfLink(item)]]"></d2l-user-activity-usage>
+				<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 			</template>
 		</div>
 	</template>

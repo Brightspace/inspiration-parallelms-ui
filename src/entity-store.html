@@ -12,7 +12,7 @@
 
 		_listeners: {},
 
-		addListener: function(entityId, listener) {
+		addListener: function(entityId, token, listener) {
 
 			if (!entityId || typeof listener !== 'function') {
 				return;
@@ -31,13 +31,13 @@
 
 		},
 
-		fetch: function(entityId) {
+		fetch: function(entityId, token) {
 			const entity = this._store[entityId];
 			if (entity) {
 				if (entity.status === 'fetching') {
 					return;
 				}
-				this._notify(entityId, entity.entity);
+				this._notify(entityId, token, entity.entity);
 			} else {
 				// uh oh... we don't have it... quick, distract them
 				// (todo: fetch the data, then update store and notify once we get the data)
@@ -45,19 +45,19 @@
 			}
 		},
 
-		update: function(entityId, entity) {
+		update: function(entityId, token, entity) {
 			return new Promise((resolve) => {
 
 				// fake it
 				this._store[entityId] = { 'status': '', 'entity': entity };
-				this._notify(entityId, entity);
+				this._notify(entityId, token, entity);
 
 				resolve(entity);
 
 			});
 		},
 
-		removeListener: function(entityId, listener) {
+		removeListener: function(entityId, token, listener) {
 
 			if (!entityId || typeof listener !== 'function') {
 				return;
@@ -74,7 +74,7 @@
 
 		},
 
-		_notify: function(entityId, entity) {
+		_notify: function(entityId, token, entity) {
 			entity = window.D2L.Hypermedia.Siren.Parse(entity);
 
 			const listeners = this._listeners[entityId];
