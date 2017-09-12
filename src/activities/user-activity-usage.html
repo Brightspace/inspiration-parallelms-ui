@@ -20,8 +20,8 @@
 		</style>
 
 		<div class="info-box">
-			<d2l-activity-card href="{{activityHref}}"></d2l-activity-card>
-			<d2l-course-name href="{{organizationHref}}"></d2l-course-name>
+			<d2l-activity-card href="{{activityHref}}" token="{{token}}"></d2l-activity-card>
+			<d2l-course-name href="{{organizationHref}}" token="{{token}}"></d2l-course-name>
 			<span>Due [[dueDate]]</span>
 			<div>
 				<template is="dom-if" if="{{complete}}">

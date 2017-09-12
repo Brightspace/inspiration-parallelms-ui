@@ -62,12 +62,14 @@
 					body = JSON.stringify(json);
 				}
 
+				var token = this.token;
+
 				fetch(url.href, {
 					method: action.method,
 					body: body
 				})
 					.then(function(response) {
-						return window.D2L.EntityStore.update(url.href, response);
+						return window.D2L.EntityStore.update(url.href, token, response);
 					});
 			}
 		};
