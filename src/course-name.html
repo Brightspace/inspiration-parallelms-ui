@@ -4,11 +4,6 @@
 
 <dom-module id="d2l-course-name">
 	<template>
-		<style include="shared-styles">
-			:host {
-				display: block;
-			}
-		</style>
 		{{entity.properties.name}}
 	</template>
 
@@ -17,16 +12,6 @@
 		class CourseName extends EntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-course-name'; }
-
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
-
-			_changed(/*entity*/) {
-				//console.log('super: entity changed!', entity);
-			}
 
 		}
 
