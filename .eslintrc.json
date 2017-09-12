@@ -5,6 +5,7 @@
   },
   "globals": {
     "EntityMixin": false,
+    "SirenEntityMixin": false,
     "SirenActionMixin": false
   },
   "parserOptions": {

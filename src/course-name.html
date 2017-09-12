@@ -1,5 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="entity-mixin.html">
+<link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="d2l-course-name">
@@ -8,8 +8,8 @@
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class CourseName extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class CourseName extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-course-name'; }
 

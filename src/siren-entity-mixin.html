@@ -1,0 +1,26 @@
+<link rel="import" href="entity-mixin.html">
+<link rel="import" href="siren-parser.html">
+
+<script>
+	/*
+		@polymerMixin
+		@mixes EntityMixin
+	*/
+	SirenEntityMixin = function(superClass) {
+		return class extends EntityMixin(superClass) {
+			_entityChanged(entity) {
+				this.entity = window.D2L.Hypermedia.Siren.Parse(entity);
+			}
+
+			// Helper methods that can be used in computed properties
+
+			_getSubEntityByRel(entity, rel) {
+				return entity && entity.getSubEntityByRel(rel);
+			}
+
+			_getLinkByRel(entity, rel) {
+				return entity && entity.getLinkByRel(rel);
+			}
+		};
+	};
+</script>

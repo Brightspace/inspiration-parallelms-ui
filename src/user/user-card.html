@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="user-name.html">
 <link rel="import" href="user-image.html">
 
@@ -15,8 +15,8 @@
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class UserCard extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class UserCard extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-user-card'; }
 		}
 

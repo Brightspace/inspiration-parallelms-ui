@@ -1,35 +1,25 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-user-name">
 	<template>
-		{{name}}
+		{{displayName.properties.name}}
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class UserName extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class UserName extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-user-name'; }
 
 			static get properties() {
 				return {
-					name: {
-						type: String
+					displayName: {
+						type: Object,
+						computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/display-name")'
 					}
 				};
 			}
-
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
-
-			_changed(entity) {
-				this.name = entity.getSubEntityByClass('display').properties.name;
-			}
-
 		}
 
 		window.customElements.define(UserName.is, UserName);
