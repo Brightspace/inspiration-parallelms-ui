@@ -15,7 +15,7 @@
 		</style>
 		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 10px;">
 			<h4>Topic: [[topic.properties.name]]</h4>
-			<d2l-discussions-topic-post-list href="[[getThreadsHref + '?pageSize=' + getThreadsPageSize + '&pageNumber=1']]" token="{{token}}"></d2l-discussions-topic-post-list>
+			<d2l-discussions-topic-post-list href="" token="{{token}}"></d2l-discussions-topic-post-list>
 		</paper-card>
 		<slot></slot>
 	</template>
@@ -37,7 +37,9 @@
 					getThreadsPageSize: {
 						type: Number,
 						value: 20
-					}
+					},
+					token: String,
+					href: String
 				};
 			}
 
@@ -50,6 +52,7 @@
 			_changed(entity) {
 				this.topic = entity;
 				this.getThreadsHref = entity.actions[0].href;
+				//[[getThreadsHref + '?pageSize=' + getThreadsPageSize + '&pageNumber=1']]
 			}
 
 		}
