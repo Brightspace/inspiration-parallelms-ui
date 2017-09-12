@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-activity-card">
 	<template>
@@ -13,8 +13,8 @@
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class ActivityCard extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class ActivityCard extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-activity-card'; }
 

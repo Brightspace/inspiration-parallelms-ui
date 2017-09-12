@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="user-activity-usage.html">
 
@@ -19,8 +19,8 @@
 	</template>
 
 	<script>
-		/* @mixes EntityMixin */
-		class UserActivityUsageList extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class UserActivityUsageList extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-user-activity-usage-list'; }
 
