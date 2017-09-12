@@ -13,7 +13,7 @@
 
 		<paper-card>
 			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-update-item href="[[_getSelfLink(item)]]"></d2l-user-activity-usage>
+				<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 			</template>
 		</paper-card>
 	</template>
