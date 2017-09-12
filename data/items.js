@@ -14921,7 +14921,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l', '', {
 	'class': [
 		'root'
 	],
@@ -14976,7 +14976,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1', '', {
 	'class': [
 		'feed',
 		'collection',
@@ -15306,7 +15306,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fdee3a6', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fdee3a6', '', {
 	'class': [
 		'feed-item',
 		'context',
@@ -15390,7 +15390,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd6776c', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd6776c', '', {
 	'class': [
 		'feed-item',
 		'context',
@@ -15474,7 +15474,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd62aa1', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd62aa1', '', {
 	'class': [
 		'feed-item',
 		'context',

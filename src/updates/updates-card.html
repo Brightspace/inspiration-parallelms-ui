@@ -9,9 +9,16 @@
 			:host {
 				display: block;
 			}
+			.header {
+				background:#37A0CE;
+				color:white;
+			}
 		</style>
 
 		<paper-card>
+			<div class="header">
+				<h2 style="margin:0; padding:10px; font-weight:normal;">New Updates</h2>
+			</div>
 			<template is="dom-repeat" items="{{entity.entities}}">
 				<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 			</template>
