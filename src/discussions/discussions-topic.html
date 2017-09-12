@@ -1,17 +1,22 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../entity-mixin.html">
 <link rel="import" href="discussions-topic-post-list.html">
 
-<dom-module id="d2l-discussions-topics">
+<dom-module id="d2l-discussions-topic">
 	<template>
 		<style>
 			:host {
 				display: block;
 			}
+			h4 {
+				margin: 0;
+			}
 		</style>
-		<h4>[[topic.properties.name]]</h4>
-		<span>[[topic.properties.description]]<span>
-		<d2l-discussions-topic-post-list href="[[getThreadsHref + '?pageSize=' + getThreadsPageSize + '&pageNumber=1']]"></d2l-discussions-topic-post-list>
+		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 10px;">
+			<h4>Topic: [[topic.properties.name]]</h4>
+			<d2l-discussions-topic-post-list href="[[getThreadsHref + '?pageSize=' + getThreadsPageSize + '&pageNumber=1']]"></d2l-discussions-topic-post-list>
+		</paper-card>
 		<slot></slot>
 	</template>
 

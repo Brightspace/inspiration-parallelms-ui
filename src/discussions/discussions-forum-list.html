@@ -1,31 +1,58 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../entity-mixin.html">
 <link rel="import" href="discussions-forum-item.html">
 
-<dom-module id="d2l-discussions-forums-list">
+<dom-module id="d2l-discussions-forum-list">
 	<template>
 		<style>
 			:host {
 				display: block;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+			.header {
+				background: #37A0CE;
+				color: white;
+			}
+			paper-tabs{
+				--paper-tabs-selection-bar-color: white;
 			}
 		</style>
-		<h2>Discussions</h2>
-		<template is="dom-repeat" items="[[forums]]">
-			<d2l-discussions-forum-item href="[[getHref(item)]]"></d2l-discussions-forum-item>
-		</template>
+		<paper-card style="width: 500px; height: 650px;">
+			<div class="header">
+				<h2 style="margin:0; padding:10px; font-weight:normal;">Discussions</h2>
+				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
+					<template is="dom-repeat" items="[[forums]]">
+						<paper-tab>[[item.properties.name]]</paper-tab>
+					</template>
+				</paper-tabs>
+			</div>
+			<iron-pages selected="{{selected}}">
+				<template is="dom-repeat" items="[[forums]]">
+					<d2l-discussions-forum-item href="[[getHref(item)]]"></d2l-discussions-forum-item>
+				</template>
+			</iron-pages>
+		</paper-card>
 		<slot></slot>
 	</template>
 
 	<script>
 		class DiscussionsForumList extends EntityMixin(Polymer.Element) {
 
-			static get is() { return 'd2l-discussions-forums-list'; }
+			static get is() { return 'd2l-discussions-forum-list'; }
 
 			static get properties() {
 				return {
 					forums: {
 						type: Array,
 						value: []
+					},
+					selected: {
+						type: Number,
+						value: 0
 					}
 				};
 			}

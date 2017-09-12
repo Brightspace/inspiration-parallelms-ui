@@ -2,14 +2,13 @@
 <link rel="import" href="../entity-mixin.html">
 <link rel="import" href="discussions-topic.html">
 
-<dom-module id="d2l-discussions-forums-item">
+<dom-module id="d2l-discussions-forum-item">
 	<template>
 		<style>
 			:host {
 				display: block;
 			}
 		</style>
-		<h3>[[forum.properties.name]]</h3>
 		<span>[[forum.properties.description.Text]]<span>
 		<template is="dom-repeat" items="[[topics]]">
 			<d2l-discussions-topic href="[[getHref(item)]]"></d2l-discussions-topic>
@@ -29,8 +28,8 @@
 						value: {}
 					},
 					topics: {
-						type: Object,
-						value: {}
+						type: Array,
+						value: []
 					}
 				};
 			}
