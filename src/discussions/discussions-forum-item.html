@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="discussions-topic.html">
+
+<dom-module id="d2l-discussions-forum-item">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<span>[[forum.properties.description.Text]]<span>
+		<template is="dom-repeat" items="[[topics]]">
+			<d2l-discussions-topic href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic>
+		</template>
+		<slot></slot>
+	</template>
+
+	<script>
+		class DiscussionsForumItem extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-discussions-forum-item'; }
+
+			static get properties() {
+				return {
+					forum: {
+						type: Object,
+						value: {}
+					},
+					topics: {
+						type: Array,
+						value: []
+					},
+					token: String,
+					href: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.forum = entity;
+				this.topics = entity.entities;
+			}
+
+			getHref(item) {
+				return item.links[0].href;
+			}
+
+		}
+
+		window.customElements.define(DiscussionsForumItem.is, DiscussionsForumItem);
+	</script>
+</dom-module>
