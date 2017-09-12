@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="update-item.html">
+
+<dom-module id="d2l-updates-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			.header {
+				background:#37A0CE;
+				color:white;
+			}
+		</style>
+
+		<paper-card>
+			<div class="header">
+				<h2 style="margin:0; padding:10px; font-weight:normal;">New Updates</h2>
+			</div>
+			<template is="dom-repeat" items="{{entity.entities}}">
+				<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
+			</template>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class UpdatesCard extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-updates-card'; }
+
+			_getSelfLink(entity) {
+				return entity.getLinkByRel('self').href;
+			}
+		}
+
+		window.customElements.define(UpdatesCard.is, UpdatesCard);
+	</script>
+</dom-module>
