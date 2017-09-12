@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../course-name.html">
 <link rel="import" href="activity-card.html">
 
 <dom-module id="d2l-user-activity-usage">
@@ -20,6 +21,7 @@
 
 		<div class="info-box">
 			<d2l-activity-card href="{{activityHref}}"></d2l-activity-card>
+			<d2l-course-name href="{{organizationHref}}"></d2l-course-name>
 			<span>Due [[dueDate]]</span>
 			<div>
 				<template is="dom-if" if="{{complete}}">
@@ -42,7 +44,8 @@
 				return {
 					activityHref: String,
 					complete: Boolean,
-					dueDate: String
+					dueDate: String,
+					organizationHref: String
 				};
 			}
 
@@ -60,6 +63,9 @@
 					this.activityHref = entity.getLinkByRel('https://api.brightspace.com/rels/assignment').href;
 				} else if (entity.hasLinkByRel('https://api.brightspace.com/rels/quiz')) {
 					this.activityHref = entity.getLinkByRel('https://api.brightspace.com/rels/quiz').href;
+				}
+				if (entity.hasLinkByRel('https://api.brightspace.com/rels/organization')) {
+					this.organizationHref = entity.getLinkByRel('https://api.brightspace.com/rels/organization').href;
 				}
 
 				this.complete = entity.hasSubEntityByClass('complete');
