@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-item">
@@ -7,13 +9,19 @@
 			:host {
 				display: block;
 			}
+			h5 {
+				margin: 0;
+			}
 		</style>
-		<div>
-			<h5>[[post.properties.subject]]</h5>
-			<span>[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
-			<span>[[post.properties.subject]]</span>
-			<span>[[post.properties.message]]</span>
-		<div>
+		<paper-item>
+			<paper-item-body two-line>
+				<div style="display:flex; align-items: center;">
+					<h5 style="flex: 1;">[[post.properties.subject]]</h5>
+					<span style="display: inline-block; font-size: 14px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
+				</div>
+				<span>[[post.properties.message]]</span>
+			</paper-item-body>
+		<paper-item>
 		<slot></slot>
 	</template>
 

@@ -9,9 +9,11 @@
 				display: block;
 			}
 		</style>
-		<template is="dom-repeat" items="[[posts]]">
-			<d2l-discussions-topic-post-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic-post-item>
-		</template>
+		<div role="listbox">
+			<template is="dom-repeat" items="[[posts]]">
+				<d2l-discussions-topic-post-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic-post-item>
+			</template>
+		</div>
 		<slot></slot>
 	</template>
 
