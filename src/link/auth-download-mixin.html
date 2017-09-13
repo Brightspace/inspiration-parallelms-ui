@@ -8,7 +8,6 @@
 			return class extends superClass {
 				static get properties() {
 					return {
-						supported: Boolean,
 						swSupported: Boolean
 					};
 				}
@@ -20,6 +19,18 @@
 
 				disconnectedCallback() {
 					this._iframe && document.body.removeChild(this._iframe);
+				}
+
+				_initFileSaver() {
+					var self = this;
+					return new Promise(function(resolve, reject) {
+						Polymer.importHref(
+							self.resolveUrl('file-saver.html'),
+							resolve,
+							reject,
+							true
+						);
+					});
 				}
 
 				_initWorker() {
@@ -59,19 +70,42 @@
 					}.bind(this));
 				}
 
+				_fetch(href, token) {
+					var headers = new Headers();
+					headers.set('Authorization', `Bearer ${token}`);
+					return fetch(href, {
+						method: 'GET',
+						headers: headers,
+						mode: 'cors'
+					})
+						.then(function(response) {
+							return response.blob();
+						});
+				}
+
 				authDownloadFile(href, token, filename) {
 					var self = this;
-					this._sendMessage({
-						url: href,
-						filename: filename,
-						headers: {
-							'Authorization': `Bearer ${token}`
-						}
-					})
-						.then(function(message) {
-							// Use an iframe to prevent navigation if file fails to download
-							self.iframe.src = message.href;
-						});
+					if (this.swSupported) {
+						return this._sendMessage({
+							url: href,
+							filename: filename,
+							headers: {
+								'Authorization': `Bearer ${token}`
+							}
+						})
+							.then(function(message) {
+								// Use an iframe to prevent navigation if file fails to download
+								self.iframe.src = message.href;
+							});
+					} else {
+						return Promise.all([
+							this._initFileSaver(),
+							this._fetch(href, token)
+						])
+							.then(function(results) {
+								window.saveAs(results[1], filename);
+							});
+					}
 				}
 
 				get iframe() {
