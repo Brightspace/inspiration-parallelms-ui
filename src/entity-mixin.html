@@ -82,7 +82,14 @@
 			}
 
 			_fetch(href, token) {
-				window.D2L.EntityStore.fetch(this.href, token);
+				if (!href || typeof token !== 'string') {
+					return;
+				}
+				var entity = window.D2L.EntityStore.fetch(this.href, token);
+				if (entity.status !== 'fetching') {
+					// Allows class/mixin to override _entityChanged
+					this._entityChanged(entity.entity);
+				}
 			}
 
 			_entityChanged(entity) {
