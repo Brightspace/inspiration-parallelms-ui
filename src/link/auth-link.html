@@ -85,6 +85,7 @@
 				}
 
 				handleClick(e) {
+					// Stop the navigation, setup the SW, and navigate to the intercepted link
 					e.preventDefault();
 					var downloadAtt = this.download;
 					this._sendMessage({
@@ -95,12 +96,8 @@
 						}
 					})
 						.then(function(message) {
-							var href = message.href;
-							var link = document.createElement('a');
-							var click = new MouseEvent('click');
-
-							link.href = href;
-							link.dispatchEvent(click);
+							// This href will be intercepted by the SW, so the navigation won't actually happen
+							window.location.href = message.href;
 						});
 				}
 			}
