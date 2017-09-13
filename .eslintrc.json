@@ -6,7 +6,8 @@
   "globals": {
     "EntityMixin": false,
     "SirenEntityMixin": false,
-    "SirenActionMixin": false
+    "SirenActionMixin": false,
+    "AuthDownloadMixin": false
   },
   "parserOptions": {
     "ecmaVersion": 6
