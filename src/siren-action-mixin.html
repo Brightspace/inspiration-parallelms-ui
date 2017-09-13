@@ -19,7 +19,7 @@
 				var fields;
 				if (action.method === 'GET' || action.method === 'HEAD') {
 					fields = url.searchParams;
-				} else if (action.type === 'application/x-www-urlencoded') {
+				} else if (action.type === 'application/x-www-form-urlencoded') {
 					fields = new URLSearchParams();
 				} else {
 					fields = new FormData();
