@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="discussions-topic-post-reply-list.html">
 <link rel="import" href="../entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-item">
@@ -13,17 +14,23 @@
 				margin: 0;
 				font-size: 14px
 			}
+			[hidden] {
+				display: none !important;
+			}
 		</style>
-		<paper-item>
-			<paper-item-body three-line>
-				<h5>[[post.properties.subject]]</h5>
-				<div style="display:flex; align-items: center;">
-					<span style="flex: 1; font-size: 12px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
-					<span style="display: inline-block; font-size: 12px;">[[date]]</span>
-				</div>
-				<span style="font-size: 14px;">[[post.properties.message]]</span>
-			</paper-item-body>
-		<paper-item>
+		<div>
+			<paper-item on-click="toggleHideReplies">
+				<paper-item-body three-line>
+					<h5>[[post.properties.subject]]</h5>
+					<div style="display:flex; align-items: center;">
+						<span style="flex: 1; font-size: 12px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
+						<span style="display: inline-block; font-size: 12px;">[[date]]</span>
+					</div>
+					<span style="font-size: 14px;">[[post.properties.message]]</span>
+				</paper-item-body>
+			</paper-item>
+			<d2l-discussions-topic-post-reply-list hidden="{{hideReplies}}" href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
+		</div>
 		<slot></slot>
 	</template>
 
@@ -43,6 +50,14 @@
 					date: {
 						type: String,
 						value: ''
+					},
+					repliesHref: {
+						type: String,
+						value: ''
+					},
+					hideReplies: {
+						type: Boolean,
+						value: true
 					}
 				};
 			}
@@ -57,6 +72,11 @@
 				this.post = entity;
 				var uglyAssDate = this.post.entities[0].properties.date;
 				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+				this.repliesHref = this.post.actions[1].href;
+			}
+
+			toggleHideReplies() {
+				this.hideReplies = !this.hideReplies;
 			}
 
 		}

@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../entity-mixin.html">
+
+<dom-module id="d2l-discussions-topic-post-reply-item">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<paper-item two-line style="font-size: 12px;">
+			<div style="display:flex; align-items: center; width: 100%;">
+				<span style="padding-right: 5px;" style="flex: 1;">↳</span>
+				<div style="flex: 2;">[[item.properties.message]]</div>
+				<div style="display: inline-block;">[[date]]</div>
+			</div>
+		</paper-item>
+		<slot></slot>
+	</template>
+
+	<script>
+		class DiscussionsTopicPostReplyItem extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-discussions-topic-post-reply-item'; }
+
+			static get properties() {
+				return {
+					post: {
+						type: Object,
+						value: {}
+					},
+					replies: {
+						type: Array,
+						value: []
+					},
+					token: String,
+					href: String,
+					item: {
+						type: Object,
+						value: {}
+					}
+				};
+			}
+
+			connectedCallback () {
+				var uglyAssDate = this.item.entities[0].properties.date;
+				this.date = new Intl.DateTimeFormat(this.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+
+			}
+
+		}
+
+		window.customElements.define(DiscussionsTopicPostReplyItem.is, DiscussionsTopicPostReplyItem);
+	</script>
+</dom-module>
