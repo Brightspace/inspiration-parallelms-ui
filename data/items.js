@@ -1,4 +1,5 @@
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.proddev.d2l', '', {
+var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjMzODZlNzJiLTQ2NmMtNDE0My1iY2ZiLWNiYjFlODhjYzc2YiJ9.eyJzdWIiOiIxNzUiLCJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0ZGQ5ZTI4ZS0yZjI5LTQ5OTYtODkzNC04NTFlMTIyZTZjYmMiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1MzM0NjU1LCJuYmYiOjE1MDUzMzEwNTV9.foQ1JCeZ3_QAc_ZOBANHavl40TIb4FAQtf0NuFunYBXctNI0UwoFR1iQgVA-6tYvYw1WaIqzKS8ZatNpLNMFcOTfaIRIiIa3KmnxaG9ByehKev6vSM9AygMH6bncB81afSVs6ctgQAsje6Rs13hcrthfFy9fVvO9EAEem_VGjCmufduVLD1gxrbDHcGzSmdVZAM3JXeCFNn_W9dkJG0UzkJpFQzShmoqznPF_wPW_rHXkNpDwL6udagEVdE9yiQ1S0Sqo0sarhFRnehsbL4D4-llwC3-pqp3M5EwkChXe7ALL1QTLcReAGpHze41K0HmprKFBKK3uv7aCX1k6NYBVQ';
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.proddev.d2l', token, {
 	'class': [
 		'root'
 	],
@@ -35,7 +36,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l', token, {
 	'class': [
 		'enrollments',
 		'root'
@@ -105,7 +106,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175', token, {
 	'class': [
 		'user'
 	],
@@ -220,7 +221,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.user
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606', token, {
 	'class': [
 		'active',
 		'organization'
@@ -320,7 +321,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.orga
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/175?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/175?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', token, {
 	'class': [
 		'enrollments',
 		'collection'
@@ -546,7 +547,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/175?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0&pinned=1', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/175?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0&pinned=1', token, {
 	'class': [
 		'enrollments',
 		'collection'
@@ -755,7 +756,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:44.324Z',
 		'end': '2017-09-18T18:48:44.324Z'
@@ -872,7 +873,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/subscriptions/threads/users/175?pageSize=20&pageNumber=1&internalIndex=0', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/subscriptions/threads/users/175?pageSize=20&pageNumber=1&internalIndex=0', token, {
 	'class': [
 		'threads',
 		'collection',
@@ -898,7 +899,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/12', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/12', token, {
 	'class': [
 		'user'
 	],
@@ -973,7 +974,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.user
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6606', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6606', token, {
 	'links': [
 		{
 			'rel': [
@@ -989,7 +990,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6606/users/175?start=2017-09-11T18%3a48%3a44.416Z&end=2017-09-18T18%3a48%3a44.416Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6606/users/175?start=2017-09-11T18%3a48%3a44.416Z&end=2017-09-18T18%3a48%3a44.416Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:44.416Z',
 		'end': '2017-09-18T18:48:44.416Z'
@@ -1022,7 +1023,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads', token, {
 	'class': [
 		'threads',
 		'collection',
@@ -1387,7 +1388,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads/10009', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads/10009', token, {
 	'class': [
 		'thread',
 		'html'
@@ -1558,7 +1559,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4/threads/3', token, {
 	'class': [
 		'thread',
 		'html'
@@ -1729,7 +1730,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads', token, {
 	'class': [
 		'threads',
 		'collection',
@@ -2435,7 +2436,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/2', token, {
 	'class': [
 		'thread',
 		'pinned',
@@ -2607,7 +2608,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10008', token, {
 	'class': [
 		'thread',
 		'html'
@@ -2778,7 +2779,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10007', token, {
 	'class': [
 		'thread',
 		'html'
@@ -2949,7 +2950,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3/threads/10006', token, {
 	'class': [
 		'thread',
 		'html'
@@ -3120,7 +3121,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 	]
 });
 
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606', token, {
 	'class': [
 		'forums',
 		'collection'
@@ -3516,7 +3517,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6606', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6606', token, {
 	'class': [
 		'assignments',
 		'home'
@@ -3530,7 +3531,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.grades.api.proddev.d2l/users/175', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.grades.api.proddev.d2l/users/175', token, {
 	'class': [
 		'user-grades',
 		'collection'
@@ -3547,7 +3548,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.grad
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6606', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6606', token, {
 	'properties': {
 		'UnapprovedDiscussions': 0,
 		'UnattemptedQuizzes': 0,
@@ -3571,7 +3572,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.noti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6606/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6606/3', token, {
 	'class': [
 		'theme'
 	],
@@ -3617,7 +3618,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.them
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0/enrollment', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0/enrollment', token, {
 	'class': [
 		'enrollment',
 		'unpinned'
@@ -3666,7 +3667,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		'https://api.brightspace.com/rels/user-enrollment'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/pDbLBMUyLfIWcub9m4HQDX5kNWZmLOi-jsJwilLMKe4/enrollment', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/pDbLBMUyLfIWcub9m4HQDX5kNWZmLOi-jsJwilLMKe4/enrollment', token, {
 	'class': [
 		'enrollment',
 		'unpinned'
@@ -3715,7 +3716,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		'https://api.brightspace.com/rels/user-enrollment'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/sgvwn6ZboBwoMZqCrqhlawvOe1uiFj47iD9NUhBq38g/enrollment', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/sgvwn6ZboBwoMZqCrqhlawvOe1uiFj47iD9NUhBq38g/enrollment', token, {
 	'class': [
 		'enrollment',
 		'unpinned'
@@ -3764,7 +3765,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		'https://api.brightspace.com/rels/user-enrollment'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609/users/175', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609/users/175', token, {
 	'class': [
 		'activity',
 		'user-assignment-activity'
@@ -3825,7 +3826,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175/overdue', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175/overdue', token, {
 	'entities': [
 		{
 			'class': [
@@ -3920,7 +3921,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/12?start=2017-09-11T18%3a48%3a44.864Z&end=2017-09-18T18%3a48%3a44.864Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/12?start=2017-09-11T18%3a48%3a44.864Z&end=2017-09-18T18%3a48%3a44.864Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:44.864Z',
 		'end': '2017-09-18T18:48:44.864Z'
@@ -3965,7 +3966,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/12?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/12?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', token, {
 	'class': [
 		'enrollments',
 		'collection'
@@ -4159,7 +4160,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/178', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/178', token, {
 	'class': [
 		'user'
 	],
@@ -4222,7 +4223,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.user
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2', token, {
 	'class': [
 		'forum'
 	],
@@ -4393,7 +4394,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/3', token, {
 	'class': [
 		'forum',
 		'allowAnonymous'
@@ -4520,7 +4521,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/4', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/4', token, {
 	'class': [
 		'forum',
 		'moderated'
@@ -4602,7 +4603,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609', token, {
 	'class': [
 		'active',
 		'course-offering'
@@ -4717,7 +4718,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.orga
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0', token, {
 	'class': [
 		'user',
 		'enrolled'
@@ -4815,7 +4816,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6613', token, {
 	'class': [
 		'active',
 		'course-offering'
@@ -4930,7 +4931,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.orga
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/pDbLBMUyLfIWcub9m4HQDX5kNWZmLOi-jsJwilLMKe4', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/pDbLBMUyLfIWcub9m4HQDX5kNWZmLOi-jsJwilLMKe4', token, {
 	'class': [
 		'user',
 		'enrolled'
@@ -5028,7 +5029,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6614', token, {
 	'class': [
 		'active',
 		'course-offering'
@@ -5143,7 +5144,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.orga
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/sgvwn6ZboBwoMZqCrqhlawvOe1uiFj47iD9NUhBq38g', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/sgvwn6ZboBwoMZqCrqhlawvOe1uiFj47iD9NUhBq38g', token, {
 	'class': [
 		'user',
 		'enrolled'
@@ -5241,7 +5242,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609', token, {
 	'class': [
 		'activity',
 		'assignment-activity',
@@ -5289,7 +5290,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609/folders/2', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609/folders/2', token, {
 	'class': [
 		'assignment'
 	],
@@ -5339,7 +5340,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		'https://assignments.api.brightspace.com/rels/assignment'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/users/175', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/users/175', token, {
 	'class': [
 		'activity',
 		'user-assignment-activity'
@@ -5412,7 +5413,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a45.814Z&end=2017-09-18T18%3a48%3a45.814Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a45.814Z&end=2017-09-18T18%3a48%3a45.814Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:45.814Z',
 		'end': '2017-09-18T18:48:45.814Z'
@@ -5529,7 +5530,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178?start=2017-09-11T18%3a48%3a46.111Z&end=2017-09-18T18%3a48%3a46.111Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178?start=2017-09-11T18%3a48%3a46.111Z&end=2017-09-18T18%3a48%3a46.111Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:46.111Z',
 		'end': '2017-09-18T18:48:46.111Z'
@@ -5646,7 +5647,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/178?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/users/178?search=&pageSize=20&embedDepth=0&sort=OrgUnitId&orgUnitTypeId=3&bookmark=&autoPinCourses=0', token, {
 	'class': [
 		'enrollments',
 		'collection'
@@ -5840,7 +5841,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/3', token, {
 	'class': [
 		'topic',
 		'text'
@@ -5910,7 +5911,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/2/topics/4', token, {
 	'class': [
 		'topic',
 		'html'
@@ -5980,7 +5981,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/3/topics/5', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/3/topics/5', token, {
 	'class': [
 		'topic',
 		'html'
@@ -6075,7 +6076,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/4/topics/6', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606/forums/4/topics/6', token, {
 	'class': [
 		'topic',
 		'locked',
@@ -6125,7 +6126,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/a2de9109-8362-4913-8fb9-3607ea9c484d', '', {
+window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/a2de9109-8362-4913-8fb9-3607ea9c484d', token, {
 	'class': [
 		'course-image'
 	],
@@ -6420,7 +6421,7 @@ window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/
 		'https://api.brightspace.com/rels/organization-image'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609', token, {
 	'entities': [
 		{
 			'class': [
@@ -6636,7 +6637,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175?start=2017-09-11T18%3a48%3a46.483Z&end=2017-09-18T18%3a48%3a46.483Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175?start=2017-09-11T18%3a48%3a46.483Z&end=2017-09-18T18%3a48%3a46.483Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:46.483Z',
 		'end': '2017-09-18T18:48:46.483Z'
@@ -6746,7 +6747,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609', token, {
 	'class': [
 		'sequence',
 		'sequence-description'
@@ -8553,7 +8554,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609', token, {
 	'class': [
 		'forums',
 		'collection'
@@ -9427,7 +9428,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609', token, {
 	'class': [
 		'assignments',
 		'home'
@@ -9441,7 +9442,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6609', token, {
 	'properties': {
 		'UnapprovedDiscussions': 0,
 		'UnattemptedQuizzes': 2,
@@ -9465,7 +9466,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.noti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6609/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6609/3', token, {
 	'class': [
 		'theme'
 	],
@@ -9511,7 +9512,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.them
 		}
 	]
 });
-window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/807f3773-1197-4c18-8974-77e4d70e1960', '', {
+window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/807f3773-1197-4c18-8974-77e4d70e1960', token, {
 	'class': [
 		'course-image'
 	],
@@ -9806,7 +9807,7 @@ window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/
 		'https://api.brightspace.com/rels/organization-image'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6613', token, {
 	'links': [
 		{
 			'rel': [
@@ -9822,7 +9823,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6613/users/175?start=2017-09-11T18%3a48%3a46.769Z&end=2017-09-18T18%3a48%3a46.769Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6613/users/175?start=2017-09-11T18%3a48%3a46.769Z&end=2017-09-18T18%3a48%3a46.769Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:46.769Z',
 		'end': '2017-09-18T18:48:46.769Z'
@@ -9854,7 +9855,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6613', token, {
 	'class': [
 		'sequence',
 		'sequence-description'
@@ -9880,7 +9881,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6613', token, {
 	'class': [
 		'forums',
 		'collection'
@@ -9895,7 +9896,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6613', token, {
 	'class': [
 		'assignments',
 		'home'
@@ -9909,7 +9910,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6613', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6613', token, {
 	'properties': {
 		'UnapprovedDiscussions': 0,
 		'UnattemptedQuizzes': 0,
@@ -9933,7 +9934,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.noti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6613/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6613/3', token, {
 	'class': [
 		'theme'
 	],
@@ -9979,7 +9980,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.them
 		}
 	]
 });
-window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/09679190-7833-448b-8183-1b1ca0f60969', '', {
+window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/images/09679190-7833-448b-8183-1b1ca0f60969', token, {
 	'class': [
 		'course-image'
 	],
@@ -10273,7 +10274,7 @@ window.D2L.EntityStore.update('https://course-image-catalog.api.brightspace.com/
 		'https://api.brightspace.com/rels/organization-image'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6614', token, {
 	'links': [
 		{
 			'rel': [
@@ -10289,7 +10290,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6614/users/175?start=2017-09-11T18%3a48%3a46.976Z&end=2017-09-18T18%3a48%3a46.976Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6614/users/175?start=2017-09-11T18%3a48%3a46.976Z&end=2017-09-18T18%3a48%3a46.976Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:46.976Z',
 		'end': '2017-09-18T18:48:46.976Z'
@@ -10321,7 +10322,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6614', token, {
 	'class': [
 		'sequence',
 		'sequence-description'
@@ -10347,7 +10348,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6614', token, {
 	'class': [
 		'forums',
 		'collection'
@@ -10362,7 +10363,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6614', token, {
 	'class': [
 		'assignments',
 		'home'
@@ -10376,7 +10377,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6614', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.notifications.api.proddev.d2l/my-notifications/organizations/6614', token, {
 	'properties': {
 		'UnapprovedDiscussions': 0,
 		'UnattemptedQuizzes': 0,
@@ -10400,7 +10401,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.noti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6614/3', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.themes.api.proddev.d2l/6614/3', token, {
 	'class': [
 		'theme'
 	],
@@ -10446,7 +10447,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.them
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609', token, {
 	'class': [
 		'activity',
 		'assignment-activity',
@@ -10506,7 +10507,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609/folders/1', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assignments.api.proddev.d2l/6609/folders/1', token, {
 	'class': [
 		'assignment'
 	],
@@ -10550,7 +10551,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.assi
 		'https://assignments.api.brightspace.com/rels/assignment'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609/users/178', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_2/usages/6609/users/178', token, {
 	'class': [
 		'activity',
 		'user-assignment-activity'
@@ -10611,7 +10612,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178/overdue', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178/overdue', token, {
 	'entities': [
 		{
 			'class': [
@@ -10706,7 +10707,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_51000_6/usages/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_51000_6/usages/6609', token, {
 	'class': [
 		'activity',
 		'quiz-activity',
@@ -10733,7 +10734,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_51000_7/usages/6609', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_51000_7/usages/6609', token, {
 	'class': [
 		'activity',
 		'quiz-activity',
@@ -10760,7 +10761,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175/overdue', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175/overdue', token, {
 	'entities': [
 		{
 			'class': [
@@ -10854,7 +10855,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97629', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97629', token, {
 	'properties': {
 		'title': 'SCORM Root'
 	},
@@ -11341,7 +11342,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97636', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97636', token, {
 	'properties': {
 		'title': 'Normal Module'
 	},
@@ -12138,7 +12139,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97642', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97642', token, {
 	'properties': {
 		'title': 'Condition Module 1 (visit topic with comments)'
 	},
@@ -12634,7 +12635,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5', token, {
 	'class': [
 		'forum'
 	],
@@ -13181,7 +13182,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6', token, {
 	'class': [
 		'forum'
 	],
@@ -13492,7 +13493,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/users/178', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activities/6606_2000_1/usages/6609/users/178', token, {
 	'class': [
 		'activity',
 		'user-assignment-activity'
@@ -13565,7 +13566,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178?start=2017-09-11T18%3a48%3a50.686Z&end=2017-09-18T18%3a48%3a50.686Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/178?start=2017-09-11T18%3a48%3a50.686Z&end=2017-09-18T18%3a48%3a50.686Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:50.686Z',
 		'end': '2017-09-18T18:48:50.686Z'
@@ -13682,7 +13683,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quizzes.api.proddev.d2l/6609/quizzes/6', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quizzes.api.proddev.d2l/6609/quizzes/6', token, {
 	'class': [
 		'quiz'
 	],
@@ -13705,7 +13706,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quiz
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quizzes.api.proddev.d2l/6609/quizzes/7', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quizzes.api.proddev.d2l/6609/quizzes/7', token, {
 	'class': [
 		'quiz'
 	],
@@ -13728,7 +13729,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.quiz
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175?start=2017-09-11T18%3a48%3a51.163Z&end=2017-09-18T18%3a48%3a51.163Z', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/activityusages/6609/users/175?start=2017-09-11T18%3a48%3a51.163Z&end=2017-09-18T18%3a48%3a51.163Z', token, {
 	'properties': {
 		'start': '2017-09-11T18:48:51.163Z',
 		'end': '2017-09-18T18:48:51.163Z'
@@ -13838,7 +13839,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.acti
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97630', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97630', token, {
 	'properties': {
 		'title': 'Lessons'
 	},
@@ -14067,7 +14068,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97631', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97631', token, {
 	'properties': {
 		'title': 'Exams'
 	},
@@ -14296,7 +14297,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97639', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97639', token, {
 	'properties': {
 		'title': 'topic 3'
 	},
@@ -14420,7 +14421,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97638', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97638', token, {
 	'properties': {
 		'title': 'topic 2'
 	},
@@ -14550,7 +14551,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97637', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97637', token, {
 	'properties': {
 		'title': 'topic 1'
 	},
@@ -14680,7 +14681,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97640', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97640', token, {
 	'properties': {
 		'title': 'asdf'
 	},
@@ -14810,7 +14811,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97641', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97641', token, {
 	'properties': {
 		'title': 'My Test Content'
 	},
@@ -14940,7 +14941,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97651', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97651', token, {
 	'properties': {
 		'title': 'Topic with comments'
 	},
@@ -15064,7 +15065,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97643', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97643', token, {
 	'properties': {
 		'title': 'Condition Topic 1 (visit My Test Content)'
 	},
@@ -15188,7 +15189,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97646', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97646', token, {
 	'properties': {
 		'title': 'Normal Module 1'
 	},
@@ -15254,7 +15255,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97648', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97648', token, {
 	'properties': {
 		'title': 'Date Module 1 (in range)'
 	},
@@ -15378,7 +15379,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97653', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97653', token, {
 	'properties': {
 		'title': 'Condition Module 2 (My Test content)'
 	},
@@ -15531,7 +15532,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/7', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/7', token, {
 	'class': [
 		'topic',
 		'html'
@@ -15601,7 +15602,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/8', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/8', token, {
 	'class': [
 		'topic',
 		'moderated',
@@ -15672,7 +15673,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/9', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/9', token, {
 	'class': [
 		'topic',
 		'anonymousPosts',
@@ -15768,7 +15769,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/10', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/10', token, {
 	'class': [
 		'topic',
 		'html'
@@ -15838,7 +15839,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/14', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/14', token, {
 	'class': [
 		'topic',
 		'html'
@@ -15921,7 +15922,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/15', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/15', token, {
 	'class': [
 		'topic',
 		'locked',
@@ -15971,7 +15972,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/16', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/5/topics/16', token, {
 	'class': [
 		'topic',
 		'html'
@@ -16047,7 +16048,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/17', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/17', token, {
 	'class': [
 		'topic',
 		'html'
@@ -16117,7 +16118,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/18', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/18', token, {
 	'class': [
 		'topic',
 		'html'
@@ -16187,7 +16188,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/19', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/19', token, {
 	'class': [
 		'topic',
 		'html'
@@ -16257,7 +16258,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/20', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6609/forums/6/topics/20', token, {
 	'class': [
 		'topic',
 		'html'
@@ -16327,7 +16328,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.disc
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97632', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97632', token, {
 	'properties': {
 		'title': 'Lesson 1'
 	},
@@ -16424,7 +16425,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97633', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97633', token, {
 	'properties': {
 		'title': 'Lesson 2'
 	},
@@ -16521,7 +16522,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97634', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97634', token, {
 	'properties': {
 		'title': 'Mid term'
 	},
@@ -16618,7 +16619,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97635', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97635', token, {
 	'properties': {
 		'title': 'Final Exam'
 	},
@@ -16715,7 +16716,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97647', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97647', token, {
 	'properties': {},
 	'rel': [
 		'item'
@@ -16740,7 +16741,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97649', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97649', token, {
 	'properties': {
 		'title': 'Date Module 2 (out of range)'
 	},
@@ -16823,7 +16824,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97654', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97654', token, {
 	'properties': {
 		'title': 'Condition Topic 2 (visits asdf)'
 	},
@@ -16941,7 +16942,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97650', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97650', token, {
 	'properties': {
 		'title': 'Date Module 3 (in range)'
 	},
@@ -16995,7 +16996,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequence-description'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97652', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609/activity/97652', token, {
 	'properties': {},
 	'rel': [
 		'item'
@@ -17020,7 +17021,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequ
 		'sequenced-activity'
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l', token, {
 	'class': [
 		'root'
 	],
@@ -17075,7 +17076,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1', '', {
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1', token, {
 	'class': [
 		'feed',
 		'collection',
@@ -17405,7 +17406,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fdee3a6', '', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fdee3a6', token, {
 	'class': [
 		'feed-item',
 		'context',
@@ -17489,7 +17490,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd6776c', '', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd6776c', token, {
 	'class': [
 		'feed-item',
 		'context',
@@ -17573,7 +17574,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		}
 	]
 });
-window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd62aa1', '', {
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fd62aa1', token, {
 	'class': [
 		'feed-item',
 		'context',
