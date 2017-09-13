@@ -30,15 +30,13 @@ self.addEventListener('fetch', function(event) {
 		event.respondWith(fetch(request)
 			.then(function(response) {
 				// Set Content-Disposition on the response if necessary
-				if (!data.filename) {
-					return;
-				}
 				var disposition = response.headers.get('content-disposition');
 				if (disposition && disposition.contains('attachment')) {
 					return;
 				}
 				var newHeaders = new Headers(response.headers);
-				newHeaders.append('Content-Disposition', 'attachment; filename*=UTF-8\'\'' + data.filename);
+				var filename = data.filename || 'download';
+				newHeaders.append('Content-Disposition', 'attachment; filename*=UTF-8\'\'' + filename);
 
 				return new Response(response.body, {
 					status: response.status,
