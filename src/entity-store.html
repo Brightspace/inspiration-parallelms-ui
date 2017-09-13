@@ -59,11 +59,14 @@
 
 		removeListener: function(entityId, token, listener) {
 
-			if (!entityId || typeof listener !== 'function') {
+			if (!entityId || typeof listener !== 'function' || !this._listeners) {
 				return;
 			}
 
 			const listeners = this._listeners[entityId];
+			if (!listeners) {
+				return;
+			}
 			const index = listeners.indexOf(listener);
 			if (index === -1) {
 				return;
