@@ -18,6 +18,9 @@
 				}
 
 				disconnectedCallback() {
+					if (super.disconnectedCallback) {
+						super.disconnectedCallback();
+					}
 					this._iframe && document.body.removeChild(this._iframe);
 				}
 
