@@ -1,0 +1,111 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="d2l-auth-link">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<a id="link" href="{{href}}" download="{{download}}"><slot></slot></a>
+	</template>
+
+	<script>
+		(function() {
+			var fileServiceWorker;
+			class AuthLink extends Polymer.Element {
+
+				static get is() { return 'd2l-auth-link'; }
+
+				static get properties() {
+					return {
+						supported: Boolean,
+						href: String,
+						token: String,
+						download: {
+							type: String,
+							value: function() {
+								return this.href;
+							}
+						}
+					};
+				}
+
+				constructor() {
+					super();
+					this.supported = 'serviceWorker' in navigator;
+					this._boundHandleClick = this.handleClick.bind(this);
+				}
+
+				_initWorker() {
+					if (!fileServiceWorker) {
+						fileServiceWorker = navigator.serviceWorker.register(this.resolveUrl('link-sw.js'));
+					}
+					return fileServiceWorker.then(function(swReg) {
+						var swRegTmp = swReg.installing || swReg.waiting;
+
+						return new Promise(function(resolve) {
+							if (swReg.active) {
+								resolve(swReg);
+							}
+							swRegTmp.onstatechange = function() {
+								if (swRegTmp.state === 'activated') {
+									resolve(swReg);
+								}
+							};
+						});
+					});
+				}
+
+				_sendMessage(message) {
+					return new Promise(function(resolve, reject) {
+						var messageChannel = new MessageChannel();
+						messageChannel.port1.onmessage = function(event) {
+							if (event.data.error) {
+								reject(event.data.error);
+							} else {
+								resolve(event.data);
+							}
+						};
+						this._initWorker().then(function(swReg) {
+							swReg.active.postMessage(message,
+								[messageChannel.port2]);
+						});
+					}.bind(this));
+				}
+
+				connectedCallback() {
+					super.connectedCallback();
+					this.addEventListener('click', this._boundHandleClick);
+				}
+
+				disconnectedCallback() {
+					super.disconnectedCallback();
+					this.removeEventListener('click', this._boundHandleClick);
+				}
+
+				handleClick(e) {
+					e.preventDefault();
+					var downloadAtt = this.download;
+					this._sendMessage({
+						url: e.target.href,
+						filename: downloadAtt,
+						headers: {
+							'Authorization': `Bearer ${this.token}`
+						}
+					})
+						.then(function(message) {
+							var href = message.href;
+							var link = document.createElement('a');
+							var click = new MouseEvent('click');
+
+							link.href = href;
+							link.dispatchEvent(click);
+						});
+				}
+			}
+
+			window.customElements.define(AuthLink.is, AuthLink);
+		}());
+	</script>
+</dom-module>
