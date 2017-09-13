@@ -14,6 +14,7 @@ self.addEventListener('message', function(event) {
 self.addEventListener('fetch', function(event) {
 	if (map.hasOwnProperty(event.request.url)) {
 		var data = map[event.request.url];
+		delete map[event.request.url];
 		if (data.headers) {
 			// The request needs to be a cors request to set headers
 			var request = new Request(data.url, {
@@ -45,6 +46,5 @@ self.addEventListener('fetch', function(event) {
 					headers: newHeaders
 				});
 			}));
-		delete map[event.request.url];
 	}
 });

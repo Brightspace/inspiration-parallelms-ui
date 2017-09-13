@@ -84,20 +84,30 @@
 					this.removeEventListener('click', this._boundHandleClick);
 				}
 
+				_getIframe() {
+					if (!this.iframe) {
+						this.iframe = document.createElement('iframe');
+						this.iframe.hidden = true;
+						document.body.appendChild(this.iframe);
+					}
+					return this.iframe;
+				}
+
 				handleClick(e) {
 					// Stop the navigation, setup the SW, and navigate to the intercepted link
 					e.preventDefault();
-					var downloadAtt = this.download;
+					var self = this;
 					this._sendMessage({
-						url: e.target.href,
-						filename: downloadAtt,
+						url: this.href,
+						filename: this.download,
 						headers: {
 							'Authorization': `Bearer ${this.token}`
 						}
 					})
 						.then(function(message) {
-							// This href will be intercepted by the SW, so the navigation won't actually happen
-							window.location.href = message.href;
+							// Use an iframe to prevent navigation if file fails to download
+							var iframe = self._getIframe();
+							iframe.src = message.href;
 						});
 				}
 			}
