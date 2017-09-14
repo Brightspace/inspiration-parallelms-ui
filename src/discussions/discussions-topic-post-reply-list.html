@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="discussions-topic-post-reply-item.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-reply-list">
 	<template>
@@ -20,7 +20,8 @@
 	</template>
 
 	<script>
-		class DiscussionsTopicPostReplyList extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostReplyList extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-discussions-topic-post-reply-list'; }
 

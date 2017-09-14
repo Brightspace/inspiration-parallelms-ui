@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../user/user-name.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-reply-item">
 	<template>
@@ -25,7 +25,8 @@
 	</template>
 
 	<script>
-		class DiscussionsTopicPostReplyItem extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostReplyItem extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-discussions-topic-post-reply-item'; }
 
@@ -63,17 +64,7 @@
 			}
 
 			_changed(item) {
-				this.authorHref = this._getLinkByRel(item, 'author');
-			}
-
-			_getLinkByRel(entity, rel) {
-				var datLink;
-				entity.links.forEach(function(link) {
-					if (link.rel[0] === rel) {
-						datLink = link.href;
-					}
-				});
-				return datLink;
+				this.authorHref = item.getLinkByRel('author').href;
 			}
 
 			connectedCallback() {
