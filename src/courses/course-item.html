@@ -49,6 +49,19 @@
 
 			static get is() { return 'd2l-course-item'; }
 
+			static get properties() {
+				return {
+					startDate: {
+						type:String,
+						value: ''
+					},
+					endDate: {
+						type:String,
+						value: ''
+					}
+				};
+			}
+
 			static get observers() {
 				return [
 					'_changed(entity)'
