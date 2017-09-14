@@ -11,12 +11,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="activities/user-activity-usage-list.html">
 <link rel="import" href="course-name.html">
+<link rel="import" href="courses/courses-card.html">
 <link rel="import" href="user/user-card.html">
 <link rel="import" href="discussions/discussions-forum-list.html">
 <link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="updates/updates-card.html">
-<link rel="import" href="courses/courses-card.html">
+<link rel="import" href="siren-entity.html">
 
 <dom-module id="my-view1">
 	<template>
@@ -25,21 +26,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				display: block;
 				padding: 10px;
 			}
+
+			.card {
+				display: flex;
+				width: calc(100% - 80px);
+			}
+
+			.col1 {
+				flex: 1;
+			}
 		</style>
 
-		<div class="card" style="display: flex; width: calc(100% - 80px);">
-			<div style"flex: 1">
+		<d2l-siren-entity href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+
+		<div class="card">
+			<div class="col1">
 				<div class="circle">1</div>
-				<h1><d2l-course-name href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-course-name></h1>
+				<h1><d2l-course-name href="{{org}}" token="{{token}}"></d2l-course-name></h1>
 				<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
 				<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-				<d2l-user-card href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-user-card>
+				<d2l-user-card href="{{user}}" token="{{token}}"></d2l-user-card>
 				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
 				<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}"></d2l-courses-card>
 			</div>
-			<div style="display: inline-block;">
+			<div class="col2">
 				<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}"></d2l-discussions-forum-list><br>
-				<d2l-updates-card href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1" token="{{token}}"></d2l-updates-card>
+				<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}"></d2l-updates-card>
 				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
 			</div>
 		</div>
@@ -56,11 +69,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					org: String,
 					orgEntity: Object,
 					myActivities: {
-						type: String,
+						type: Object,
 						computed: '_getLinkByRel(userEntity, "https://activities.api.brightspace.com/rels/my-activities")'
 					},
+					myUpdates: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/updates")'
+					},
 					discussions: {
-						type: String,
+						type: Object,
 						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/discussions")'
 					},
 					myEnrollments: {
@@ -68,8 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
 					},
 					user: String,
-					userEntity: Object,
-					rootOrg: Object
+					userEntity: Object
 				};
 			}
 

@@ -255,6 +255,12 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.user
 				'https://parentportal.api.brightspace.com/rels/parent'
 			],
 			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/12'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/updates'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1'
 		}
 	]
 });
@@ -5785,6 +5791,205 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enro
 		}
 	]
 });
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/87B9jtOPumpaMOEsVJKJZsc1492DfA5-K9s-8ZiS_gU', token, {
+	'class': [
+		'user',
+		'enrolled'
+	],
+	'entities': [
+		{
+			'class': [
+				'display',
+				'name'
+			],
+			'properties': {
+				'name': 'Leonard Fournette'
+			},
+			'rel': [
+				'https://api.brightspace.com/rels/display-name'
+			]
+		},
+		{
+			'class': [
+				'first',
+				'name'
+			],
+			'properties': {
+				'name': 'Leonard'
+			},
+			'rel': [
+				'https://api.brightspace.com/rels/first-name'
+			]
+		},
+		{
+			'class': [
+				'profile'
+			],
+			'entities': [
+				{
+					'class': [
+						'file',
+						'image',
+						'default-image'
+					],
+					'properties': {
+						'smallRelativePath': '/d2l/img/0/Framework.UserProfileBadge.actProfile22.png?v=10.7.6.0-0809504',
+						'regularRelativePath': '/d2l/img/0/Framework.UserProfileBadge.actProfile50.png?v=10.7.6.0-0809504'
+					},
+					'links': [
+						{
+							'rel': [
+								'alternate'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile200.png?v=10.7.6.0-0809504'
+						},
+						{
+							'rel': [
+								'preview',
+								'https://api.brightspace.com/rels/thumbnail#small'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile22.png?v=10.7.6.0-0809504'
+						},
+						{
+							'rel': [
+								'preview',
+								'https://api.brightspace.com/rels/thumbnail#regular'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile50.png?v=10.7.6.0-0809504'
+						}
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/profile-image'
+					]
+				}
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/user-profile'
+			]
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0'
+		},
+		{
+			'rel': [
+				'https://users.api.brightspace.com/rels/canonical-user'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175'
+		},
+		{
+			'rel': [
+				'https://parentportal.api.brightspace.com/rels/parent'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/12'
+		}
+	]
+});
+
+window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/nDgLFlUkR6k6OYd3DEmmLpit4b_5jt3LJ1EQ8acsl38', token, {
+	'class': [
+		'user',
+		'enrolled'
+	],
+	'entities': [
+		{
+			'class': [
+				'display',
+				'name'
+			],
+			'properties': {
+				'name': 'LeSean McCoy'
+			},
+			'rel': [
+				'https://api.brightspace.com/rels/display-name'
+			]
+		},
+		{
+			'class': [
+				'first',
+				'name'
+			],
+			'properties': {
+				'name': 'LeSean'
+			},
+			'rel': [
+				'https://api.brightspace.com/rels/first-name'
+			]
+		},
+		{
+			'class': [
+				'profile'
+			],
+			'entities': [
+				{
+					'class': [
+						'file',
+						'image',
+						'default-image'
+					],
+					'properties': {
+						'smallRelativePath': '/d2l/img/0/Framework.UserProfileBadge.actProfile22.png?v=10.7.6.0-0809504',
+						'regularRelativePath': '/d2l/img/0/Framework.UserProfileBadge.actProfile50.png?v=10.7.6.0-0809504'
+					},
+					'links': [
+						{
+							'rel': [
+								'alternate'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile200.png?v=10.7.6.0-0809504'
+						},
+						{
+							'rel': [
+								'preview',
+								'https://api.brightspace.com/rels/thumbnail#small'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile22.png?v=10.7.6.0-0809504'
+						},
+						{
+							'rel': [
+								'preview',
+								'https://api.brightspace.com/rels/thumbnail#regular'
+							],
+							'href': 'http://KLX1-EKNUTSON:44453/d2l/img/0/Framework.UserProfileBadge.actProfile50.png?v=10.7.6.0-0809504'
+						}
+					],
+					'rel': [
+						'https://api.brightspace.com/rels/profile-image'
+					]
+				}
+			],
+			'rel': [
+				'https://api.brightspace.com/rels/user-profile'
+			]
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l/enrolled-user/t7KpAAhFJY-2i_4SvEU3b3MKZ6DmCqFefzZspZgzRj0'
+		},
+		{
+			'rel': [
+				'https://users.api.brightspace.com/rels/canonical-user'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175'
+		},
+		{
+			'rel': [
+				'https://parentportal.api.brightspace.com/rels/parent'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/12'
+		}
+	]
+});
+
 window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6613', token, {
 	'class': [
 		'active',
