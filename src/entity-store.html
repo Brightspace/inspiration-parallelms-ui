@@ -45,7 +45,10 @@
 					headers: headers
 				})
 					.then(function(res) {
-						this.update(entityId, token, res.json());
+						return res.json();
+					})
+					.then(function(json) {
+						this.update(entityId, token, json);
 					}.bind(this));
 			}
 			return this._store.get(token).get(entityId);
