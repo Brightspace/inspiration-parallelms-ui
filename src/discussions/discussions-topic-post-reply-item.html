@@ -63,16 +63,14 @@
 			}
 
 			_changed(item) {
-				console.log(item);
-				this.authorHref = this._getLinkByRel(item, 'author')
-				console.log(this.authorHref);
+				this.authorHref = this._getLinkByRel(item, 'author');
 			}
 
 			_getLinkByRel(entity, rel) {
 				var datLink;
 				entity.links.forEach(function(link) {
 					if (link.rel[0] === rel) {
-						datLink = link.href
+						datLink = link.href;
 					}
 				});
 				return datLink;
