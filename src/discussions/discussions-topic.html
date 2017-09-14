@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-topic-post-list.html">
 
 <dom-module id="d2l-discussions-topic">
@@ -23,7 +23,7 @@
 	</template>
 
 	<script>
-		class DiscussionsTopic extends EntityMixin(Polymer.Element) {
+		class DiscussionsTopic extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-discussions-topic'; }
 
@@ -53,7 +53,7 @@
 
 			_changed(entity) {
 				this.topic = entity;
-				this.getThreadsHref = entity.actions[0].href;
+				this.getThreadsHref = entity.getActionByName('get-threads').href;
 			}
 		}
 
