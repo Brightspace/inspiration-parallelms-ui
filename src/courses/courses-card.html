@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="courses-list.html">
+
+<dom-module id="d2l-courses-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+				width: 500px;
+			}
+			.header {
+				background:#37A0CE;
+				color:white;
+			}
+			h2 {
+				margin :0;
+				padding: 10px;
+				font-weight: normal;
+			}
+			paper-card {
+				width: 500px;
+				height: 650px;
+				overflow-y: scroll;
+			}
+		</style>
+		<div class="header">
+			<h2>My Courses</h2>
+		</div>
+		<paper-card>
+			<template is="dom-repeat" items="{{entity.entities}}">
+				<d2l-courses-list href="[[_getOrgLink(item)]]" token="{{token}}"></d2l-courses-list>
+			</template>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CoursesCard extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-courses-card'; }
+
+			_getOrgLink(link) {
+				return link.href;
+			}
+		}
+
+		window.customElements.define(CoursesCard.is, CoursesCard);
+	</script>
+</dom-module>

@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-action-mixin.html">
+
+<dom-module id="d2l-course-item">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--adjusting-background: white;
+			}
+			paper-card {
+				width: calc(100% - 20px);
+				margin: 10px;
+				padding: 0px;
+				background-color: var(--adjusting-background);
+			}
+			div {
+				margin: 10px;
+			}
+			.header {
+				background-color: lightgray;
+				color: white;
+				padding: 10px;
+			}
+			h4 {
+				margin: 0px;
+			}
+		</style>
+			<paper-card class$="[[entity.properties.isActive]]">
+				<div class="header">
+					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
+				</div>
+				<div style="padding-left: 10px;">Start Date: [[entity.properties.startDate]]</div>
+				<div style="padding-left: 10px;">End Date: [[entity.properties.endDate]]</div>
+			</div>
+			</paper-card>
+
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CourseItem extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-course-item'; }
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (!entity.properties.isActive) {
+					this.updateStyles({'--adjusting-background': 'WhiteSmoke'});
+				}
+			}
+		}
+
+		window.customElements.define(CourseItem.is, CourseItem);
+	</script>
+</dom-module>
