@@ -74,6 +74,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			*/
 			window.Polymer = {rootPath: '/'};
 
+			if ('PerformanceObserver' in window) {
+				const observer = new PerformanceObserver((list) => {
+					for (const entry of list.getEntries()) {
+						if (entry.entryType === 'paint') {
+							// TODO: log
+						} else if (entry.entryType === 'longtask') {
+							// TODO: log
+						}
+					}
+				});
+				observer.observe({entryTypes: ['paint', 'longtask']});
+			}
+
 			// Load and register pre-caching Service Worker
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', function() {

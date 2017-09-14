@@ -4,10 +4,11 @@
     "es6": true
   },
   "globals": {
+    "AuthDownloadMixin": false,
     "EntityMixin": false,
-    "SirenEntityMixin": false,
     "SirenActionMixin": false,
-    "AuthDownloadMixin": false
+    "SirenEntityMixin": false,
+    "PerformanceObserver": false
   },
   "parserOptions": {
     "ecmaVersion": 6
