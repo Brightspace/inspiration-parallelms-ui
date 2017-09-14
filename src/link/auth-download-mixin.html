@@ -69,7 +69,7 @@
 						this._initWorker().then(function(swReg) {
 							swReg.active.postMessage(message,
 								[messageChannel.port2]);
-						});
+						}).catch(reject);
 					}.bind(this));
 				}
 
@@ -86,6 +86,16 @@
 						});
 				}
 
+				_fileSaverSaveAs(href, token, filename) {
+					return Promise.all([
+						this._initFileSaver(),
+						this._fetch(href, token)
+					])
+						.then(function(results) {
+							window.saveAs(results[1], filename);
+						});
+				}
+
 				authDownloadFile(href, token, filename) {
 					var self = this;
 					if (this.swSupported) {
@@ -99,15 +109,12 @@
 							.then(function(message) {
 								// Use an iframe to prevent navigation if file fails to download
 								self.iframe.src = message.href;
-							});
+							})
+							.catch(function() {
+								return this._fileSaverSaveAs(href, token, filename);
+							}.bind(this));
 					} else {
-						return Promise.all([
-							this._initFileSaver(),
-							this._fetch(href, token)
-						])
-							.then(function(results) {
-								window.saveAs(results[1], filename);
-							});
+						return this._fileSaverSaveAs(href, token, filename);
 					}
 				}
 
