@@ -12,30 +12,30 @@
 
 		_listeners: new Map(),
 
+		_initContainer(map, entityId, token, init) {
+			if (!map.has(token)) {
+				map.set(token, new Map());
+			}
+			var entityMap = map.get(token);
+			if (init && !entityMap.has(entityId)) {
+				entityMap.set(entityId, init);
+			}
+			return entityMap.get(entityId);
+		},
+
 		addListener: function(entityId, token, listener) {
 
 			if (!entityId || typeof token !== 'string' || typeof listener !== 'function') {
 				return;
 			}
 
-			if (!this._listeners.has(token)) {
-				this._listeners.set(token, new Map());
-			}
-			var listeners = this._listeners.get(token);
-			if (!listeners.has(entityId)) {
-				listeners.set(entityId, new Set());
-			}
-			listeners.get(entityId).add(listener);
+			this._initContainer(this._listeners, entityId, token, new Set()).add(listener);
+
 		},
 
 		fetch: function(entityId, token) {
-			if (!this._store.has(token)) {
-				this._store.set(token, new Map());
-			}
-			const entity = this._store.get(token).get(entityId);
+			var entity = this._initContainer(this._store, entityId, token);
 			if (!entity) {
-				// uh oh... we don't have it... quick, distract them
-				// (todo: fetch the data, then update store and notify once we get the data)
 				this._store.get(token).set(entityId, { 'status': 'fetching', 'entity': null });
 
 				var headers = new Headers();
@@ -55,9 +55,7 @@
 		},
 
 		update: function(entityId, token, entity) {
-			if (!this._store.has(token)) {
-				this._store.set(token, new Map());
-			}
+			this._initContainer(this._store, entityId, token);
 			return new Promise((resolve) => {
 
 				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
@@ -74,31 +72,14 @@
 				return;
 			}
 
-			if (!this._listeners.has(token)) {
-				this._listeners.set(token, new Map());
-			}
-			var listeners = this._listeners.get(token);
-			if (!listeners.has(entityId)) {
-				listeners.set(entityId, new Set());
-			}
-			listeners.get(entityId).delete(listeners);
+			this._initContainer(this._listeners, entityId, token, new Set()).delete(listener);
 
 		},
 
 		_notify: function(entityId, token, entity) {
-			if (!this._listeners.has(token)) {
-				this._listeners.set(token, new Map());
-			}
-			var listeners = this._listeners.get(token);
-			if (!listeners.has(entityId)) {
-				listeners.set(entityId, new Set());
-			}
-
-			const listenerSet = listeners.get(entityId);
-			if (listeners) {
-				for (const listener of listenerSet) {
-					listener(entity);
-				}
+			const listenerSet = this._initContainer(this._listeners, entityId, token, new Set());
+			for (const listener of listenerSet) {
+				listener(entity);
 			}
 		}
 
