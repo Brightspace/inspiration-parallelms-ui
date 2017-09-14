@@ -24,10 +24,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				display: block;
 				padding: 10px;
 			}
+
+			.card {
+				display: flex;
+				width: calc(100% - 80px);
+			}
+
+			.col1 {
+				flex: 1;
+			}
 		</style>
 
-		<div class="card" style="display: flex; width: calc(100% - 80px);">
-			<div style"flex: 1">
+		<div class="card">
+			<div class="col1">
 				<div class="circle">1</div>
 				<h1><d2l-course-name href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-course-name></h1>
 				<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
@@ -35,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<d2l-user-card href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-user-card>
 				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
 			</div>
-			<div style="display: inline-block;">
+			<div class="col2">
 				<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}"></d2l-discussions-forum-list><br>
 				<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}"></d2l-updates-card>
 				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
