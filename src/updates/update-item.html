@@ -56,8 +56,7 @@
 				this.title = entity.properties.title;
 				this.body = entity.properties.body;
 
-				var uglyAssDate = entity.properties.date;
-				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+				this.date = this._formatDate(entity.properties.date, this.locale);
 			}
 
 			_onClickAction(e) {

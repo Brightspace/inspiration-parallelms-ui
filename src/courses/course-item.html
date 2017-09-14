@@ -28,13 +28,16 @@
 			h4 {
 				margin: 0px;
 			}
+			.date {
+				padding-left: 10px;
+			}
 		</style>
-			<paper-card class$="[[entity.properties.isActive]]">
+			<paper-card>
 				<div class="header">
 					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
 				</div>
-				<div style="padding-left: 10px;">Start Date: [[entity.properties.startDate]]</div>
-				<div style="padding-left: 10px;">End Date: [[entity.properties.endDate]]</div>
+				<div class="date">Start Date: [[startDate]]</div>
+				<div class="date">End Date: [[endDate]]</div>
 			</div>
 			</paper-card>
 
@@ -55,6 +58,13 @@
 			_changed(entity) {
 				if (!entity.properties.isActive) {
 					this.updateStyles({'--adjusting-background': 'WhiteSmoke'});
+				}
+
+				if (entity.properties.startDate) {
+				 this.startDate = this._formatDate(entity.properties.startDate, this.locale);
+				}
+				if (entity.properties.endDate) {
+					this.endDate = this._formatDate(entity.properties.endDate, this.locale);
 				}
 			}
 		}
