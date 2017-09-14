@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="discussions-topic-post-reply-list.html">
+<link rel="import" href="../user/user-name.html">
 <link rel="import" href="../entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-item">
@@ -21,7 +22,12 @@
 		<div>
 			<paper-item on-click="toggleHideReplies">
 				<paper-item-body three-line>
-					<h5>[[post.properties.subject]]</h5>
+					<div style="display:flex;">
+						<h5 style="flex: 1; font-size: 12px;">[[post.properties.subject]]</h5>
+						<span style="display: inline-block; font-size: 12px;">
+							<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name>
+						</span>
+					</div>
 					<div style="display:flex; align-items: center;">
 						<span style="flex: 1; font-size: 12px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
 						<span style="display: inline-block; font-size: 12px;">[[date]]</span>
@@ -58,6 +64,10 @@
 					hideReplies: {
 						type: Boolean,
 						value: true
+					},
+					authorHref: {
+						type: String,
+						value: ''
 					}
 				};
 			}
@@ -73,10 +83,21 @@
 				var uglyAssDate = this.post.entities[0].properties.date;
 				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 				this.repliesHref = this.post.actions[1].href;
+				this.authorHref = this._getLinkByRel(entity, 'author');
 			}
 
 			toggleHideReplies() {
 				this.hideReplies = !this.hideReplies;
+			}
+
+			_getLinkByRel(entity, rel) {
+				var datLink;
+				entity.links.forEach(function(link) {
+					if (link.rel[0] === rel) {
+						datLink = link.href;
+					}
+				});
+				return datLink;
 			}
 
 		}
