@@ -36,6 +36,43 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.
 		}
 	]
 });
+window.D2L.EntityStore.update('https://api.proddev.d2l', token, {
+	'class': [
+		'root'
+	],
+	'links': [
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/enrollments'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/whoami'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175'
+		},
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.proddev.d2l'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/organizations'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/organization'
+			],
+			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6606'
+		}
+	]
+});
 window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.enrollments.api.proddev.d2l', token, {
 	'class': [
 		'enrollments',
