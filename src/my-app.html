@@ -119,6 +119,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</template>
 
 	<script>
+		window.performance && performance.mark && performance.mark('parallelms-app.beforeRegister');
+
 		class MyApp extends Polymer.Element {
 			static get is() { return 'my-app'; }
 
@@ -153,6 +155,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				return [
 					'_routePageChanged(routeData.page)'
 				];
+			}
+
+			constructor() {
+				super();
+				window.performance && performance.mark && performance.mark('parallelms-app.created');
 			}
 
 			_routePageChanged(page) {
