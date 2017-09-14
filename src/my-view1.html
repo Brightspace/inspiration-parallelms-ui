@@ -26,16 +26,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
-		<div class="card">
-			<div class="circle">1</div>
-			<h1><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609" token="{{token}}"></d2l-course-name></h1>
-			<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-			<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-			<d2l-user-card href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.users.api.proddev.d2l/175" token="{{token}}"></d2l-user-card>
-			<d2l-user-activity-usage-list href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.activities.api.proddev.d2l/users/175?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z" token="{{token}}"></d2l-user-activity-usage-list>
-			<d2l-discussions-forum-list href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.discussions.api.proddev.d2l/6606" token="{{token}}"></d2l-discussions-forum-list><br>
-			<d2l-updates-card href="https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed?filter=feed&count=20&page=1" token="{{token}}"></d2l-updates-card>
-			<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
+		<div class="card" style="display: flex; width: calc(100% - 80px);">
+			<div style"flex: 1">
+				<div class="circle">1</div>
+				<h1><d2l-course-name href="https://{{tenantId}}.organizations.api.proddev.d2l/6609" token="{{token}}"></d2l-course-name></h1>
+				<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
+				<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+				<d2l-user-card href="https://{{tenantId}}.users.api.proddev.d2l/{{userId}}" token="{{token}}"></d2l-user-card>
+				<d2l-user-activity-usage-list href="https://{{tenantId}}.activities.api.proddev.d2l/users/{{userId}}?start=2017-09-11T18%3a48%3a44.324Z&end=2017-09-18T18%3a48%3a44.324Z" token="{{token}}"></d2l-user-activity-usage-list>
+			</div>
+			<div style="display: inline-block;">
+				<d2l-discussions-forum-list href="https://{{tenantId}}.discussions.api.proddev.d2l/6606" token="{{token}}"></d2l-discussions-forum-list><br>
+				<d2l-updates-card href="https://{{tenantId}}.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1" token="{{token}}"></d2l-updates-card>
+				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
+			</div>
 		</div>
 	</template>
 
@@ -46,9 +50,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
-					token: {
-						type: String
-					}
+					token: String,
+					tenantId: String,
+					userId: String
 				};
 			}
 

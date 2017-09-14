@@ -8,48 +8,56 @@
 	*/
 	const EntityStore = {
 
-		_store: {},
+		_store: new Map(),
 
-		_listeners: {},
+		_listeners: new Map(),
 
 		addListener: function(entityId, token, listener) {
 
-			if (!entityId || typeof listener !== 'function') {
+			if (!entityId || typeof token !== 'string' || typeof listener !== 'function') {
 				return;
 			}
 
-			let listeners = this._listeners[entityId];
-			if (listeners) {
-				if (listeners.indexOf(listener) !== -1) {
-					return;
-				}
-			} else {
-				this._listeners[entityId] = listeners = [];
+			if (!this._listeners.has(token)) {
+				this._listeners.set(token, new Map());
 			}
-
-			listeners.push(listener);
-
+			var listeners = this._listeners.get(token);
+			if (!listeners.has(entityId)) {
+				listeners.set(entityId, new Set());
+			}
+			listeners.get(entityId).add(listener);
 		},
 
 		fetch: function(entityId, token) {
-			const entity = this._store[entityId];
-			if (entity) {
-				if (entity.status === 'fetching') {
-					return;
-				}
-				this._notify(entityId, token, entity.entity);
-			} else {
+			if (!this._store.has(token)) {
+				this._store.set(token, new Map());
+			}
+			const entity = this._store.get(token).get(entityId);
+			if (!entity) {
 				// uh oh... we don't have it... quick, distract them
 				// (todo: fetch the data, then update store and notify once we get the data)
-				this._store[entityId] = { 'status': 'fetching', 'entity': null };
+				this._store.get(token).set(entityId, { 'status': 'fetching', 'entity': null });
+
+				var headers = new Headers();
+				headers.set('Authorization', `Bearer ${token}`);
+				fetch(entityId, {
+					method: 'GET',
+					headers: headers
+				})
+					.then(function(res) {
+						this.update(entityId, token, res.json());
+					}.bind(this));
 			}
+			return this._store.get(token).get(entityId);
 		},
 
 		update: function(entityId, token, entity) {
+			if (!this._store.has(token)) {
+				this._store.set(token, new Map());
+			}
 			return new Promise((resolve) => {
 
-				// fake it
-				this._store[entityId] = { 'status': '', 'entity': entity };
+				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
 				this._notify(entityId, token, entity);
 
 				resolve(entity);
@@ -59,26 +67,34 @@
 
 		removeListener: function(entityId, token, listener) {
 
-			if (!entityId || typeof listener !== 'function') {
+			if (!entityId || typeof token !== 'string' || typeof listener !== 'function' || !this._listeners) {
 				return;
 			}
 
-			const listeners = this._listeners[entityId];
-			const index = listeners.indexOf(listener);
-			if (index === -1) {
-				return;
+			if (!this._listeners.has(token)) {
+				this._listeners.set(token, new Map());
 			}
-
-			// maybe just set null and clean up array in requestIdleCallback
-			listeners.splice(index, 1);
+			var listeners = this._listeners.get(token);
+			if (!listeners.has(entityId)) {
+				listeners.set(entityId, new Set());
+			}
+			listeners.get(entityId).delete(listeners);
 
 		},
 
 		_notify: function(entityId, token, entity) {
-			const listeners = this._listeners[entityId];
+			if (!this._listeners.has(token)) {
+				this._listeners.set(token, new Map());
+			}
+			var listeners = this._listeners.get(token);
+			if (!listeners.has(entityId)) {
+				listeners.set(entityId, new Set());
+			}
+
+			const listenerSet = listeners.get(entityId);
 			if (listeners) {
-				for (let i = 0; i < listeners.length; i++) {
-					listeners[i](entity);
+				for (const listener of listenerSet) {
+					listener(entity);
 				}
 			}
 		}

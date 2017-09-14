@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="course-name.html">
 
@@ -80,11 +81,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<app-drawer-layout fullbleed narrow="{{narrow}}">
 			<!-- Drawer content -->
 			<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+				<paper-input label="Token" value="{{token}}"></paper-input>
 				<app-toolbar>Menu</app-toolbar>
 				<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-					<a name="view1" href="[[rootPath]]view1"><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6609" token></d2l-course-name></a>
-					<a name="view2" href="[[rootPath]]view2"><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6613" token></d2l-course-name></a>
-					<a name="view3" href="[[rootPath]]view3"><d2l-course-name href="https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.organizations.api.proddev.d2l/6614" token></d2l-course-name></a>
+					<a name="view1" href="[[rootPath]]view1"><d2l-course-name href="https://{{tokenBody.tenantid}}.organizations.api.proddev.d2l/6609" token="{{token}}"></d2l-course-name></a>
+					<a name="view2" href="[[rootPath]]view2"><d2l-course-name href="https://{{tokenBody.tenantid}}.organizations.api.proddev.d2l/6613" token="{{token}}"></d2l-course-name></a>
+					<a name="view3" href="[[rootPath]]view3"><d2l-course-name href="https://{{tokenBody.tenantid}}.organizations.api.proddev.d2l/6614" token="{{token}}"></d2l-course-name></a>
 				</iron-selector>
 			</app-drawer>
 
@@ -103,9 +105,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					attr-for-selected="name"
 					fallback-selection="view404"
 					role="main">
-					<my-view1 name="view1" token></my-view1>
-					<my-view2 name="view2" token></my-view2>
-					<my-view3 name="view3" token></my-view3>
+					<my-view1 name="view1" token="{{token}}" tenant-id="{{tokenBody.tenantid}}" user-id="{{tokenBody.sub}}"></my-view1>
+					<my-view2 name="view2"></my-view2>
+					<my-view3 name="view3"></my-view3>
 					<my-view404 name="view404"></my-view404>
 				</iron-pages>
 			</app-header-layout>
@@ -119,6 +121,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
+					token: {
+						type: String,
+						value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjMzODZlNzJiLTQ2NmMtNDE0My1iY2ZiLWNiYjFlODhjYzc2YiJ9.eyJzdWIiOiIxNzUiLCJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0ZGQ5ZTI4ZS0yZjI5LTQ5OTYtODkzNC04NTFlMTIyZTZjYmMiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1MzM0NjU1LCJuYmYiOjE1MDUzMzEwNTV9.foQ1JCeZ3_QAc_ZOBANHavl40TIb4FAQtf0NuFunYBXctNI0UwoFR1iQgVA-6tYvYw1WaIqzKS8ZatNpLNMFcOTfaIRIiIa3KmnxaG9ByehKev6vSM9AygMH6bncB81afSVs6ctgQAsje6Rs13hcrthfFy9fVvO9EAEem_VGjCmufduVLD1gxrbDHcGzSmdVZAM3JXeCFNn_W9dkJG0UzkJpFQzShmoqznPF_wPW_rHXkNpDwL6udagEVdE9yiQ1S0Sqo0sarhFRnehsbL4D4-llwC3-pqp3M5EwkChXe7ALL1QTLcReAGpHze41K0HmprKFBKK3uv7aCX1k6NYBVQ'
+					},
+					tokenBody: {
+						type: Object,
+						computed: '_computeTokenBody(token)'
+					},
 					page: {
 						type: String,
 						reflectToAttribute: true,
@@ -136,6 +146,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				return [
 					'_routePageChanged(routeData.page)'
 				];
+			}
+
+			_computeTokenBody(token) {
+				try {
+					return JSON.parse(atob(token.split('.')[1]));
+				} catch (e) {
+					return null;
+				}
 			}
 
 			_routePageChanged(page) {
