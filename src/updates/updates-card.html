@@ -2,6 +2,9 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
 <dom-module id="d2l-updates-card">
 	<template>
@@ -15,13 +18,26 @@
 			}
 		</style>
 
-		<paper-card>
+		<paper-card style="width: 500px; height: 650px; overflow-y: scroll;">
 			<div class="header">
 				<h2 style="margin:0; padding:10px; font-weight:normal;">New Updates</h2>
+				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color: white>
+					<paper-tab>News</paper-tab>
+					<paper-tab>Grades</paper-tab>
+				</paper-tabs>
 			</div>
-			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
-			</template>
+			<iron-pages selected="{{selected}}">
+				<div>
+					<template is="dom-repeat" items="[[newsUpdates]]">
+						<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item>
+					</template>
+				</div>
+				<div>
+					<template is="dom-repeat" items="[[gradeUpdates]]">
+						<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item>
+					</template>
+				</div>
+			</iron-pages>
 		</paper-card>
 	</template>
 
@@ -29,6 +45,34 @@
 		/* @mixes SirenEntityMixin */
 		class UpdatesCard extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-updates-card'; }
+
+			static get properties() {
+				return {
+					selected: {
+						type: Number,
+						value: 0
+					},
+					newsUpdates: {
+						type: Array,
+						value: []
+					},
+					gradeUpdates: {
+						type: Array,
+						value: []
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.newsUpdates = entity.getSubEntitiesByClass('news');
+				this.gradeUpdates = entity.getSubEntitiesByClass('grade');
+			}
 
 			_getSelfLink(entity) {
 				return entity.getLinkByRel('self').href;
