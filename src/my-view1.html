@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="updates/updates-card.html">
+<link rel="import" href="siren-entity.html">
 
 <dom-module id="my-view1">
 	<template>
@@ -35,13 +36,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
+		<d2l-siren-entity href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+
 		<div class="card">
 			<div class="col1">
 				<div class="circle">1</div>
-				<h1><d2l-course-name href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-course-name></h1>
+				<h1><d2l-course-name href="{{org}}" token="{{token}}"></d2l-course-name></h1>
 				<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
 				<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-				<d2l-user-card href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-user-card>
+				<d2l-user-card href="{{user}}" token="{{token}}"></d2l-user-card>
 				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
 			</div>
 			<div class="col2">
@@ -75,8 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/discussions")'
 					},
 					user: String,
-					userEntity: Object,
-					rootOrg: Object
+					userEntity: Object
 				};
 			}
 

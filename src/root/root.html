@@ -1,17 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="org.html">
-<link rel="import" href="orgs.html">
+<link rel="import" href="../siren-entity.html">
 
 <dom-module id="d2l-root">
 	<template>
-		<style>
-			:host {
-				display: block;
-			}
-		</style>
-		<d2l-org href="{{organizationLink.href}}" token="{{token}}" entity="{{organization}}"></d2l-org>
-		<d2l-orgs href="{{organizationsLink.href}}" token="{{token}}" organizations="{{organizations}}"></d2l-orgs>
+		<d2l-siren-entity href="{{organizationsLink.href}}" token="{{token}}" entity="{{organizationsEntity}}"></d2l-orgs>
 	</template>
 
 	<script>
@@ -21,14 +14,12 @@
 
 			static get properties() {
 				return {
-					organization: {
-						type: Object,
-						notify: true
-					},
 					organizations: {
 						type: Object,
-						notify: true
+						notify: true,
+						computed: '_getSubEntitiesByRel(organizationsEntity, "https://api.brightspace.com/rels/organization")'
 					},
+					organizationsEntity: Object,
 					organizationsLink: {
 						type: Object,
 						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organizations")'
