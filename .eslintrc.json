@@ -9,6 +9,7 @@
     "gtag": false,
     "SirenActionMixin": false,
     "SirenEntityMixin": false,
+    "LocalizationMixin": false,
     "PerformanceObserver": false,
     "ttiPolyfill": false
   },
