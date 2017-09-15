@@ -12,11 +12,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html lang="en">
 	<head>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67145611-6"></script>
+		<script async src="bower_components/tti-polyfill/tti-polyfill.js" id="tti"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag() { window.dataLayer.push(arguments); }
 			gtag('js', new Date());
 			gtag('config', 'UA-67145611-6');
+
+			if ('PerformanceLongTaskTiming' in window) {
+				var g = window.__tti = {e:[]};
+				const observer = new PerformanceObserver((list) => {
+					for (const entry of list.getEntries()) {
+						if (entry.entryType === 'paint') {
+							gtag('event', 'paint', {
+								event_action: entry.name,
+								event_category: 'Performance Metrics',
+								value: Math.round(entry.startTime + entry.duration),
+								non_interaction: true
+							});
+						} else if (entry.entryType === 'longtask') {
+							g.e = g.e.concat(entry);
+							gtag('event', 'longtask', {
+								event_action: 'longtask',
+								event_category: 'Performance Metrics',
+								value: Math.round(entry.startTime + entry.duration),
+								event_label: JSON.stringify(entry.attribution),
+								non_interaction: true
+							});
+						}
+					}
+				});
+				observer.observe({entryTypes: ['paint', 'longtask']});
+			}
 		</script>
 		<meta charset="utf-8">
 		<meta name="generator" content="Polymer Starter Kit">
@@ -81,30 +108,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			*/
 			window.Polymer = {rootPath: '/'};
 
-			if ('PerformanceObserver' in window) {
-				const observer = new PerformanceObserver((list) => {
-					for (const entry of list.getEntries()) {
-						if (entry.entryType === 'paint') {
-							gtag('event', 'paint', {
-								event_action: entry.name,
-								event_category: 'Performance Metrics',
-								value: Math.round(entry.startTime + entry.duration),
-								non_interaction: true
-							});
-						} else if (entry.entryType === 'longtask') {
-							gtag('event', 'longtask', {
-								event_action: 'longtask',
-								event_category: 'Performance Metrics',
-								value: Math.round(entry.startTime + entry.duration),
-								event_label: JSON.stringify(entry.attribution),
-								non_interaction: true
-							});
-						}
-					}
-				});
-				observer.observe({entryTypes: ['paint', 'longtask']});
-			}
-
 			// Load and register pre-caching Service Worker
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', function() {
@@ -138,7 +141,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			Please enable JavaScript to view this website.
 		</noscript>
 		<script>
-			window.performance && performance.mark && performance.mark('index.html');
+			window.performance &&
+				performance.mark &&
+				performance.mark('index.html');
+
+			document.getElementById('tti').addEventListener('load', function() {
+				ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
+					gtag('event', 'TTI', {
+						event_action: 'TTI',
+						event_category: 'Performance Metrics',
+						value: tti,
+						non_interaction: true
+					});
+				});
+			});
 		</script>
 	</body>
 </html>

@@ -9,7 +9,8 @@
     "gtag": false,
     "SirenActionMixin": false,
     "SirenEntityMixin": false,
-    "PerformanceObserver": false
+    "PerformanceObserver": false,
+    "ttiPolyfill": false
   },
   "parserOptions": {
     "ecmaVersion": 6
