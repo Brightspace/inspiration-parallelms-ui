@@ -6,6 +6,7 @@
   "globals": {
     "AuthDownloadMixin": false,
     "EntityMixin": false,
+    "gtag": false,
     "SirenActionMixin": false,
     "SirenEntityMixin": false,
     "PerformanceObserver": false
