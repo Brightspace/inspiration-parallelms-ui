@@ -96,10 +96,6 @@
 				this.entity = entity;
 			}
 
-			_formatDate(date, locale) {
-				return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(date));
-			}
-
 		};
 	};
 </script>

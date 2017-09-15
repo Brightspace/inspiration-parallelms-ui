@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="../siren-action-mixin.html">
+<link rel="import" href="../localization-mixin.html">
 
 <dom-module id="d2l-course-item">
 	<template>
@@ -48,7 +48,8 @@
 
 	<script>
 		/* @mixes SirenEntityMixin */
-		class CourseItem extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes LocalizationMixin */
+		class CourseItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
 
 			static get is() { return 'd2l-course-item'; }
 
