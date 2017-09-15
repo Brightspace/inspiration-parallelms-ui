@@ -11,6 +11,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!doctype html>
 <html lang="en">
 	<head>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67145611-6"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { window.dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'UA-67145611-6');
+		</script>
 		<meta charset="utf-8">
 		<meta name="generator" content="Polymer Starter Kit">
 		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
@@ -78,9 +85,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				const observer = new PerformanceObserver((list) => {
 					for (const entry of list.getEntries()) {
 						if (entry.entryType === 'paint') {
-							// TODO: log
+							gtag('event', 'paint', {
+								event_action: entry.name,
+								event_category: 'Performance Metrics',
+								value: Math.round(entry.startTime + entry.duration),
+								non_interaction: true
+							});
 						} else if (entry.entryType === 'longtask') {
-							// TODO: log
+							gtag('event', 'longtask', {
+								event_action: 'longtask',
+								event_category: 'Performance Metrics',
+								value: Math.round(entry.startTime + entry.duration),
+								event_label: JSON.stringify(entry.attribution),
+								non_interaction: true
+							});
 						}
 					}
 				});
