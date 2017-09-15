@@ -51,7 +51,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</div>
 			<div class="col2">
 				<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}"></d2l-discussions-forum-list><br>
-				<d2l-content-module-list href="{{content.href}}" token="{{token}}"></d2l-content-module-list><br>
+				<template is="dom-if" if="{{content}}">
+					<d2l-content-module-list href="{{content.href}}" token="{{token}}"></d2l-content-module-list><br>
+				</template>
 				<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}"></d2l-updates-card>
 				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
 			</div>
