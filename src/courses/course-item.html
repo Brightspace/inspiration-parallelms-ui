@@ -1,8 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../localization-mixin.html">
+<link rel="import" href="../content/content-module-list.html">
 
 <dom-module id="d2l-course-item">
 	<template>
@@ -41,7 +43,12 @@
 				</div>
 				<div class="date">Start Date: [[startDate]]</div>
 				<div class="date">End Date: [[endDate]]</div>
-			</div>
+				<div>
+					<paper-button on-click="toggle">Show Content</paper-button>
+				</div>
+				<iron-collapse id="collapse">
+					<d2l-content-module-list href="{{content.href}}" token="{{token}}"></d2l-content-module-list>
+				</iron-collapse>
 			</paper-card>
 
 	</template>
@@ -66,6 +73,10 @@
 					endDate: {
 						type: String,
 						value: ''
+					},
+					content: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/sequence")'
 					}
 				};
 			}
@@ -85,6 +96,10 @@
 				if (entity.properties.endDate) {
 					this.endDate = this._formatDate(entity.properties.endDate, this.locale);
 				}
+			}
+
+			toggle() {
+				this.$.collapse.toggle();
 			}
 		}
 
