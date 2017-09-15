@@ -18353,6 +18353,91 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 			'class': [
 				'feed-item',
 				'context',
+				'grade'
+			],
+			'rel': [
+				'item',
+				'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+			],
+			'properties': {
+				'context': 'cgalvin_course',
+				'title': 'Grade for sadf',
+				'date': '2017-09-12T14:53:40.579Z',
+				'value': '50 %',
+				'comments': ''
+			},
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90'
+				},
+				{
+					'rel': [
+						'profile'
+					],
+					'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+				},
+				{
+					'rel': [
+						'lms-source',
+						'source',
+						'source-mobile'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/m/le/grades/123070/item/60/details'
+				},
+				{
+					'rel': [
+						'source-desktop'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/lms/grades/my_grades/main.d2l?ou=123070'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/organization'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.organizations.api.dev.brightspace.com/123070',
+					'type': 'application/vnd.siren+json'
+				}
+			],
+			'actions': [
+				{
+					'name': 'acknowledge',
+					'class': [
+						'acknowledge'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'acknowledge'
+						}
+					]
+				},
+				{
+					'name': 'dismiss',
+					'class': [
+						'dismiss'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'dismiss'
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
+				'feed-item',
+				'context',
 				'news'
 			],
 			'rel': [
@@ -18832,3 +18917,420 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		}
 	]
 });
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed?filter=feed&count=20&page=1', token, {
+	'class': [
+		'feed',
+		'collection',
+		'paged'
+	],
+	'properties': {
+		'total': 2,
+		'pagingInfo': {
+			'pageSize': 20,
+			'currentPage': 1,
+			'totalPages': 1
+		}
+	},
+	'entities': [
+		{
+			'class': [
+				'feed-item',
+				'context',
+				'news'
+			],
+			'rel': [
+				'item',
+				'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+			],
+			'properties': {
+				'context': 'cgalvin_course',
+				'title': 'announce',
+				'date': '2017-09-12T18:52:13.466Z',
+				'body': '<p>asdf</p>'
+			},
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf'
+				},
+				{
+					'rel': [
+						'profile'
+					],
+					'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+				},
+				{
+					'rel': [
+						'lms-source',
+						'source',
+						'source-mobile'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/m/le/news/123070/details/73'
+				},
+				{
+					'rel': [
+						'source-desktop'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/lms/news/main.d2l?ou=123070'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/organization'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.organizations.api.dev.brightspace.com/123070',
+					'type': 'application/vnd.siren+json'
+				}
+			],
+			'actions': [
+				{
+					'name': 'acknowledge',
+					'class': [
+						'acknowledge'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'acknowledge'
+						}
+					]
+				},
+				{
+					'name': 'dismiss',
+					'class': [
+						'dismiss'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'dismiss'
+						}
+					]
+				}
+			]
+		},
+		{
+			'class': [
+				'feed-item',
+				'context',
+				'grade'
+			],
+			'rel': [
+				'item',
+				'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+			],
+			'properties': {
+				'context': 'cgalvin_course',
+				'title': 'Grade for sadf',
+				'date': '2017-09-12T14:53:40.579Z',
+				'value': '50 %',
+				'comments': ''
+			},
+			'links': [
+				{
+					'rel': [
+						'self'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90'
+				},
+				{
+					'rel': [
+						'profile'
+					],
+					'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+				},
+				{
+					'rel': [
+						'lms-source',
+						'source',
+						'source-mobile'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/m/le/grades/123070/item/60/details'
+				},
+				{
+					'rel': [
+						'source-desktop'
+					],
+					'href': 'https://uxdtest.devlms.brightspace.com/d2l/lms/grades/my_grades/main.d2l?ou=123070'
+				},
+				{
+					'rel': [
+						'https://api.brightspace.com/rels/organization'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.organizations.api.dev.brightspace.com/123070',
+					'type': 'application/vnd.siren+json'
+				}
+			],
+			'actions': [
+				{
+					'name': 'acknowledge',
+					'class': [
+						'acknowledge'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'acknowledge'
+						}
+					]
+				},
+				{
+					'name': 'dismiss',
+					'class': [
+						'dismiss'
+					],
+					'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+					'method': 'POST',
+					'fields': [
+						{
+							'name': 'action',
+							'type': 'text',
+							'value': 'dismiss'
+						}
+					]
+				}
+			]
+		}
+	],
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed?filter=feed&count=20&page=1'
+		},
+		{
+			'rel': [
+				'profile'
+			],
+			'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed'
+		}
+	],
+	'actions': [
+		{
+			'name': 'page',
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed',
+			'class': [
+				'paging'
+			],
+			'method': 'GET',
+			'fields': [
+				{
+					'name': 'count',
+					'type': 'number',
+					'value': 20
+				},
+				{
+					'name': 'page',
+					'type': 'number',
+					'value': 1
+				},
+				{
+					'name': 'filter',
+					'type': 'text',
+					'value': 'feed'
+				}
+			]
+		},
+		{
+			'name': 'acknowledge-all',
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed',
+			'class': [
+				'acknowledge-all'
+			],
+			'method': 'PATCH',
+			'fields': [
+				{
+					'name': 'action',
+					'type': 'text',
+					'value': 'acknowledge-all'
+				},
+				{
+					'name': 'beforeDate',
+					'type': 'text',
+					'value': '2017-09-13T18:56:09.312Z'
+				}
+			]
+		}
+	]
+});
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf', token, {
+	'class': [
+		'feed-item',
+		'context',
+		'news'
+	],
+	'rel': [
+		'item',
+		'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+	],
+	'properties': {
+		'context': 'cgalvin_course',
+		'title': 'announce',
+		'date': '2017-09-12T18:52:13.466Z',
+		'body': '<p>asdf</p>'
+	},
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf'
+		},
+		{
+			'rel': [
+				'profile'
+			],
+			'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+		},
+		{
+			'rel': [
+				'lms-source',
+				'source',
+				'source-mobile'
+			],
+			'href': 'https://uxdtest.devlms.brightspace.com/d2l/m/le/news/123070/details/73'
+		},
+		{
+			'rel': [
+				'source-desktop'
+			],
+			'href': 'https://uxdtest.devlms.brightspace.com/d2l/lms/news/main.d2l?ou=123070'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/organization'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.organizations.api.dev.brightspace.com/123070',
+			'type': 'application/vnd.siren+json'
+		}
+	],
+	'actions': [
+		{
+			'name': 'acknowledge',
+			'class': [
+				'acknowledge'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf',
+			'method': 'POST',
+			'fields': [
+				{
+					'name': 'action',
+					'type': 'text',
+					'value': 'acknowledge'
+				}
+			]
+		},
+		{
+			'name': 'dismiss',
+			'class': [
+				'dismiss'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe25aaf',
+			'method': 'POST',
+			'fields': [
+				{
+					'name': 'action',
+					'type': 'text',
+					'value': 'dismiss'
+				}
+			]
+		}
+	]
+});
+window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90', token, {
+	'class': [
+		'feed-item',
+		'context',
+		'grade'
+	],
+	'rel': [
+		'item',
+		'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+	],
+	'properties': {
+		'context': 'cgalvin_course',
+		'title': 'Grade for sadf',
+		'date': '2017-09-12T14:53:40.579Z',
+		'value': '50 %',
+		'comments': ''
+	},
+	'links': [
+		{
+			'rel': [
+				'self'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90'
+		},
+		{
+			'rel': [
+				'profile'
+			],
+			'href': 'http://dev-docs.api.brightspace.com/updates/profiles#feed-item'
+		},
+		{
+			'rel': [
+				'lms-source',
+				'source',
+				'source-mobile'
+			],
+			'href': 'https://uxdtest.devlms.brightspace.com/d2l/m/le/grades/123070/item/60/details'
+		},
+		{
+			'rel': [
+				'source-desktop'
+			],
+			'href': 'https://uxdtest.devlms.brightspace.com/d2l/lms/grades/my_grades/main.d2l?ou=123070'
+		},
+		{
+			'rel': [
+				'https://api.brightspace.com/rels/organization'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.organizations.api.dev.brightspace.com/123070',
+			'type': 'application/vnd.siren+json'
+		}
+	],
+	'actions': [
+		{
+			'name': 'acknowledge',
+			'class': [
+				'acknowledge'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+			'method': 'POST',
+			'fields': [
+				{
+					'name': 'action',
+					'type': 'text',
+					'value': 'acknowledge'
+				}
+			]
+		},
+		{
+			'name': 'dismiss',
+			'class': [
+				'dismiss'
+			],
+			'href': 'https://bd80b9ab-5a62-4362-a347-78c55bac70a2.updates.api.dev.brightspace.com/feed/e8bd9cdf8a7069f1bed6592d4fe24f90',
+			'method': 'POST',
+			'fields': [
+				{
+					'name': 'action',
+					'type': 'text',
+					'value': 'dismiss'
+				}
+			]
+		}
+	]
+});
+

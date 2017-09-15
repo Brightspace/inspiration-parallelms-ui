@@ -6,9 +6,12 @@
   "globals": {
     "AuthDownloadMixin": false,
     "EntityMixin": false,
+    "gtag": false,
     "SirenActionMixin": false,
     "SirenEntityMixin": false,
-    "PerformanceObserver": false
+    "LocalizationMixin": false,
+    "PerformanceObserver": false,
+    "ttiPolyfill": false
   },
   "parserOptions": {
     "ecmaVersion": 6

@@ -1,6 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-action-mixin.html">
 <link rel="import" href="discussions-topic-post-list.html">
 
 <dom-module id="d2l-discussions-topic">
@@ -12,19 +15,31 @@
 			h4 {
 				margin: 0;
 			}
+			[hidden] {
+				display: none !important;
+			}
 		</style>
 		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0;">
 			<div style="background: lightgrey; color: white; padding: 10px;">
 				<h4>[[topic.properties.name]]</h4>
 			</div>
 			<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
+			<div hidden={{!canCreateThread}} style="padding:0 10px 0 16px; background-color: lightgrey">
+				<span style="font-size: 12px;">Create a thread</span>
+				<div style="display:flex;">
+					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Subject" value="{{subject}}"></paper-input>
+					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Message" value="{{message}}"></paper-input>
+					<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
+				</div>
+			</div>
 		</paper-card>
 		<slot></slot>
 	</template>
 
 	<script>
 		/* @mixes SirenEntityMixin */
-		class DiscussionsTopic extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes SirenActionMixin */
+		class DiscussionsTopic extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
 
 			static get is() { return 'd2l-discussions-topic'; }
 
@@ -42,7 +57,13 @@
 						value: 20
 					},
 					token: String,
-					href: String
+					href: String,
+					subject: String,
+					message: String,
+					canCreateThread: {
+						type: Boolean,
+						value: false
+					}
 				};
 			}
 
@@ -54,7 +75,23 @@
 
 			_changed(entity) {
 				this.topic = entity;
-				this.getThreadsHref = entity.getActionByName('get-threads').href;
+				this.getThreadsHref = entity.getActionByName('get-threads') &&  entity.getActionByName('get-threads').href;
+				this.canCreateThread = this.topic.hasActionByName('create-thread');
+			}
+
+			_sendReply() {
+				var self = this;
+				var action = this.topic.getActionByName('create-thread');
+				if (action) {
+					var fields = this.getSirenFields(action);
+					fields.has('message') && fields.set('subject', self.subject);
+					fields.has('message') && fields.set('message', self.message);
+					fields.has('isHtml') && fields.set('isHtml', true);
+					this.performSirenAction(action, fields).then(function() {
+						self.subject = '';
+						self.message = '';
+					});
+				}
 			}
 		}
 

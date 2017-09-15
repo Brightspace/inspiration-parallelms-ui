@@ -20,7 +20,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="course-name.html">
 <link rel="import" href="root/root.html">
@@ -82,14 +81,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<app-drawer-layout fullbleed narrow="{{narrow}}">
 			<!-- Drawer content -->
 			<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-				<paper-input label="Token" value="{{token}}"></paper-input>
-				<paper-input label="Entrypoint" value="{{entrypoint}}"></paper-input>
 				<app-toolbar>Menu</app-toolbar>
-				<d2l-root href="{{entrypoint}}" token="{{token}}" organizations="{{organizations}}" organization-link="{{organizationLink}}" whoami-link="{{whoamiLink}}"></d2l-root>
 				<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-					<a name="view1" href="[[rootPath]]view1"><d2l-course-name href="[[organizationLink.href]]" token="[[token]]"></d2l-course-name></a>
-					<a name="view2" href="[[rootPath]]view2"><d2l-course-name href="[[organizations.0.href]]" token="[[token]]"></d2l-course-name></a>
-					<a name="view3" href="[[rootPath]]view3"><d2l-course-name href="[[organizations.1.href]]" token="[[token]]"></d2l-course-name></a>
+					<a name="view1" href="[[rootPath]]view1">Elements Demo Page</a>
+					<a name="view2" href="[[rootPath]]view2">View 2</a>
+					<a name="view3" href="[[rootPath]]view3">View 3</a>
 				</iron-selector>
 			</app-drawer>
 
@@ -108,7 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					attr-for-selected="name"
 					fallback-selection="view404"
 					role="main">
-					<my-view1 name="view1" org="[[organizationLink.href]]" user="[[whoamiLink.href]]" token="[[token]]"></my-view1>
+					<my-view1 name="view1"></my-view1>
 					<my-view2 name="view2"></my-view2>
 					<my-view3 name="view3"></my-view3>
 					<my-view404 name="view404"></my-view404>
@@ -126,17 +122,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
-					token: {
-						type: String,
-						value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjkzNzg1NTk0LTZlNTctNGJmNy04MWY1LWEzNTdmZjAyYjA0OCJ9.eyJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0NDI3MDNlNS00NDRjLTQ3ZmItYWNmYS01Y2I2MjM5NjgxZjYiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1NDA3MjU3LCJuYmYiOjE1MDU0MDM2NTd9.qmwCMpDwUoZeI-gffPcjieWcLl0j7wTOsXMY08SIcvFvVS4bULo6BU8mqUZsJeIHJqQCgP3ADgjyS-yrJG_Ct8ss9lwnP6GQ8X0B1yF6QVDKmbjrt8j2hEYFdaWw9VF6dKQfw_H535V2uNV-a02brhSo0Hqx9_kuIIm7Bayg6YsCDtWC7LVVlgwa_XcKkLETCOS9La_WeA_3H9It2nM1IxXdxTSaqCEBEaLQiIj2iwi3xO6bmp2ez0-w3-c-wLjgH3kJNsISpcABibvYVFL_53upfzFyC8zAx3A9h5iYY71-SYX1HATWEx-KWRblv2hXDvv59p9LpAxfO4VGfycDqw'
-					},
-					entrypoint: {
-						type: String,
-						value: 'https://api.proddev.d2l'
-					},
-					organizations: Object,
-					organizationLink: Object,
-					whoamiLink: Object,
 					page: {
 						type: String,
 						reflectToAttribute: true,

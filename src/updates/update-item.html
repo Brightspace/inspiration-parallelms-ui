@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
+<link rel="import" href="../localization-mixin.html">
 
 <dom-module id="d2l-update-item">
 	<template>
@@ -26,9 +27,10 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		/* @mixes SirenActionMixin */
-		class UpdateItem extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+		/* @mixes SirenEntityMixin
+		   @mixes SirenActionMixin
+		   @mixes LocalizationMixin */
+		class UpdateItem extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(Polymer.Element))) {
 
 			static get is() { return 'd2l-update-item'; }
 
@@ -56,8 +58,7 @@
 				this.title = entity.properties.title;
 				this.body = entity.properties.body;
 
-				var uglyAssDate = entity.properties.date;
-				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+				this.date = this._formatDate(entity.properties.date, this.locale);
 			}
 
 			_onClickAction(e) {

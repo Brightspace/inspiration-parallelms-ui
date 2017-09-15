@@ -1,0 +1,93 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../localization-mixin.html">
+
+<dom-module id="d2l-course-item">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--adjusting-background: whitesmoke;
+			}
+			:host([is-active]) {
+				--adjusting-background: white;
+			}
+			paper-card {
+				width: calc(100% - 20px);
+				margin: 10px;
+				padding: 0px;
+				background-color: var(--adjusting-background);
+			}
+			div {
+				margin: 10px;
+			}
+			.header {
+				background-color: lightgray;
+				color: white;
+				padding: 10px;
+			}
+			h4 {
+				margin: 0px;
+			}
+			.date {
+				padding-left: 10px;
+			}
+		</style>
+			<paper-card is-active>
+				<div class="header">
+					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
+				</div>
+				<div class="date">Start Date: [[startDate]]</div>
+				<div class="date">End Date: [[endDate]]</div>
+			</div>
+			</paper-card>
+
+	</template>
+
+	<script>
+		/* @mixes LocalizationMixin
+		   @mixes SirenEntityMixin */
+		class CourseItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get is() { return 'd2l-course-item'; }
+
+			static get properties() {
+				return {
+					isActive: {
+						type: Boolean,
+						reflectToAttribute: true
+					},
+					startDate: {
+						type: String,
+						value: ''
+					},
+					endDate: {
+						type: String,
+						value: ''
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.isActive = entity.properties.isActive;
+
+				if (entity.properties.startDate) {
+					this.startDate = this._formatDate(entity.properties.startDate, this.locale);
+				}
+				if (entity.properties.endDate) {
+					this.endDate = this._formatDate(entity.properties.endDate, this.locale);
+				}
+			}
+		}
+
+		window.customElements.define(CourseItem.is, CourseItem);
+	</script>
+</dom-module>
