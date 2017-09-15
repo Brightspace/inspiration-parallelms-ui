@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="content-topic-list.html">
+
+<dom-module id="d2l-content-module-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0;">
+			<div style="background: lightgrey; color: white; padding: 10px;">
+				<span>[[module.properties.title]]<span>
+			</div>
+			<div role="listbox">
+				<template is="dom-repeat" items="[[topics]]">
+					<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
+						<div style="font-weight:bold; padding: 10px 0px 0px 10px">[[item.properties.title]]</div>
+						<div style="background-color:lightgray;">
+							<template is="dom-repeat" items="[[item.entities]]">
+								<!-- sketchy array access pattern below -->
+								<a href="[[item.links.0.href]]">[[item.properties.title]]</a>
+							</template>
+						</div>
+					</paper-card>
+				</template>
+			</div>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class ContentModuleCard extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-content-module-card'; }
+
+			static get properties() {
+				return {
+					type: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.module = entity;
+				this.topics = entity.entities;
+			}
+		}
+
+		window.customElements.define(ContentModuleCard.is, ContentModuleCard);
+	</script>
+</dom-module>

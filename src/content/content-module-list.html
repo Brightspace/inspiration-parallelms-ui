@@ -1,0 +1,61 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="content-module-card.html">
+
+<dom-module id="d2l-content-module-list">
+	<template>
+		<style>
+			:host {
+				display: block;
+				font-family: 'Source Sans Pro', sans-serif;
+			}
+			.header {
+				background: #37A0CE;
+				color: white;
+			}
+		</style>
+
+		<paper-card style="width: 500px; height: 650px; overflow-y: scroll;">
+			<div class="header">
+				<h2 style="margin:0; padding:10px; font-weight:normal;">Content</h2>
+			</div>
+			<template is="dom-repeat" items="[[items]]">
+				<d2l-content-module-card href="[[getHref(item)]]" token="{{token}}"></d2l-content-module-card>
+			</template>
+		</paper-card>
+	</template>
+
+	<script>
+		class ContentModuleList extends EntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-content-module-list'; }
+
+			static get properties() {
+				return {
+					title: String,
+					token: String,
+					href: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.items = entity.entities;
+				console.log(this.items);
+			}
+
+			getHref(item) {
+				return item.links[0].href;
+			}
+
+		}
+
+		window.customElements.define(ContentModuleList.is, ContentModuleList);
+	</script>
+</dom-module>

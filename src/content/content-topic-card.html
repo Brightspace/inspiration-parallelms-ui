@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-content-topic-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
+			<div style="font-weight:bold; padding: 10px 0px 0px 10px">[[entity.properties.title]]</div>
+			<div style="background-color:lightgray;">
+				<template is="dom-repeat" items="{{entity.actions}}">
+					<paper-button on-tap="_onClickAction" style="margin: 0px;">[[item.name]]</paper-button>
+				</template>
+			</div>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class ContentTopicCard extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-content-topic-card'; }
+
+			static get properties() {
+				return {
+					type: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+			}
+
+		}
+
+		window.customElements.define(ContentTopicCard.is, ContentTopicCard);
+	</script>
+</dom-module>

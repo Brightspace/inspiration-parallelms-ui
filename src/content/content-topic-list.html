@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="content-topic-card.html">
+
+<dom-module id="d2l-content-topic-list">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+
+		<div role="listbox">
+			<template is="dom-repeat" items="[[items]]">
+				<d2l-content-topic-card href="[[getHref(item)]]" token="{{token}}"></d2l-content-topic-card>
+			</template>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class ContentTopicList extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-content-topic-list'; }
+
+			static get properties() {
+				return {
+					posts: {
+						type: Array,
+						value: []
+					},
+					token: String,
+					href: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.items = entity.entities;
+			}
+
+			getHref(item) {
+				return item.links[0].href;
+			}
+
+		}
+
+		window.customElements.define(ContentTopicList.is, ContentTopicList);
+	</script>
+</dom-module>
