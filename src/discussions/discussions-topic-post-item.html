@@ -96,7 +96,8 @@
 
 			_changed(entity) {
 				this.post = entity;
-				var uglyAssDate = this.post.entities[0].properties.date;
+				var dateEntity = this.post.getSubEntityByClass('created');
+				var uglyAssDate = dateEntity.properties.date;
 				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 				this.repliesHref = this.post.getActionByName('get-all-posts').href;
 				this.authorHref = entity.getLinkByRel('author').href;
