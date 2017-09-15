@@ -1,0 +1,174 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>my-view1</title>
+
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<script src="../bower_components/web-component-tester/browser.js"></script>
+
+	<!-- Import the element to test -->
+	<link rel="import" href="test-components/test-siren-action.html">
+	<link rel="import" href="../src/siren-parser.html">
+</head>
+
+<body>
+	<test-fixture id="SirenActionMixin">
+		<template>
+			<test-siren-action></test-siren-action>
+		</template>
+	</test-fixture>
+
+	<script>
+		setup(function() {
+			this.origFetch = window.fetch;
+			window.fetch = sinon.stub().returns(Promise.resolve());
+		});
+
+		teardown(function() {
+			window.fetch = this.origFetch;
+		});
+
+		function createSirenAction(action) {
+			const entity = {
+				actions: [action]
+			};
+			return window.D2L.Hypermedia.Siren.Parse(entity).actions[0];
+		}
+		suite('siren-action-mixin tests', function() {
+			[{
+				name: 'empty-get',
+				action: {
+					name: 'stuff',
+					href: '/do-stuff',
+					method: 'GET',
+					fields: []
+				},
+				expectedHref: '/do-stuff',
+				expectedFields: new URLSearchParams()
+			}, {
+				name: 'empty-post',
+				action: {
+					name: 'stuff',
+					type: 'multipart/form-data',
+					href: '/do-stuff',
+					method: 'POST',
+					fields: []
+				},
+				expectedHref: '/do-stuff',
+				expectedFields: new FormData()
+			}, {
+				name: 'empty-post-urlencoded',
+				type: 'application/x-www-form-urlencoded',
+				action: {
+					name: 'stuff',
+					href: '/do-stuff',
+					method: 'POST',
+					fields: []
+				},
+				expectedHref: '/do-stuff',
+				expectedFields: new URLSearchParams()
+			}, {
+				name: 'url-params',
+				action: {
+					name: 'stuff',
+					href: '/do-stuff?foo=bar',
+					method: 'GET',
+					fields: []
+				},
+				expectedHref: '/do-stuff?foo=bar',
+				expectedFields: new URLSearchParams('foo=bar')
+			}, {
+				name: 'url-params-with-fields',
+				action: {
+					name: 'stuff',
+					href: '/do-stuff?foo=bar',
+					method: 'GET',
+					fields: [{
+						name: 'hidden',
+						value: 'true'
+					}]
+				},
+				expectedHref: '/do-stuff?foo=bar&hidden=true',
+				expectedFields: new URLSearchParams('foo=bar&hidden=true')
+			}, {
+				name: 'post-url-params',
+				action: {
+					name: 'stuff',
+					type: 'multipart/form-data',
+					href: '/do-stuff?foo=bar',
+					method: 'POST',
+					fields: []
+				},
+				expectedHref: '/do-stuff?foo=bar',
+				expectedFields: new FormData()
+			}, {
+				name: 'post-url-params-with-fields',
+				action: {
+					name: 'stuff',
+					type: 'multipart/form-data',
+					href: '/do-stuff?foo=bar',
+					method: 'POST',
+					fields: [{
+						name: 'hidden',
+						value: 'true'
+					}]
+				},
+				expectedHref: '/do-stuff?foo=bar',
+				expectedFields: function() {
+					const form = new FormData();
+					form.set('hidden', 'true');
+					return form;
+				}()
+			}]
+			.forEach(function({
+				name,
+				action,
+				expectedFields,
+				expectedHref
+			}) {
+				suite(name, function() {
+					test('getSirenFields', function() {
+						const sirenActionMixin = fixture('SirenActionMixin');
+						const actionEntity = createSirenAction(action);
+
+						const actualFields = sirenActionMixin.getSirenFields(actionEntity);
+						expect(actualFields.constructor).to.equal(expectedFields.constructor);
+						expect(Array.from(actualFields.entries())).to.deep.equal(Array.from(expectedFields.entries()));
+					});
+
+					test('performSirenAction', function() {
+						const sirenActionMixin = fixture('SirenActionMixin');
+						sirenActionMixin.token = 'foozleberries';
+						const actionEntity = createSirenAction(action);
+						const expectedBody = action.method === 'GET' || action.method === 'HEAD' ? undefined : expectedFields;
+
+						sirenActionMixin.performSirenAction(actionEntity, expectedFields);
+						expect(window.fetch).to.have.been.calledWithMatch(expectedHref, {
+							method: action.method,
+							body: expectedBody,
+							headers: sinon.match(function(value) {
+								return value.get('Authorization') === 'Bearer foozleberries';
+							}, 'headers')
+						});
+					});
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

@@ -15,7 +15,7 @@
 			}
 
 			getSirenFields(action) {
-				var url = new URL(action.href);
+				var url = new URL(action.href, window.location.origin);
 				var fields;
 				if (action.method === 'GET' || action.method === 'HEAD') {
 					fields = url.searchParams;
@@ -38,12 +38,12 @@
 				var headers = new Headers();
 				this.token && headers.append('Authorization', `Bearer ${this.token}`);
 
-				var url = new URL(action.href);
+				var url = new URL(action.href, window.location.origin);
 				var body;
 
 				fields = fields || this.getSirenFields(action);
 				if (action.method === 'GET' || action.method === 'HEAD') {
-					url.searchParams = fields;
+					url = new URL(url.pathname + '?' + fields.toString(), url.origin);
 				} else {
 					body = fields;
 				}
