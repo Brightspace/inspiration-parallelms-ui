@@ -24,10 +24,13 @@
 				<h4>[[topic.properties.name]]</h4>
 			</div>
 			<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
-			<div hidden={{!canCreateThread}} style="display:flex; padding:0 10px 0 16px;">
-				<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Subject" value="{{subject}}"></paper-input>
-				<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Message" value="{{message}}"></paper-input>
-				<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
+			<div hidden={{!canCreateThread}} style="padding:0 10px 0 16px; background-color: lightgrey">
+				<span style="font-size: 12px;">Create a thread</span>
+				<div style="display:flex;">
+					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Subject" value="{{subject}}"></paper-input>
+					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Message" value="{{message}}"></paper-input>
+					<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
+				</div>
 			</div>
 		</paper-card>
 		<slot></slot>
