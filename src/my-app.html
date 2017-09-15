@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<paper-input label="Token" value="{{token}}"></paper-input>
 				<paper-input label="Entrypoint" value="{{entrypoint}}"></paper-input>
 				<app-toolbar>Menu</app-toolbar>
-				<d2l-root href="{{entrypoint}}" token="{{token}}" organizations="{{organizations}}" organization="{{organization}}" organization-link="{{organizationLink}}" whoami-link="{{whoamiLink}}"></d2l-root>
+				<d2l-root href="{{entrypoint}}" token="{{token}}" organizations="{{organizations}}" organization-link="{{organizationLink}}" whoami-link="{{whoamiLink}}"></d2l-root>
 				<iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
 					<a name="view1" href="[[rootPath]]view1"><d2l-course-name href="[[organizationLink.href]]" token="[[token]]"></d2l-course-name></a>
 					<a name="view2" href="[[rootPath]]view2"><d2l-course-name href="[[organizations.0.href]]" token="[[token]]"></d2l-course-name></a>
@@ -108,7 +108,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					attr-for-selected="name"
 					fallback-selection="view404"
 					role="main">
-					<my-view1 name="view1" org="[[organizationLink.href]]" user="[[whoamiLink.href]]" root-org="[[organization]]" token="[[token]]"></my-view1>
+					<my-view1 name="view1" org="[[organizationLink.href]]" user="[[whoamiLink.href]]" token="[[token]]"></my-view1>
 					<my-view2 name="view2"></my-view2>
 					<my-view3 name="view3"></my-view3>
 					<my-view404 name="view404"></my-view404>
@@ -119,6 +119,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</template>
 
 	<script>
+		window.performance && performance.mark && performance.mark('parallelms-app.beforeRegister');
+
 		class MyApp extends Polymer.Element {
 			static get is() { return 'my-app'; }
 
@@ -133,7 +135,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						value: 'https://api.proddev.d2l'
 					},
 					organizations: Object,
-					organization: Object,
 					organizationLink: Object,
 					whoamiLink: Object,
 					page: {
@@ -153,6 +154,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				return [
 					'_routePageChanged(routeData.page)'
 				];
+			}
+
+			constructor() {
+				super();
+				window.performance && performance.mark && performance.mark('parallelms-app.created');
 			}
 
 			_routePageChanged(page) {

@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-topic-post-item.html">
 
 <dom-module id="d2l-discussions-topic-post-list">
@@ -18,7 +18,8 @@
 	</template>
 
 	<script>
-		class DiscussionsTopicPostList extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostList extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-discussions-topic-post-list'; }
 
@@ -44,7 +45,7 @@
 			}
 
 			getHref(item) {
-				return item.links[0].href;
+				return item.getLinkByRel('self').href;
 			}
 
 		}

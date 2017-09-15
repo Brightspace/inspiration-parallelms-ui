@@ -1,7 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
-<link rel="import" href="../entity-mixin.html">
+<link rel="import" href="../user/user-name.html">
+<link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-discussions-topic-post-reply-item">
 	<template>
@@ -14,14 +15,18 @@
 			<div style="display:flex; align-items: center; width: 100%;">
 				<span style="padding-right: 5px;" style="flex: 1;">↳</span>
 				<div style="flex: 2;">[[item.properties.message]]</div>
-				<div style="display: inline-block;">[[date]]</div>
+				<div style="display: inline-block; padding-left: 10px;">
+					<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name><br>
+					[[date]]
+				</div>
 			</div>
 		</paper-item>
 		<slot></slot>
 	</template>
 
 	<script>
-		class DiscussionsTopicPostReplyItem extends EntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostReplyItem extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-discussions-topic-post-reply-item'; }
 
@@ -44,8 +49,22 @@
 					date: {
 						type: String,
 						value: ''
+					},
+					authorHref: {
+						type: String,
+						value: ''
 					}
 				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(item)'
+				];
+			}
+
+			_changed(item) {
+				this.authorHref = item.getLinkByRel('author').href;
 			}
 
 			connectedCallback() {
