@@ -5,13 +5,18 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
+<link rel="import" href="../shared-styles.html">
 <link rel="import" href="discussions-topic-post-list.html">
 
 <dom-module id="d2l-discussions-topic">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
+				font-size: 12px;
+			}
+			span {
+				font-size: 12px;
 			}
 			h4 {
 				margin: 0;
@@ -19,18 +24,30 @@
 			[hidden] {
 				display: none !important;
 			}
+			.topic {
+				width: calc(100% - 20px); margin: 10px; padding: 0;
+			}
+			.topic-header {
+				background: lightgrey; color: white; padding: 10px;
+			}
+			.create-threads-input-container {
+				padding:5px 10px 0 16px; background-color: lightgrey
+			}
+			.create-thread-input {
+				width: 100%;
+			}
 		</style>
-		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0;">
-			<paper-item style="background: lightgrey; color: white; padding: 10px;" on-tap="_toggleShowPosts">
+		<paper-card class="topic">
+			<paper-item class="topic-header" on-tap="_toggleShowPosts">
 				<h4>[[topic.properties.name]]</h4>
 			</paper-item>
 			<div hidden="{{!showPosts}}">
 				<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
-				<div hidden={{!canCreateThread}} style="padding:0 10px 0 16px; background-color: lightgrey">
-					<span style="font-size: 12px;">Create a thread</span>
-					<div style="display:flex;">
-						<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Subject" value="{{subject}}"></paper-input>
-						<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Message" value="{{message}}"></paper-input>
+				<div hidden={{!canCreateThread}} class="create-threads-input-container">
+					<span>Create a thread</span>
+					<div class="flex-parent">
+						<paper-input class="flex-1 create-thread-input" label="Subject" value="{{subject}}"></paper-input>
+						<paper-input class="flex-1 create-thread-input" label="Message" value="{{message}}"></paper-input>
 						<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
 					</div>
 				</div>

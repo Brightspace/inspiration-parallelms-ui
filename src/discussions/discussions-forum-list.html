@@ -13,6 +13,11 @@
 				display: block;
 				font-family: 'Source Sans Pro', sans-serif;
 			}
+			.medium-card-size {
+				width: 800px;
+				height: 650px;
+				overflow-y: scroll;
+			}
 			.header {
 				background: #37A0CE;
 				color: white;
@@ -20,10 +25,15 @@
 			paper-tabs{
 				--paper-tabs-selection-bar-color: white;
 			}
+			.card-header {
+				margin:0;
+				padding:10px;
+				font-weight:normal;
+			}
 		</style>
-		<paper-card style="width: 500px; height: 650px; overflow-y: scroll;">
+		<paper-card class="medium-card-size">
 			<div class="header">
-				<h2 style="margin:0; padding:10px; font-weight:normal;">Discussions</h2>
+				<h2 class="card-header">Discussions</h2>
 				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
 					<template is="dom-repeat" items="[[forums]]">
 						<paper-tab>[[item.properties.name]]</paper-tab>

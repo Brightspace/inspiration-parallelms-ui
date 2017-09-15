@@ -7,16 +7,17 @@
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
 <link rel="import" href="discussions-topic-post-reply-list.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-discussions-topic-post-item">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
+				font-size: 12px;
 			}
 			h5 {
-				margin: 0;
-				font-size: 14px
+				margin: 0; font-size: 14px
 			}
 			[hidden] {
 				display: none !important;
@@ -27,28 +28,37 @@
 			.unread {
 				border-left: solid 3px lightskyblue;
 			}
+			.light-borders {
+				border-top: solid 1px lightgrey; border-bottom: solid 1px lightgrey;
+			}
+			span {
+				font-size: 12px;
+			}
+			.new-thread-container {
+				margin-left: 10px; border-left: solid 3px lightgrey;
+			}
 		</style>
 		<div>
-			<paper-item on-tap="toggleHideReplies" id="topicitem" style="border-top: solid 1px lightgrey; border-bottom: solid 1px lightgrey;">
+			<paper-item on-tap="toggleHideReplies" id="topicitem" class="light-borders">
 				<paper-item-body three-line>
-					<div style="display:flex;">
-						<h5 style="flex: 1; font-size: 12px;">[[post.properties.subject]]</h5>
-						<span style="display: inline-block; font-size: 12px;">
+					<div class="flex-parent">
+						<h5 class="flex-1">[[post.properties.subject]]</h5>
+						<span class="flex-right">
 							<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name>
 						</span>
 					</div>
-					<div style="display:flex; align-items: center;">
-						<span style="flex: 1; font-size: 12px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
-						<span style="display: inline-block; font-size: 12px;">[[date]]</span>
+					<div class="flex-parent">
+						<span class="flex-1">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
+						<span class="flex-right">[[date]]</span>
 					</div>
 					<span style="font-size: 14px;" id="message"></span>
 				</paper-item-body>
 			</paper-item>
 			<div hidden="{{hideReplies}}">
 				<d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
-				<div hidden="{{!canReply}}" style="display:flex; padding-left: 10px; margin-left: 10px; border-left: solid 3px lightgrey;">
-					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
-					<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Send</paper-button>
+				<div hidden="{{!canReply}}" class="flex-parent new-thread-container basic-left-padding">
+					<paper-input class="flex-1" style="width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
+					<paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Send</paper-button>
 				</div>
 			</div>
 		</div>

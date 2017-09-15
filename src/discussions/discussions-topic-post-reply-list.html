@@ -3,15 +3,16 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="discussions-topic-post-reply-item.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-discussions-topic-post-reply-list">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
 			}
 		</style>
-		<div style="padding-left: 10px">
+		<div class="basic-left-padding">
 			<template is="dom-repeat" items="[[replies]]">
 				<d2l-discussions-topic-post-reply-item href="{{_getHref(item)}}" token="{{token}}"></d2l-discussions-topic-post-reply-item>
 			</template>
