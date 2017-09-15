@@ -41,7 +41,7 @@
 						<span style="flex: 1; font-size: 12px;">[[post.properties.replies]] replies, [[post.properties.unread]] unread</span>
 						<span style="display: inline-block; font-size: 12px;">[[date]]</span>
 					</div>
-					<span style="font-size: 14px;">[[post.properties.message]]</span>
+					<span style="font-size: 14px;" id="message"></span>
 				</paper-item-body>
 			</paper-item>
 			<div hidden="{{hideReplies}}">
@@ -117,6 +117,7 @@
 				if (this.post.properties.unread > 0) this.readClass = 'unread';
 				else this.readClass = 'read';
 				this.$.topicitem.classList.add(this.readClass);
+				this.$.message.innerHTML = this.post.properties.message;
 			}
 
 			toggleHideReplies() {

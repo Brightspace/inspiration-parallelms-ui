@@ -14,7 +14,7 @@
 		<paper-item two-line style="font-size: 12px; border-left: solid 3px lightgrey;">
 			<div style="display:flex; align-items: center; width: 100%;">
 				<span style="padding-right: 5px;" style="flex: 1;">↳</span>
-				<div style="flex: 2;">[[entity.properties.message]]</div>
+				<div style="flex: 2;" id="message">[[entity.properties.message]]</div>
 				<div style="display: inline-block; padding-left: 10px;">
 					<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name><br>
 					[[date]]
@@ -70,6 +70,7 @@
 					var uglyAssDate = dateEntity.properties.date;
 					this.date = new Intl.DateTimeFormat(this.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 				}
+				this.$.message.innerHTML = this.entity.properties.message;
 			}
 
 		}
