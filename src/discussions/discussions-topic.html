@@ -72,21 +72,23 @@
 
 			_changed(entity) {
 				this.topic = entity;
-				this.getThreadsHref = entity.getActionByName('get-threads').href;
+				this.getThreadsHref = entity.getActionByName('get-threads') &&  entity.getActionByName('get-threads').href;
 				this.canCreateThread = this.topic.hasActionByName('create-thread');
 			}
 
 			_sendReply() {
 				var self = this;
 				var action = this.topic.getActionByName('create-thread');
-				var fields = this.getSirenFields(action);
-				fields.has('message') && fields.set('subject', self.subject);
-				fields.has('message') && fields.set('message', self.message);
-				fields.has('isHtml') && fields.set('isHtml', true);
-				this.performSirenAction(action, fields).then(function() {
-					self.subject = '';
-					self.message = '';
-				});
+				if (action) {
+					var fields = this.getSirenFields(action);
+					fields.has('message') && fields.set('subject', self.subject);
+					fields.has('message') && fields.set('message', self.message);
+					fields.has('isHtml') && fields.set('isHtml', true);
+					this.performSirenAction(action, fields).then(function() {
+						self.subject = '';
+						self.message = '';
+					});
+				}
 			}
 		}
 
