@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-orgs">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class Orgs extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-orgs'; }
+
+			static get properties() {
+				return {
+					organizations: {
+						type: Object,
+						computed: '_getSubEntitiesByRel(entity, "https://api.brightspace.com/rels/organization")',
+						notify: true
+					}
+				};
+			}
+		}
+
+		window.customElements.define(Orgs.is, Orgs);
+	</script>
+</dom-module>

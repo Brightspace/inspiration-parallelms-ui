@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="org.html">
+<link rel="import" href="orgs.html">
+
+<dom-module id="d2l-root">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+		<d2l-org href="{{organizationLink.href}}" token="{{token}}" entity="{{organization}}"></d2l-org>
+		<d2l-orgs href="{{organizationsLink.href}}" token="{{token}}" organizations="{{organizations}}"></d2l-orgs>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class Root extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-root'; }
+
+			static get properties() {
+				return {
+					organization: {
+						type: Object,
+						notify: true
+					},
+					organizations: {
+						type: Object,
+						notify: true
+					},
+					organizationsLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organizations")'
+					},
+					organizationLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organization")',
+						notify: true
+					},
+					whoamiLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					}
+				};
+			}
+		}
+
+		window.customElements.define(Root.is, Root);
+	</script>
+</dom-module>
