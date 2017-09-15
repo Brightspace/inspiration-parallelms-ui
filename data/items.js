@@ -261,12 +261,6 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.user
 				'https://api.brightspace.com/rels/updates'
 			],
 			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.updates.api.proddev.d2l/feed?filter=feed&count=20&page=1'
-		},
-		{
-			'rel': [
-				'https://api.brightspace.com/rels/content'
-			],
-			'href': 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.sequences.api.proddev.d2l/6609'
 		}
 	]
 });
