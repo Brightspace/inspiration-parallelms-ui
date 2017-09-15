@@ -30,7 +30,7 @@
 		</div>
 		<paper-card>
 			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-courses-list href="[[_getOrgLink(item)]]" token="{{token}}"></d2l-courses-list>
+				<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
 			</template>
 		</paper-card>
 	</template>
@@ -39,10 +39,6 @@
 		/* @mixes SirenEntityMixin */
 		class CoursesCard extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-courses-card'; }
-
-			_getOrgLink(link) {
-				return link.href;
-			}
 		}
 
 		window.customElements.define(CoursesCard.is, CoursesCard);
