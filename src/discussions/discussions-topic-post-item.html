@@ -106,10 +106,8 @@
 				var self = this;
 				var action = this.post.getActionByName('reply');
 				var fields = this.getSirenFields(action);
-				fields.forEach(function(value, key) {
-					if (key === 'message') value = fields.set(key, self.reply);
-					if (key === 'isHtml') value = fields.set(key, true);
-				});
+				fields.has('message') && fields.set('message', self.reply);
+				fields.has('isHtml') && fields.set('isHtml', true);
 				this.performSirenAction(action, fields).then(function() {
 					self.reply = '';
 				});
