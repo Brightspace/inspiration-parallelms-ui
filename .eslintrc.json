@@ -10,7 +10,8 @@
     "SirenActionMixin": false,
     "SirenEntityMixin": false,
     "LocalizationMixin": false,
-    "PerformanceObserver": false
+    "PerformanceObserver": false,
+    "ttiPolyfill": false
   },
   "parserOptions": {
     "ecmaVersion": 6
