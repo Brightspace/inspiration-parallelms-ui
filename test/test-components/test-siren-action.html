@@ -1,0 +1,11 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../src/siren-action-mixin.html">
+
+<script>
+	/* @mixes SirenActionMixin */
+	class TestSirenAction extends SirenActionMixin(Polymer.Element) {
+		static get is() { return 'test-siren-action'; }
+	}
+
+	window.customElements.define(TestSirenAction.is, TestSirenAction);
+</script>
