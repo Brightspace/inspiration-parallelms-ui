@@ -3,19 +3,26 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../user/user-name.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-discussions-topic-post-reply-item">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
-				display: block;
+				display: block; font-size: 12px;
+			}
+			.left-border {
+				border-left: solid 3px lightgrey;
+			}
+			span, div {
+				font-size: 12px;
 			}
 		</style>
-		<paper-item two-line style="font-size: 12px; border-left: solid 3px lightgrey;">
-			<div style="display:flex; align-items: center; width: 100%;">
+		<paper-item two-line class="left-border">
+			<div style="width: 100%; align-items: center;" class="flex-parent">
 				<span style="padding-right: 5px;" style="flex: 1;">↳</span>
-				<div style="flex: 2;" id="message">[[entity.properties.message]]</div>
-				<div style="display: inline-block; padding-left: 10px;">
+				<div class="flex-2" id="message">[[entity.properties.message]]</div>
+				<div class="flex-right basic-left-padding">
 					<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name><br>
 					[[date]]
 				</div>
