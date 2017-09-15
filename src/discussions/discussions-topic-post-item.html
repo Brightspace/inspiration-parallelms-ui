@@ -40,7 +40,7 @@
 			</paper-item>
 			<div hidden="{{hideReplies}}">
 				<d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
-				<div style="display:flex; padding:0 10px 0 16px; border-bottom: solid 1px lightgrey;">
+				<div hidden="{{!canReply}}" style="display:flex; padding:0 10px 0 16px; border-bottom: solid 1px lightgrey;">
 					<paper-input style="flex: 1; font-size: 12px; width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
 					<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Send</paper-button>
 				</div>
@@ -80,7 +80,11 @@
 						type: String,
 						value: ''
 					},
-					reply: String
+					reply: String,
+					canReply: {
+						type: String,
+						value: false
+					}
 				};
 			}
 
@@ -96,6 +100,7 @@
 				this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 				this.repliesHref = this.post.getActionByName('get-all-posts').href;
 				this.authorHref = entity.getLinkByRel('author').href;
+				this.canReply = this.post.hasActionByName('reply');
 			}
 
 			toggleHideReplies() {
