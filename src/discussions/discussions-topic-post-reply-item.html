@@ -64,10 +64,12 @@
 			}
 
 			_changed(entity) {
-				this.authorHref = entity.getLinkByRel('author').href;
+				this.authorHref = entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
 				var dateEntity = this.entity.getSubEntityByClass('date');
-				var uglyAssDate = dateEntity.properties.date;
-				this.date = new Intl.DateTimeFormat(this.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+				if (dateEntity) {
+					var uglyAssDate = dateEntity.properties.date;
+					this.date = new Intl.DateTimeFormat(this.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
+				}
 			}
 
 		}

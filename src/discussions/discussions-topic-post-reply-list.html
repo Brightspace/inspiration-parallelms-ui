@@ -52,7 +52,7 @@
 			}
 
 			_getHref(item) {
-				return item.getLinkByRel('self').href;
+				return item.getLinkByRel('self') && item.getLinkByRel('self').href;
 			}
 
 		}
