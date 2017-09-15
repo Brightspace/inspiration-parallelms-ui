@@ -27,6 +27,7 @@
 	</template>
 
 	<script>
+		/* @mixes SirenEntityMixin */
 		class ContentModuleList extends EntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-content-module-list'; }
@@ -47,7 +48,6 @@
 
 			_changed(entity) {
 				this.items = entity.entities;
-				console.log(this.items);
 			}
 
 			getHref(item) {
