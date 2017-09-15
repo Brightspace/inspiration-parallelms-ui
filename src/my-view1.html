@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="activities/user-activity-usage-list.html">
 <link rel="import" href="course-name.html">
 <link rel="import" href="user/user-card.html">
@@ -36,16 +37,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
-		<d2l-siren-entity href="{{org}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
-		<d2l-siren-entity href="{{user}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<paper-input label="Token" value="{{token}}"></paper-input>
+		<paper-input label="Entrypoint" value="{{entrypoint}}"></paper-input>
+
+		<d2l-siren-entity href="{{entrypoint}}" token="{{token}}" entity="{{rootEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{organization.href}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
 		<div class="card">
 			<div class="col1">
 				<div class="circle">1</div>
-				<h1><d2l-course-name href="{{org}}" token="{{token}}"></d2l-course-name></h1>
+				<h1><d2l-course-name href="{{organization.href}}" token="{{token}}"></d2l-course-name></h1>
 				<p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
 				<p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-				<d2l-user-card href="{{user}}" token="{{token}}"></d2l-user-card>
+				<d2l-user-card href="{{whoami.href}}" token="{{token}}"></d2l-user-card>
 				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
 			</div>
 			<div class="col2">
@@ -63,8 +68,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
-					token: String,
-					org: String,
+					/* hard coded token/entrypoint for demo page */
+					token: {
+						type: String,
+						value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjkzNzg1NTk0LTZlNTctNGJmNy04MWY1LWEzNTdmZjAyYjA0OCJ9.eyJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0NDI3MDNlNS00NDRjLTQ3ZmItYWNmYS01Y2I2MjM5NjgxZjYiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1NDA3MjU3LCJuYmYiOjE1MDU0MDM2NTd9.qmwCMpDwUoZeI-gffPcjieWcLl0j7wTOsXMY08SIcvFvVS4bULo6BU8mqUZsJeIHJqQCgP3ADgjyS-yrJG_Ct8ss9lwnP6GQ8X0B1yF6QVDKmbjrt8j2hEYFdaWw9VF6dKQfw_H535V2uNV-a02brhSo0Hqx9_kuIIm7Bayg6YsCDtWC7LVVlgwa_XcKkLETCOS9La_WeA_3H9It2nM1IxXdxTSaqCEBEaLQiIj2iwi3xO6bmp2ez0-w3-c-wLjgH3kJNsISpcABibvYVFL_53upfzFyC8zAx3A9h5iYY71-SYX1HATWEx-KWRblv2hXDvv59p9LpAxfO4VGfycDqw'
+					},
+					entrypoint: {
+						type: String,
+						value: 'https://api.proddev.d2l'
+					},
+					rootEntity: Object,
+					organization: {
+						type: Object,
+						computed: '_getLinkByRel(rootEntity, "https://api.brightspace.com/rels/organization")'
+					},
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(rootEntity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					},
 					orgEntity: Object,
 					myActivities: {
 						type: Object,
@@ -78,7 +100,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/discussions")'
 					},
-					user: String,
 					userEntity: Object
 				};
 			}
