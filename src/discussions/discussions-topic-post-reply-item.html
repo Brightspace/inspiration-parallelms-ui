@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../user/user-name.html">
+<link rel="import" href="../user/user-image.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -17,14 +18,23 @@
 			span, div {
 				font-size: 12px;
 			}
+			.reply-image {
+				width: 60px; height: 60px; padding-top: 5px;
+			}
+			.reply-item {
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
 		</style>
-		<paper-item two-line class="left-border">
-			<div style="width: 100%; align-items: center;" class="flex-parent">
-				<span style="padding-right: 5px;" style="flex: 1;">↳</span>
-				<div class="flex-2" id="message">[[entity.properties.message]]</div>
-				<div class="flex-right basic-left-padding">
-					<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name><br>
-					[[date]]
+		<paper-item two-line class="left-border reply-item">
+			<div style="width: 100%;" class="flex-parent">
+				<!-- <span style="padding-right: 5px;" style="flex: 1;">↳</span> -->
+				<d2l-user-image href="{{authorHref}}" token="{{token}}" class="reply-image"></d2l-user-image>
+				<div class="flex-2 basic-left-padding">
+					<div style="font-weight: bold">
+						<d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name> at [[date]]
+					</div>
+					<div id="message">[[entity.properties.message]]</div>
 				</div>
 			</div>
 		</paper-item>
