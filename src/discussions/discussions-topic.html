@@ -41,7 +41,7 @@
 			<paper-item class="topic-header" on-tap="_toggleShowPosts">
 				<h4>[[topic.properties.name]]</h4>
 			</paper-item>
-			<div hidden="{{!showPosts}}">
+			<template is="dom-if" if="{{showPosts}}">
 				<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
 				<div hidden={{!canCreateThread}} class="create-threads-input-container">
 					<span>Create a thread</span>
@@ -51,7 +51,7 @@
 						<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
 					</div>
 				</div>
-			</div>
+			</template>
 		</paper-card>
 		<slot></slot>
 	</template>
