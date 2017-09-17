@@ -17,10 +17,12 @@
     "paper-card": "PolymerElements/paper-card#^2.0.0",
     "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
     "paper-item": "PolymerElements/paper-item#^2.0.0",
+    "paper-spinner": "PolymerElements/paper-spinner#^2.0.0",
     "polymer": "Polymer/polymer#^2.0.0",
     "tti-polyfill": "git://github.com/GoogleChrome/tti-polyfill",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "d2l-image": "Brightspace/d2l-image#^1.1.2",
+    "d2l-icons": "BrightspaceUI/icons#^4.4.1",
     "file-saver": "eligrey/FileSaver.js#^1.3.3",
     "paper-input": "PolymerElements/paper-input#^2.0.2"
   },

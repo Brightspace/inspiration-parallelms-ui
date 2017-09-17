@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/d2l-image/d2l-image.html">
+<link rel="import" href="../../bower_components/d2l-icons/tier3-icons.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-user-image">
@@ -10,11 +12,16 @@
 			}
 
 			d2l-image {
-				height: 200px;
-				width: 200px;
+				max-height: 200px;
+				max-width: 200px;
 			}
 		</style>
-		<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+		<template is="dom-if" if="{{!isDefault}}">
+			<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+		</template>
+		<template  is="dom-if" if="{{isDefault}}">
+			<iron-icon style="width:100%; height: 100%" icon="d2l-tier3:profile-pic"></iron-icon>
+		</template>
 	</template>
 
 	<script>
@@ -36,6 +43,10 @@
 					image: {
 						type: Object,
 						computed: '_getLinkByRel(profileImage, "alternate")'
+					},
+					isDefault: {
+						type: Boolean,
+						computed: '_hasClass(profileImage, "default-image")'
 					}
 				};
 			}

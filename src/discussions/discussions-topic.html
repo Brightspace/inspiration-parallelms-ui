@@ -36,22 +36,32 @@
 			.create-thread-input {
 				width: 100%;
 			}
+			.white {
+				--paper-spinner-color: white;
+			}
 		</style>
 		<paper-card class="topic">
 			<paper-item class="topic-header" on-tap="_toggleShowPosts">
 				<h4>[[topic.properties.name]]</h4>
 			</paper-item>
-			<div hidden="{{!showPosts}}">
+			<template is="dom-if" if="{{showPosts}}">
 				<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
 				<div hidden={{!canCreateThread}} class="create-threads-input-container">
 					<span>Create a thread</span>
 					<div class="flex-parent">
 						<paper-input class="flex-1 create-thread-input" label="Subject" value="{{subject}}"></paper-input>
 						<paper-input class="flex-1 create-thread-input" label="Message" value="{{message}}"></paper-input>
-						<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Create</paper-button>
+						<paper-button style="font-size: 12px; background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">
+							<template is="dom-if" if="{{!sendingReply}}">
+								<span>Create</span>
+							</template>
+							<template is="dom-if" if="{{sendingReply}}">
+								<paper-spinner-lite active class="white" style="width: 18px; height: 18px;"></paper-spinner-lite>
+							</template>
+						</paper-button>
 					</div>
 				</div>
-			</div>
+			</template>
 		</paper-card>
 		<slot></slot>
 	</template>
@@ -87,6 +97,10 @@
 					showPosts: {
 						type: Boolean,
 						value: true
+					},
+					sendingReply: {
+						type: Boolean,
+						value: false
 					}
 				};
 			}
@@ -107,6 +121,7 @@
 				var self = this;
 				var action = this.topic.getActionByName('create-thread');
 				if (action) {
+					this.sendingReply = true;
 					var fields = this.getSirenFields(action);
 					fields.has('message') && fields.set('subject', self.subject);
 					fields.has('message') && fields.set('message', self.message);
@@ -114,6 +129,7 @@
 					this.performSirenAction(action, fields).then(function() {
 						self.subject = '';
 						self.message = '';
+						self.sendingReply = false;
 					});
 				}
 			}
