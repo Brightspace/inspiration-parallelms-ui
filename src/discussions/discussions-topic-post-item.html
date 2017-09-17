@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../user/user-name.html">
 <link rel="import" href="../siren-entity-mixin.html">
@@ -38,6 +39,9 @@
 				margin-left: 10px; border-left: solid 3px lightgrey;
 				margin-right: 10px;
 			}
+			.white {
+				--paper-spinner-color: white;
+			}
 		</style>
 		<div>
 			<paper-item on-tap="toggleHideReplies" id="topicitem" class="light-borders">
@@ -59,7 +63,14 @@
 				<d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
 				<div hidden="{{!canReply}}" class="flex-parent new-thread-container basic-left-padding">
 					<paper-input class="flex-1" style="width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
-					<paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">Send</paper-button>
+					<paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">
+						<template is="dom-if" if="{{!sendingReply}}">
+							<span>Send</span>
+						</template>
+						<template is="dom-if" if="{{sendingReply}}">
+							<paper-spinner-lite active class="white" style="width: 18px; height: 18px;"></paper-spinner-lite>
+						</template>
+					</paper-button>
 				</div>
 			</template>
 		</div>
@@ -105,6 +116,10 @@
 					readClass: {
 						type: String,
 						value: 'read'
+					},
+					sendingReply: {
+						type: Boolean,
+						value: false
 					}
 				};
 			}
@@ -141,11 +156,13 @@
 				var self = this;
 				var action = this.post.getActionByName('reply');
 				if (action) {
+					this.sendingReply = true;
 					var fields = this.getSirenFields(action);
 					fields.has('message') && fields.set('message', self.reply);
 					fields.has('isHtml') && fields.set('isHtml', true);
 					this.performSirenAction(action, fields).then(function() {
 						self.reply = '';
+						self.sendingReply = false;
 					});
 				}
 			}
