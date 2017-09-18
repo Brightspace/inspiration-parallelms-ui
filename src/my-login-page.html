@@ -1,0 +1,100 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="siren-entity.html">
+
+<dom-module id="my-login-page">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			.login-container {
+				width: 300px;
+				height: auto;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.endpoints-dropdown {
+				width: 100%;
+			}
+			.login-button {
+				background-color: cornflowerblue; color: white; height: 100%; width: 100%; margin: 0;
+			}
+		</style>
+		<template is="dom-if" if="{{wannaLogIn}}">
+			<d2l-siren-entity href="{{entrypoint}}" token="{{token}}" entity="{{rootEntity}}"></d2l-siren-entity>
+		</template>
+		<div class="login-container">
+			<h2>Login</h2>
+			<paper-dropdown-menu label="Endpoints" class="endpoints-dropdown">
+				<paper-listbox slot="dropdown-content" selected="{{selected}}">
+					<template is="dom-repeat" items="{{endpoints}}">
+						<paper-item>{{item}}</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu>
+			<paper-input label="Token" value="{{token}}"></paper-input>
+			<paper-button class="login-button" on-tap="_login">Goooo</paper-button>
+		</div>
+		<slot></slot>
+	</template>
+
+	<script>
+		class LoginPage extends Polymer.Element {
+
+			static get is() { return 'my-login-page'; }
+
+			static get properties() {
+				return {
+					token: {
+						type: String,
+						value: ''
+					},
+					href: String,
+					selected: {
+						type: Number,
+						value: 0,
+						observer: '_endpointChanged'
+					},
+					endpoints: {
+						type: Array,
+						value: [
+							'https://api.proddev.d2l',
+							'https://api.dev.brightspace.com'
+						]
+					},
+					entrypoint: {
+						type: String,
+						value: 'https://api.proddev.d2l'
+					},
+					rootEntity: {
+						type: Object,
+						observer: '_rootEntityChanged'
+					},
+					wannaLogIn: {
+						type: Boolean,
+						value: false
+					}
+				};
+			}
+
+			_endpointChanged() {
+				this.entrypoint = this.endpoints[this.selected];
+			}
+
+			_login() {
+				if (this.token !== '') this.wannaLogIn = true;
+			}
+
+			_rootEntityChanged() {
+				this.href = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
+			}
+		}
+
+		window.customElements.define(LoginPage.is, LoginPage);
+	</script>
+</dom-module>
