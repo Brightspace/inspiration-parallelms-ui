@@ -29,20 +29,25 @@
 			#comments {
 				padding: 0px 10px 10px 10px;
 			}
+			#action-buttons {
+				background-color: lightgray;
+			}
+			paper-button {
+				margin: 0px;
+			}
 		</style>
-			<paper-card>
-				<div id="title">{{title}}</div>
-				<div id="date">{{date}}</div>
-				<div id="grade">Grade received: {{value}}</div>
-				<div id="comments">Comments: {{comments}}</div>
-				<div style="background-color:lightgray;">
-					<template is="dom-repeat" items="{{entity.actions}}">
-						<paper-button on-tap="_onClickAction" style="margin: 0px;">[[item.name]]</paper-button>
-					</template>
-				</div>
-			</div>
-			</paper-card>
 
+		<paper-card>
+			<div id="title">{{title}}</div>
+			<div id="date">{{date}}</div>
+			<div id="grade">Grade received: {{value}}</div>
+			<div id="comments">Comments: {{comments}}</div>
+			<div id="action-buttons">
+				<template is="dom-repeat" items="{{entity.actions}}" strip-whitespace>
+					<paper-button on-tap="_onClickAction">[[item.name]]</paper-button>
+				</template>
+			</div>
+		</paper-card>
 	</template>
 
 	<script>
