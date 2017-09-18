@@ -19,11 +19,26 @@
 
 			static get properties() {
 				return {
-					token: String,
-					href: String
+					token: {
+						type: String
+					},
+					href: {
+						type: String
+					}
 				};
 			}
 
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				console.log(entity);
+				console.log(this.href);
+				console.log(this.token);
+			}
 
 		}
 
