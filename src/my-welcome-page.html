@@ -1,0 +1,32 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="siren-entity-mixin.html">
+
+<dom-module id="my-welcome-page">
+	<template>
+		<style>
+		</style>
+		<p>Welcome</p>
+		<p>Token: {{token}}</p>
+		<p>Href: {{href}}</p>
+		<slot></slot>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class WelcomePage extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'my-welcome-page'; }
+
+			static get properties() {
+				return {
+					token: String,
+					href: String
+				};
+			}
+
+
+		}
+
+		window.customElements.define(WelcomePage.is, WelcomePage);
+	</script>
+</dom-module>
