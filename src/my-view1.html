@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="courses/courses-card.html">
 <link rel="import" href="user/user-card.html">
 <link rel="import" href="discussions/discussions-forum-list.html">
+<link rel="import" href="content/content-module-list.html">
 <link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="updates/updates-card.html">
@@ -57,6 +58,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</div>
 			<div class="col2">
 				<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}"></d2l-discussions-forum-list><br>
+				<template is="dom-if" if="{{content}}">
+					<d2l-content-module-list href="{{content.href}}" token="{{token}}"></d2l-content-module-list><br>
+				</template>
 				<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}"></d2l-updates-card>
 				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
 			</div>
@@ -102,6 +106,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/discussions")'
 					},
+					content: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/sequence")'
+					},
+					user: String,
 					myEnrollments: {
 						type: Object,
 						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
