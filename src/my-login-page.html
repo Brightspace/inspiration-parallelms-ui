@@ -50,10 +50,7 @@
 
 			static get properties() {
 				return {
-					token: {
-						type: String,
-						value: ''
-					},
+					token: String,
 					href: String,
 					selected: {
 						type: Number,
@@ -78,7 +75,8 @@
 					wannaLogIn: {
 						type: Boolean,
 						value: false
-					}
+					},
+					route: Object
 				};
 			}
 
@@ -92,6 +90,9 @@
 
 			_rootEntityChanged() {
 				this.href = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
+				if (this.href !== '') {
+					this.set('route.path', 'view1');
+				}
 			}
 		}
 
