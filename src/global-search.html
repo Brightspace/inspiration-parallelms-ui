@@ -1,0 +1,140 @@
+<script src="https://unpkg.com/lunr/lunr.js"></script>
+<script>
+(function() {
+	'use strict';
+	/*global lunr*/
+	/*eslint no-undef: "error"*/
+	/*eslint no-invalid-this: "error"*/
+
+	let _index = lunr(function() {});
+	let _debouncer;
+
+	const _courseOfferingSirenHandler = function(href, token, entity) {
+		if (entity.class) {
+			if (entity.class.indexOf('course-offering') !== -1) {
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.name,
+					entity.properties.code,
+					'course-offering'
+				);
+			}
+		}
+		return null;
+	};
+
+	const _userSirenHandler = function(href, token, entity) {
+		if (entity.class) {
+			if (entity.class.indexOf('user') !== -1 ) {
+				const displayName = entity.entities.filter(function(subEntity) {
+					return subEntity.class.indexOf('display') !== -1 && subEntity.class.indexOf('name') !== -1;
+				});
+				if (displayName.length !== 1) {
+					return null;
+				}
+				return 	_formatResult(
+					href,
+					token,
+					displayName[0].properties.name,
+					null,
+					'user'
+				);
+			}
+		}
+		return null;
+	};
+
+	const _discussionsSirenHandler = function(href, token, entity) {
+		if (entity.class) {
+			if (entity.class.indexOf('topic') !== -1) {
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.name,
+					entity.properties.description && entity.properties.description.Text || '',
+					'topic'
+				);
+			} else if (entity.class.indexOf('forum') !== -1) {
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.name,
+					entity.properties.description && entity.properties.description.Text || '',
+					'forum'
+				);
+
+			} else if (entity.class.indexOf('thread') !== -1) {
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.subject,
+					entity.properties.message,
+					'topic'
+				);
+			}
+		}
+		return null;
+	};
+	const SPLITTER = '|';
+	const _formatResult = function(href, token, primaryText, secondaryText, type) {
+		return 	{
+			type: type,
+			primaryText: primaryText,
+			secondaryText: secondaryText,
+			key: `${token}${SPLITTER}${href}`
+		};
+	};
+	const _handlers = [
+		_userSirenHandler,
+		_courseOfferingSirenHandler,
+		_discussionsSirenHandler
+	];
+
+	const GlobalSearch = {
+		update: (store) => {
+			_debouncer = Polymer.Debouncer.debounce(
+				_debouncer,
+				Polymer.Async.timeOut.after(500),
+				function() {
+					_index = lunr(/* @this */ function() {
+						this.ref('key');
+						this.field('type');
+						this.field('primaryText', { boost: 3 });
+						this.field('secondaryText');
+						for (const [token, hrefStore] of store.entries()) {
+							for (const [href, entity] of hrefStore.entries()) {
+								if (entity.status === 'fetching') {
+									continue;
+								}
+								for (const handler of _handlers) {
+									const result = handler(href, token, entity.entity);
+									if (result) {
+										this.add(result);
+										break;
+									}
+								}
+							}
+						}
+					});
+				}
+			);
+		},
+		search: (term) => {
+			return _index
+				.search(term)
+				.map(function(result) {
+					const parts = result.ref.split(SPLITTER);
+					return {
+						token: parts[0],
+						href: parts[1]
+					};
+				});
+		}
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.GlobalSearch = GlobalSearch;
+
+})();
+</script>

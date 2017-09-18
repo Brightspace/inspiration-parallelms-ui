@@ -1,4 +1,6 @@
 <link rel="import" href="siren-parser.html">
+<link rel="import" href="global-search.html">
+
 <script>
 (function() {
 	'use strict';
@@ -60,6 +62,7 @@
 		update: function(entityId, token, entity) {
 			this._initContainer(this._store, entityId, token);
 			return new Promise((resolve) => {
+				D2L.GlobalSearch.update(this._store);
 
 				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
 				this._notify(entityId, token, entity);
