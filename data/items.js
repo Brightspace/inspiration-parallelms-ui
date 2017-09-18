@@ -18257,7 +18257,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 		'paged'
 	],
 	'properties': {
-		'total': 3,
+		'total': 4,
 		'pagingInfo': {
 			'pageSize': 20,
 			'currentPage': 1,
@@ -18364,7 +18364,7 @@ window.D2L.EntityStore.update('https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.upda
 				'title': 'Grade for sadf',
 				'date': '2017-09-12T14:53:40.579Z',
 				'value': '50 %',
-				'comments': ''
+				'comments': 'This grade is mediocre.'
 			},
 			'links': [
 				{
@@ -19031,7 +19031,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 				'title': 'Grade for sadf',
 				'date': '2017-09-12T14:53:40.579Z',
 				'value': '50 %',
-				'comments': ''
+				'comments': 'This grade is mediocre.'
 			},
 			'links': [
 				{
@@ -19263,7 +19263,7 @@ window.D2L.EntityStore.update('https://bd80b9ab-5a62-4362-a347-78c55bac70a2.upda
 		'title': 'Grade for sadf',
 		'date': '2017-09-12T14:53:40.579Z',
 		'value': '50 %',
-		'comments': ''
+		'comments': 'This grade is mediocre.'
 	},
 	'links': [
 		{

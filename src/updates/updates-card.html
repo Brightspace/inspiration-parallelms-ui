@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
+<link rel="import" href="update-item-grades.html">
 
 <dom-module id="d2l-updates-card">
 	<template>
@@ -44,7 +45,7 @@
 				</div>
 				<div>
 					<template is="dom-repeat" items="[[gradeUpdates]]" strip-whitespace>
-						<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item>
+						<d2l-update-item-grades href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item-grades>
 					</template>
 				</div>
 			</iron-pages>
