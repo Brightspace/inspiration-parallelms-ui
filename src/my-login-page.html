@@ -50,8 +50,14 @@
 
 			static get properties() {
 				return {
-					token: String,
-					href: String,
+					token: {
+						type: String,
+						notify: true
+					},
+					href: {
+						type: String,
+						notify: true
+					},
 					selected: {
 						type: Number,
 						value: 0,
@@ -91,7 +97,7 @@
 			_rootEntityChanged() {
 				this.href = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
 				if (this.href !== '') {
-					this.set('route.path', 'view1');
+					this.set('route.path', 'welcome-page');
 				}
 			}
 		}
