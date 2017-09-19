@@ -89,6 +89,9 @@
 					{
 						getLinks: entity => entity.getActionByName('get-all-posts'),
 						elements: [window.customElements.get('d2l-discussions-topic-post-reply-list')]
+					}, {
+						getLinks: entity => entity.getLinkByRel('author'),
+						elements: [window.customElements.get('d2l-user-name')]
 					}
 				];
 			}
