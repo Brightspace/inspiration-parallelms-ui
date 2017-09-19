@@ -19,7 +19,7 @@
 				<div class="card-header">
 					<h2 class="card-header-text">Upcoming Work</h2>
 				</div>
-				<template is="dom-if" if="{{hasActivites}}"></template>
+				<template is="dom-if" if="{{hasActivites}}">
 					<template is="dom-repeat" items="{{entity.entities}}">
 						<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 					</template>
@@ -41,7 +41,7 @@
 					entity: Object,
 					hasActivites: {
 						type: Boolean,
-						notify: true
+						value: false
 					}
 				};
 			}
@@ -58,8 +58,10 @@
 
 			_changed(entity) {
 				if (entity.entities && entity.entities.length > 0) {
+					console.log(true)
 					this.hasActivites = true;
 				} else {
+					console.log('holla')
 					this.hasActivites = false;
 				}
 			}
