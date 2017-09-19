@@ -15,16 +15,19 @@
 
 		</style>
 
-		<template is="dom-if" if="{{hasActivites}}">
 			<paper-card class="medium-card-size">
 				<div class="card-header">
 					<h2 class="card-header-text">Upcoming Work</h2>
 				</div>
-				<template is="dom-repeat" items="{{entity.entities}}">
-					<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
+				<template is="dom-if" if="{{hasActivites}}">
+					<template is="dom-repeat" items="{{entity.entities}}">
+						<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
+					</template>
+				</template>
+				<template is="dom-if" if="{{!hasActivites}}">
+					<span>There is no upcoming working</span>
 				</template>
 			</paper-card>
-		</template>
 	</template>
 
 	<script>
@@ -38,7 +41,7 @@
 					entity: Object,
 					hasActivites: {
 						type: Boolean,
-						notify: true
+						value: true
 					}
 				};
 			}
@@ -57,7 +60,7 @@
 				if (entity.entities && entity.entities.length > 0) {
 					this.hasActivites = true;
 				} else {
-					this.hasActivites = true;
+					this.hasActivites = false;
 				}
 			}
 

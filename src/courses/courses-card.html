@@ -15,8 +15,13 @@
 			<div class="card-header">
 				<h2 class="card-header-text">My Courses</h2>
 			</div>
-			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
+			<template is="dom-if" if="{{hasCourses}}">
+				<template is="dom-repeat" items="{{entity.entities}}">
+					<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
+				</template>
+			</template>
+			<template is="dom-if" if="{{!hasCourses}}">
+				<span>You have no courses</span>
 			</template>
 		</paper-card>
 	</template>
@@ -25,6 +30,26 @@
 		/* @mixes SirenEntityMixin */
 		class CoursesCard extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-courses-card'; }
+
+			static get properties() {
+				return {
+					entity: Object,
+					hasCourses: {
+						type: Boolean,
+						value: true
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.hasCourses = (entity.entities && entity.entities.length > 0);
+			}
 		}
 
 		window.customElements.define(CoursesCard.is, CoursesCard);
