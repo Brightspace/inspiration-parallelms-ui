@@ -26,8 +26,7 @@
 			return class extends superClass {
 				_entityChanged(entity) {
 					super._entityChanged(entity);
-					// do prefetching when browser is idle
-					Polymer.Async.idlePeriod.run(() => this.constructor.beginPrefetch(this.entity, this.token));
+					this.constructor.beginPrefetch(this.entity, this.token);
 				}
 
 				static beginPrefetch(entity, token) {
@@ -53,7 +52,7 @@
 
 							// fetch interesting entity and iterate through the constructors
 							console.debug(`prefetch "${href}" - start`);
-							const fetchResult = D2L.EntityStore.fetch(href, token);
+							const fetchResult = D2L.EntityStore.fetch(href, token, { idle: true });
 							for (const interestingElement of elements) {
 								if ( fetchResult.status === 'fetching') {
 									console.debug(`prefetch "${href}" - fetching`);
