@@ -6,17 +6,14 @@
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
 <link rel="import" href="update-item-grades.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-updates-card">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: inline-block;
 				width: 100%;
-			}
-			.header {
-				background:#37A0CE;
-				color:white;
 			}
 			paper-card {
 				height: 650px;
@@ -31,7 +28,7 @@
 		</style>
 
 		<paper-card>
-			<div class="header">
+			<div class="card-header">
 				<h2>New Updates</h2>
 				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color: white>
 					<paper-tab>News</paper-tab>
