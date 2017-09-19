@@ -72,11 +72,11 @@
 					token: String,
 					hasUpdates: {
 						type: Boolean,
-						value: false
+						value: true
 					},
 					hasGrades: {
 						type: Boolean,
-						value: false
+						value: true
 					}
 				};
 			}
@@ -90,8 +90,8 @@
 			_changed(entity) {
 				this.newsUpdates = entity.getSubEntitiesByClass('news');
 				this.gradeUpdates = entity.getSubEntitiesByClass('grade');
-				this.hasUpdates = this.newsUpdates.length > 0;
-				this.hasGrades = this.gradeUpdates.length > 0;
+				this.hasUpdates = this.newsUpdates && this.newsUpdates.length > 0;
+				this.hasGrades = this.gradeUpdates && this.gradeUpdates.length > 0;
 			}
 
 			_getSelfLink(entity) {

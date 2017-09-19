@@ -41,7 +41,7 @@
 					entity: Object,
 					hasActivites: {
 						type: Boolean,
-						value: false
+						value: true
 					}
 				};
 			}
@@ -58,10 +58,8 @@
 
 			_changed(entity) {
 				if (entity.entities && entity.entities.length > 0) {
-					console.log(true)
 					this.hasActivites = true;
 				} else {
-					console.log('holla')
 					this.hasActivites = false;
 				}
 			}
