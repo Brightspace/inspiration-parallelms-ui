@@ -24,10 +24,10 @@
 				overflow-y: scroll;
 			}
 		</style>
-		<div class="header">
-			<h2>My Courses</h2>
-		</div>
 		<paper-card>
+			<div class="header">
+				<h2>My Courses</h2>
+			</div>
 			<template is="dom-repeat" items="{{entity.entities}}">
 				<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
 			</template>

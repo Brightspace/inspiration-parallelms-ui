@@ -10,7 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="activities/user-activity-usage-list.html">
 <link rel="import" href="course-name.html">
 <link rel="import" href="courses/courses-card.html">
@@ -44,13 +43,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="{{organization.href}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
-		<paper-toolbar>
-			<span slot="top" class="title">ParalleLMS</span>
-		</paper-toolbar>
 		<div class="not">
 			<div class="col">
-				<h1><d2l-course-name href="{{organization.href}}" token="{{token}}"></d2l-course-name></h1>
-				<d2l-user-card href="{{whoami.href}}" token="{{token}}"></d2l-user-card>
 				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
 				<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}"></d2l-courses-card>
 			</div>
@@ -72,11 +66,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					/* hard coded token/entrypoint for demo page */
 					token: {
 						type: String,
-						value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjhlMGRlOGE1LThmMjMtNDUwNi04MDhkLWNmZmIyZDQ4ZGJmOSJ9.eyJzdWIiOiIzMDIyMCIsInRlbmFudGlkIjoiNDBlOTA5NGMtZmQ1Ny00OWRjLTg4ZmEtZDRiMWYxNDkxN2RlIiwic2NvcGUiOiIqOio6KiIsImp0aSI6ImJhY2M2ZWE4LTA0M2ItNDQ1OC04ZTVlLTQ3NjAyYjE1ZTQ0MSIsImlzcyI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoIiwiYXVkIjoiaHR0cHM6Ly9hcGkuYnJpZ2h0c3BhY2UuY29tL2F1dGgvdG9rZW4iLCJleHAiOjE1MDU3NzQwMzAsIm5iZiI6MTUwNTc3MDQzMH0.CpHC7532QmiuiCDM4rW4Oc4x6K57RBb8M2DG7k0QTRtlQEGSpoJ5Xfhgt_gPpiHBqvtkJjUNxqVU0J0xgOofMDxas-TONOsHS9kWKOITxNEumSVCaiXqgyo0PciOZrE9yixSnEgulEg6wncvGSF_hn1uo7wDh_wcempCbGi51_jIGs7LlxP5U0Y0tjGw-3-Zko_i19pVD_antV3kK0P0fCNOZRujHj3h73rIxhSYKvXp5JXOPEUokJxSs2Dp7nZKOs5kniKnUJmCGEQXwAF0_Z1j74J9BvtLA7B7FigOxY2lWvUiStAf9RQV6Shdb1NUbyTtsDfVDeoulDK7qqBb6w'
+						value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjkzNzg1NTk0LTZlNTctNGJmNy04MWY1LWEzNTdmZjAyYjA0OCJ9.eyJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0NDI3MDNlNS00NDRjLTQ3ZmItYWNmYS01Y2I2MjM5NjgxZjYiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1NDA3MjU3LCJuYmYiOjE1MDU0MDM2NTd9.qmwCMpDwUoZeI-gffPcjieWcLl0j7wTOsXMY08SIcvFvVS4bULo6BU8mqUZsJeIHJqQCgP3ADgjyS-yrJG_Ct8ss9lwnP6GQ8X0B1yF6QVDKmbjrt8j2hEYFdaWw9VF6dKQfw_H535V2uNV-a02brhSo0Hqx9_kuIIm7Bayg6YsCDtWC7LVVlgwa_XcKkLETCOS9La_WeA_3H9It2nM1IxXdxTSaqCEBEaLQiIj2iwi3xO6bmp2ez0-w3-c-wLjgH3kJNsISpcABibvYVFL_53upfzFyC8zAx3A9h5iYY71-SYX1HATWEx-KWRblv2hXDvv59p9LpAxfO4VGfycDqw'
 					},
 					entrypoint: {
 						type: String,
-						value: 'https://api.dev.brightspace.com'
+						value: 'https://api.proddev.d2l'
 					},
 					rootEntity: Object,
 					organization: {
