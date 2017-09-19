@@ -95,7 +95,8 @@
 			}
 
 			_rootEntityChanged() {
-				this.href = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
+				var rootEntityLink = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
+				if (rootEntityLink) this.href = rootEntityLink;
 				if (this.href !== '') {
 					this.set('route.path', 'welcome-page');
 				}
