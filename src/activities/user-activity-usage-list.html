@@ -3,6 +3,8 @@
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="user-activity-usage.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-user-activity-usage-list">
 	<template>
@@ -10,31 +12,19 @@
 			:host {
 				display: block;
 			}
-			.header {
-				background:#37A0CE;
-				color:white;
-			}
-			h2 {
-				margin :0;
-				padding: 10px;
-				font-weight: normal;
-			}
-			paper-card {
-				width: 100%;
-				overflow-y: scroll;
-			}
+
 		</style>
 
-		<paper-card>
-			<div class="header">
-				<h2>My Activities</h2>
-			</div>
-			<div class="card">
-				<template is="dom-repeat" items="[[entity.entities]]">
+		<template is="dom-if" if="{{hasActivites}}">
+			<paper-card class="medium-card-size">
+				<div class="card-header">
+					<h2 class="card-header-text">Upcoming Work</h2>
+				</div>
+				<template is="dom-repeat" items="{{entity.entities}}">
 					<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 				</template>
-			</div>
-		</paper-card>
+			</paper-card>
+		</template>
 	</template>
 
 	<script>
@@ -45,12 +35,30 @@
 
 			static get properties() {
 				return {
-					entity: Object
+					entity: Object,
+					hasActivites: {
+						type: Boolean,
+						notify: true
+					}
 				};
 			}
 
 			_getSelfLink(entity) {
 				return entity.getLinkByRel('self').href;
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (entity.entities && entity.entities.length > 0) {
+					this.hasActivites = true;
+				} else {
+					this.hasActivites = true;
+				}
 			}
 
 		}

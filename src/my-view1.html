@@ -29,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			.not {
 				display: flex;
+				flex-wrap: wrap;
 				width: calc(100%);
 			}
 
@@ -37,6 +38,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				width: 50%;
 				padding: 20px;
 			}
+
+			.card-item {
+				width: calc(50% - 40px);
+				padding: 20px;
+			}
+
+			@media (max-width:1000px) {
+				.card-item {
+					width: calc(100% - 40px);
+				}
+			}
 		</style>
 
 		<d2l-siren-entity href="{{entrypoint}}" token="{{token}}" entity="{{rootEntity}}"></d2l-siren-entity>
@@ -44,15 +56,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
 		<div class="not">
-			<div class="col">
-				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}"></d2l-user-activity-usage-list>
-				<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}"></d2l-courses-card>
-			</div>
-			<div class="col">
-				<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}"></d2l-discussions-forum-list><br>
-				<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}"></d2l-updates-card>
-				<d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link>
-			</div>
+			<template is="dom-if" if="{{renderActivityUsageList}}">
+				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}" class="card-item" has-activites="{{renderActivityUsageList}}"></d2l-user-activity-usage-list>
+			</template>
+			<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}" class="card-item"></d2l-courses-card>
+			<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}" class="card-item"></d2l-discussions-forum-list><br>
+			<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}" class="card-item"></d2l-updates-card>
+			<!-- <d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link> -->
 		</div>
 	</template>
 
@@ -99,7 +109,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
 					},
-					userEntity: Object
+					userEntity: Object,
+
+					renderActivityUsageList: {
+						type: Boolean,
+						value: true
+					}
 				};
 			}
 

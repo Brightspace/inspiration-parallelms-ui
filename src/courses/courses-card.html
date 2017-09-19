@@ -10,20 +10,10 @@
 			:host {
 				display: block;
 			}
-			h2 {
-				margin :0;
-				padding: 10px;
-				font-weight: normal;
-			}
-			paper-card {
-				width: 100%;
-				height: 650px;
-				overflow-y: scroll;
-			}
 		</style>
-		<paper-card>
+		<paper-card class="medium-card-size">
 			<div class="card-header">
-				<h2>My Courses</h2>
+				<h2 class="card-header-text">My Courses</h2>
 			</div>
 			<template is="dom-repeat" items="{{entity.entities}}">
 				<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
