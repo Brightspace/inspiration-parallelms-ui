@@ -5,6 +5,72 @@
 (function() {
 	'use strict';
 
+	var connection = new WebSocket("ws://resource-invalidator.api.dev.brightspace.com", "protocolOne");
+	var clientId = guid();
+	var listeners = {};
+
+	connection.onopen = function () {
+		connection.send(JSON.stringify({"action": "register", "deviceId": clientId})); // Send the message 'Ping' to the server
+	};
+
+	// Log errors
+	connection.onerror = function (error) {
+		console.log('WebSocket Error ' + error);
+	};
+
+	// Log messages from the server
+	connection.onmessage = function (e) {
+		console.log(e.data);
+		var data = JSON.parse(e.data);
+		if(data.action && data.action == "invalidate") {
+			var resource = data.resource;
+			if (listeners[resource]) {
+				for(var i=0; i<listeners[resource].length; i++) {
+					var token = listeners[resource][i];
+					var headers = new Headers();
+					headers.set('Authorization', `Bearer ${token}`);
+					headers.set("pragma", "no-cache");
+					headers.set("cache-control", "no-cache");
+					
+					fetch(resource, {
+						method: 'GET',
+						headers: headers
+					})
+					.then(function(res) {
+						return res.json();
+					})
+					.then(function(json) {
+						this.update(resource, token, json);
+					}.bind(EntityStore));
+				}
+			}
+		}
+		
+	};
+
+	function listenForChanges(resource, token)  {
+		if(listeners[resource]) {
+			if(listeners[resource].includes(token)) {
+				listeners[resource].push(token);
+			}
+		} else {
+			listeners[resource] = [token];
+		}
+
+		connection.send(JSON.stringify({"action": "subscribe", "resource": resource}));
+	}
+		
+	// from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+	function guid() {
+		function s4() {
+			return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+		}
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+			s4() + '-' + s4() + s4() + s4();
+	}
+
 	/*
 		This store is hacked together to develop entity-mixin.
 	*/
@@ -13,6 +79,8 @@
 		_store: new Map(),
 
 		_listeners: new Map(),
+
+		
 
 		_initContainer(map, entityId, token, init) {
 			if (!map.has(token)) {
@@ -56,11 +124,13 @@
 						this.setError(entityId, token, err);
 					}.bind(this));
 			}
+
 			return this._store.get(token).get(entityId);
 		},
 
 		update: function(entityId, token, entity) {
 			this._initContainer(this._store, entityId, token);
+			listenForChanges(entityId, token);
 			return new Promise((resolve) => {
 				D2L.GlobalSearch.update(this._store);
 
