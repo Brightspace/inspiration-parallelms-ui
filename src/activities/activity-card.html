@@ -22,7 +22,7 @@
 	<script>
 		/* @mixes SirenEntityMixin
 		   @mixes SirenActionMixin */
-		class ActivityCard extends SirenEntityMixin(Polymer.Element) {
+		class ActivityCard extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
 
 			static get is() { return 'd2l-activity-card'; }
 
