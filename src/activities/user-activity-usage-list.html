@@ -1,3 +1,4 @@
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
@@ -9,15 +10,31 @@
 			:host {
 				display: block;
 			}
+			.header {
+				background:#37A0CE;
+				color:white;
+			}
+			h2 {
+				margin :0;
+				padding: 10px;
+				font-weight: normal;
+			}
+			paper-card {
+				width: 100%;
+				overflow-y: scroll;
+			}
 		</style>
 
-		<template is="dom-if" if="{{hasEntities}}">
+		<paper-card>
+			<div class="header">
+				<h2>My Activities</h2>
+			</div>
 			<div class="card">
-				<template is="dom-repeat" items="{{entity.entities}}">
+				<template is="dom-repeat" items="[[entity.entities]]">
 					<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 				</template>
 			</div>
-		</template>
+		</paper-card>
 	</template>
 
 	<script>
@@ -28,26 +45,12 @@
 
 			static get properties() {
 				return {
-					entity: Object,
-					hasEntities: {
-						type: Boolean,
-						value: false
-					}
+					entity: Object
 				};
 			}
 
 			_getSelfLink(entity) {
 				return entity.getLinkByRel('self').href;
-			}
-
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
-
-			_changed(entity) {
-				if (entity.entities && entity.entities > 0) this.hasEntities = true;
 			}
 
 		}

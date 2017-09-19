@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-action-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-activity-card">
@@ -7,19 +8,28 @@
 			:host {
 				display: block;
 			}
+
+			input {
+				margin-left: 20px;
+			}
 		</style>
 
 		[[entity.properties.name]] ([[type]])
+
+		<input id="fileUpload" type="file" hidden="[[!hasAddFileAction]]">
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class ActivityCard extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes SirenEntityMixin
+		   @mixes SirenActionMixin */
+		class ActivityCard extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
 
 			static get is() { return 'd2l-activity-card'; }
 
 			static get properties() {
 				return {
+					addFileAction: Object,
+					hasAddFileAction: Boolean,
 					type: String
 				};
 			}
@@ -37,6 +47,20 @@
 					this.type = 'Quiz';
 				} else {
 					this.type = 'Unknown Activity Type';
+				}
+
+				this.hasAddFileAction = entity.hasActionByName('submit-file');
+				if (this.hasAddFileAction) {
+					this.addFileAction = entity.getActionByName('submit-file');
+
+					const self = this;
+					this.$.fileUpload.addEventListener('change', /* @this */ function() {
+						const file = this.files[0];
+
+						const formData = new FormData();
+						formData.append('submission', file);
+						self.performSirenAction(self.addFileAction, formData);
+					});
 				}
 			}
 
