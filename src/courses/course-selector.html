@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="d2l-course-selector">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+			.course-selector {
+				background:#E87511;
+				color: white;
+				--paper-tabs-selection-bar-color: white;
+			}
+		</style>
+		<paper-tabs selected="{{selectedCourse}}" scrollable class="course-selector">
+			<template is="dom-repeat" items="[[myCourses]]">
+				<paper-tab>Poopy</paper-tab>
+			</template>
+		</paper-tabs>
+		<slot></slot>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CourseSelector extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-course-selector'; }
+
+			static get properties() {
+				return {
+					token: String,
+					href: String,
+					selectedCourse: {
+						type: Number,
+						value: 0
+					},
+					myCourses: {
+						type: Array,
+						value: [1, 2, 3, 4]
+					},
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				console.log(entity);
+			}
+		}
+
+		window.customElements.define(CourseSelector.is, CourseSelector);
+	</script>
+</dom-module>
