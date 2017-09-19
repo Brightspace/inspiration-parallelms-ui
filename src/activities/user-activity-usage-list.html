@@ -11,11 +11,13 @@
 			}
 		</style>
 
-		<div class="card">
-			<template is="dom-repeat" items="{{entity.entities}}">
-				<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
-			</template>
-		</div>
+		<template is="dom-if" if="{{hasEntities}}">
+			<div class="card">
+				<template is="dom-repeat" items="{{entity.entities}}">
+					<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
+				</template>
+			</div>
+		</template>
 	</template>
 
 	<script>
@@ -24,8 +26,28 @@
 
 			static get is() { return 'd2l-user-activity-usage-list'; }
 
+			static get properties() {
+				return {
+					entity: Object,
+					hasEntities: {
+						type: Boolean,
+						value: false
+					}
+				};
+			}
+
 			_getSelfLink(entity) {
 				return entity.getLinkByRel('self').href;
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (entity.entities && entity.entities > 0) this.hasEntities = true;
 			}
 
 		}
