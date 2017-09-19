@@ -1,13 +1,16 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="siren-entity-mixin.html">
+<link rel="import" href="user/user-first-name.html">
 
 <dom-module id="my-welcome-page">
 	<template>
 		<style>
+			:host {
+				display: block;
+			}
 		</style>
-		<p>Welcome</p>
-		<p>Token: {{token}}</p>
-		<p>Href: {{href}}</p>
+		<h2>Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
+
 		<slot></slot>
 	</template>
 
@@ -20,11 +23,18 @@
 			static get properties() {
 				return {
 					token: {
-						type: String
+						type: String,
+						// value: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjkzNzg1NTk0LTZlNTctNGJmNy04MWY1LWEzNTdmZjAyYjA0OCJ9.eyJ0ZW5hbnRpZCI6ImYxYmJlNDE3LThjOWMtNDhjMC05MGIyLTc1YzBjZmFjZWRhNSIsInNjb3BlIjoiKjoqOioiLCJqdGkiOiI0NDI3MDNlNS00NDRjLTQ3ZmItYWNmYS01Y2I2MjM5NjgxZjYiLCJpc3MiOiJodHRwczovL2FwaS5icmlnaHRzcGFjZS5jb20vYXV0aCIsImF1ZCI6Imh0dHBzOi8vYXBpLmJyaWdodHNwYWNlLmNvbS9hdXRoL3Rva2VuIiwiZXhwIjoxNTA1NDA3MjU3LCJuYmYiOjE1MDU0MDM2NTd9.qmwCMpDwUoZeI-gffPcjieWcLl0j7wTOsXMY08SIcvFvVS4bULo6BU8mqUZsJeIHJqQCgP3ADgjyS-yrJG_Ct8ss9lwnP6GQ8X0B1yF6QVDKmbjrt8j2hEYFdaWw9VF6dKQfw_H535V2uNV-a02brhSo0Hqx9_kuIIm7Bayg6YsCDtWC7LVVlgwa_XcKkLETCOS9La_WeA_3H9It2nM1IxXdxTSaqCEBEaLQiIj2iwi3xO6bmp2ez0-w3-c-wLjgH3kJNsISpcABibvYVFL_53upfzFyC8zAx3A9h5iYY71-SYX1HATWEx-KWRblv2hXDvv59p9LpAxfO4VGfycDqw'
 					},
 					href: {
-						type: String
-					}
+						type: String,
+						// value: 'https://f1bbe417-8c9c-48c0-90b2-75c0cfaceda5.api.proddev.d2l'
+					},
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					},
 				};
 			}
 
@@ -38,6 +48,7 @@
 				console.log(entity);
 				console.log(this.href);
 				console.log(this.token);
+				console.log(this.whoami);
 			}
 
 		}
