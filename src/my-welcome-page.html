@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="siren-entity-mixin.html">
+<link rel="import" href="user/user-first-name.html">
+<link rel="import" href="user/user-image.html">
+
+<dom-module id="my-welcome-page">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			.welcome-container {
+				width: 300px;
+				height: auto;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.welcome-message {
+				text-align: center;
+			}
+			.user-image {
+				border-radius: 50%;
+				overflow: hidden;
+				width: 200px;
+				height: 200px;
+				margin: 0 auto;
+			}
+			.go-button {
+				background-color: cornflowerblue;
+				color: white;
+				height: 100%;
+				width: 100%;
+				margin-top: 10px;
+			}
+		</style>
+		<div class="welcome-container">
+			<h2 class="welcome-message">Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
+			<d2l-user-image class="user-image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
+			<paper-button class="go-button" on-tap="_goToLandingPage">Go</paper-button>
+		</div>
+		<slot></slot>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class WelcomePage extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'my-welcome-page'; }
+
+			static get properties() {
+				return {
+					token: {
+						type: String,
+						notify: true
+					},
+					href: {
+						type: String
+					},
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					},
+					route: Object
+				};
+			}
+
+			_goToLandingPage() {
+				this.set('route.path', 'view1');
+			}
+
+		}
+
+		window.customElements.define(WelcomePage.is, WelcomePage);
+	</script>
+</dom-module>

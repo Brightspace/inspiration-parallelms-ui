@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="updates/updates-card.html">
 <link rel="import" href="siren-entity.html">
+<link rel="import" href="siren-entity-mixin.html">
 
 <dom-module id="my-view1">
 	<template>
@@ -51,7 +52,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
-		<d2l-siren-entity href="{{entrypoint}}" token="{{token}}" entity="{{rootEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="{{organization.href}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
@@ -65,7 +65,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</template>
 
 	<script>
-		class MyView1 extends Polymer.Element {
+		/* @mixes SirenEntityMixin */
+		class MyView1 extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'my-view1'; }
 
@@ -80,14 +81,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: String,
 						value: 'https://api.proddev.d2l'
 					},
-					rootEntity: Object,
+					entity: Object,
 					organization: {
 						type: Object,
-						computed: '_getLinkByRel(rootEntity, "https://api.brightspace.com/rels/organization")'
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organization")'
 					},
 					whoami: {
 						type: Object,
-						computed: '_getLinkByRel(rootEntity, "https://api.brightspace.com/rels/whoami")',
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
 						notify: true
 					},
 					orgEntity: Object,
