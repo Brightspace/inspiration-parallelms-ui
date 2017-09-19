@@ -2,16 +2,13 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="courses-list.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-courses-card">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
-			}
-			.header {
-				background:#37A0CE;
-				color:white;
 			}
 			h2 {
 				margin :0;
@@ -25,7 +22,7 @@
 			}
 		</style>
 		<paper-card>
-			<div class="header">
+			<div class="card-header">
 				<h2>My Courses</h2>
 			</div>
 			<template is="dom-repeat" items="{{entity.entities}}">

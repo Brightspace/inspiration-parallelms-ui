@@ -19,9 +19,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="course-name.html">
 <link rel="import" href="root/root.html">
+<link rel="import" href="shared-styles.html">
 
 <link rel="lazy-import" href="my-view1.html">
 <link rel="lazy-import" href="my-view2.html">
@@ -30,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="my-app">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				--app-primary-color: #4285f4;
 				--app-secondary-color: black;
@@ -47,6 +49,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			app-header paper-icon-button {
 				--paper-icon-button-ink-color: white;
 			}
+
+			paper-toolbar {
+				--paper-toolbar-background: #E87511;
+			}
+
+			.title {
+				align-self: center;
+			}
+
+			.search-bar {
+				width: 100%;
+				--paper-input-container-color: white;
+				--paper-input-container-focus-color: white;
+				--paper-input-container-input-color: white;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
 		</style>
 
 		<app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
@@ -58,8 +77,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			tail="{{subroute}}"></app-route>
 
 		<paper-toolbar>
-				<span slot="top" class="title">ParalleLMS</span>
-			</paper-toolbar>
+			<div slot="top" class="flex-parent" style="width: 100%">
+				<span class="title flex-1">ParalleLMS</span>
+				<paper-input label="Search" class="search-bar" value="{{searchString}}"></paper-input>
+				<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+			</div>
+		</paper-toolbar>
 
 
 		<iron-pages
@@ -91,7 +114,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					subroute: String,
 					// This shouldn't be neccessary, but the Analyzer isn't picking up
 					// Polymer.Element#rootPath
-					rootPath: String
+					rootPath: String,
+					searchString: String
 				};
 			}
 

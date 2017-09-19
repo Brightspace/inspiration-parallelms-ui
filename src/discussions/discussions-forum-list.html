@@ -5,10 +5,11 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-forum-item.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-discussions-forum-list">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
 				font-family: 'Source Sans Pro', sans-serif;
@@ -18,22 +19,18 @@
 				height: 650px;
 				overflow-y: scroll;
 			}
-			.header {
-				background: #37A0CE;
-				color: white;
-			}
 			paper-tabs{
 				--paper-tabs-selection-bar-color: white;
 			}
-			.card-header {
+			.dicsussions-card-header {
 				margin:0;
 				padding:10px;
 				font-weight:normal;
 			}
 		</style>
 		<paper-card class="medium-card-size">
-			<div class="header">
-				<h2 class="card-header">Discussions</h2>
+			<div class="card-header">
+				<h2 class="dicsussions-card-header">Discussions</h2>
 				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
 					<template is="dom-repeat" items="[[forums]]">
 						<paper-tab>[[item.properties.name]]</paper-tab>
