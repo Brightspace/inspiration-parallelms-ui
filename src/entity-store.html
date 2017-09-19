@@ -33,32 +33,23 @@
 
 		},
 
-		_doFetch: function(entityId, token, headers) {
-			fetch(entityId, {
-				method: 'GET',
-				headers: headers
-			})
-				.then(function(res) {
-					return res.json();
-				})
-				.then(function(json) {
-					this.update(entityId, token, json);
-				}.bind(this));
-		},
-
-		fetch: function(entityId, token, options = {}) {
+		fetch: function(entityId, token) {
 			var entity = this._initContainer(this._store, entityId, token);
 			if (!entity) {
 				this._store.get(token).set(entityId, { 'status': 'fetching', 'entity': null });
 
 				var headers = new Headers();
 				headers.set('Authorization', `Bearer ${token}`);
-
-				if (options.idle) {
-					Polymer.Async.idlePeriod.run(() => this._doFetch(entityId, token, headers));
-				} else {
-					this._doFetch(entityId, token, headers);
-				}
+				fetch(entityId, {
+					method: 'GET',
+					headers: headers
+				})
+					.then(function(res) {
+						return res.json();
+					})
+					.then(function(json) {
+						this.update(entityId, token, json);
+					}.bind(this));
 			}
 			return this._store.get(token).get(entityId);
 		},

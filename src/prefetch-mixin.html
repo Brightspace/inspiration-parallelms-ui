@@ -29,6 +29,37 @@
 					this.constructor.beginPrefetch(this.entity, this.token);
 				}
 
+				// fetch interesting entity and iterate through the constructors
+				static _doPrefetch(href, token, elements) {
+					console.debug(`prefetch "${href}" - start`);
+					const fetchResult = D2L.EntityStore.fetch(href, token);
+					for (const interestingElement of elements) {
+						if ( fetchResult.status === 'fetching') {
+							console.debug(`prefetch "${href}" - fetching`);
+							const interestingListener = {
+								href: href,
+								token: token
+							};
+							interestingListener.listener = (interestingEntity) => {
+								console.debug(`prefetch "${href}" - fetched`);
+								console.debug(`prefetch "${href}" - removing listener`);
+								interestingListeners.delete(interestingListener);
+								D2L.EntityStore.removeListener(href, token, interestingListener.listener);
+								console.debug(`prefetch "${href}" - starting next prefetch`);
+								interestingElement.beginPrefetch && interestingElement.beginPrefetch(interestingEntity, token);
+							};
+
+							console.debug(`prefetch "${href}" - adding listener`);
+							interestingListeners.add(interestingListener);
+							D2L.EntityStore.addListener(href, token, interestingListener.listener);
+						} else {
+							console.debug(`prefetch "${href}" - fetched`);
+							console.debug(`prefetch "${href}" - starting next prefetch`);
+							interestingElement.beginPrefetch && interestingElement.beginPrefetch(fetchResult.entity, token);
+						}
+					}
+				}
+
 				static beginPrefetch(entity, token) {
 					entity = window.D2L.Hypermedia.Siren.Parse(entity);
 
@@ -50,34 +81,7 @@
 								continue;
 							}
 
-							// fetch interesting entity and iterate through the constructors
-							console.debug(`prefetch "${href}" - start`);
-							const fetchResult = D2L.EntityStore.fetch(href, token, { idle: true });
-							for (const interestingElement of elements) {
-								if ( fetchResult.status === 'fetching') {
-									console.debug(`prefetch "${href}" - fetching`);
-									const interestingListener = {
-										href: href,
-										token: token
-									};
-									interestingListener.listener = (interestingEntity) => {
-										console.debug(`prefetch "${href}" - fetched`);
-										console.debug(`prefetch "${href}" - removing listener`);
-										interestingListeners.delete(interestingListener);
-										D2L.EntityStore.removeListener(href, token, interestingListener.listener);
-										console.debug(`prefetch "${href}" - starting next prefetch`);
-										interestingElement.beginPrefetch && interestingElement.beginPrefetch(interestingEntity, token);
-									};
-
-									console.debug(`prefetch "${href}" - adding listener`);
-									interestingListeners.add(interestingListener);
-									D2L.EntityStore.addListener(href, token, interestingListener.listener);
-								} else {
-									console.debug(`prefetch "${href}" - fetched`);
-									console.debug(`prefetch "${href}" - starting next prefetch`);
-									interestingElement.beginPrefetch && interestingElement.beginPrefetch(fetchResult.entity, token);
-								}
-							}
+							Polymer.Async.idlePeriod.run(() => this._doPrefetch(href, token, elements));
 						}
 					}
 				}
