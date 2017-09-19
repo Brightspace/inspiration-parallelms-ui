@@ -1,6 +1,54 @@
 <link rel="import" href="entity-store.html">
 
 <script>
+	var connection = new WebSocket("ws://localhost:8080", "protocolOne");
+		var clientId = guid();
+		var listeners = {};
+
+        connection.onopen = function () {
+            connection.send(JSON.stringify({"action": "register", "deviceId": clientId})); // Send the message 'Ping' to the server
+        };
+
+        // Log errors
+        connection.onerror = function (error) {
+            console.log('WebSocket Error ' + error);
+        };
+
+        // Log messages from the server
+        connection.onmessage = function (e) {
+			var data = JSON.parse(e.data);
+			if(data.action && data.action == "invalidate") {
+				var resource = data.resource;
+				if (listeners[resource]) {
+					for(var i=0; i<listeners[resource].length; i++) {
+						listeners[resource]();
+					}
+				}
+			}
+			
+		};
+
+		function listenForChanges(resource, token, callback)  {
+			if(listeners[resource]) {
+				listeners[resource].push(callback);
+			} else {
+				listeners[resource] = [callback];
+			}
+
+			connection.send(JSON.stringify({"action": "subscribe", "resource": resource}));
+		}
+		
+		// from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+        function guid() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+        }
+
 	/*
 		@polymerMixin
 	*/
@@ -30,6 +78,8 @@
 				});
 				return fields;
 			}
+
+			
 
 			performSirenAction(action, fields) {
 				if (!action) {
@@ -63,7 +113,24 @@
 				}
 
 				var token = this.token;
+				// such a hacky clone, but is fast based on 
+				// https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
+				var noCacheHeaders = JSON.parse(JSON.stringify(headers));
+				noCacheHeaders.set("pragma", "no-cache");
+				noCacheHeaders.set("cache-control", "no-cache");
 
+				var updateFunction = function() {
+					fetch(url.href, {
+					method: action.method,
+					body: body,
+					headers: noCacheHeaders
+				})
+					.then(function(response) {
+						return window.D2L.EntityStore.update(url.href, token, response);
+					});
+				};
+
+				listenForChanges(url.href, updateFunction);
 				return fetch(url.href, {
 					method: action.method,
 					body: body,
