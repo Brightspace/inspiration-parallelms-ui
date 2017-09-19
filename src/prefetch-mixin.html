@@ -2,6 +2,9 @@
 
 <script>
 	(function() {
+		let prefetching = 0;
+		const concurrency = 100;
+
 		/*
 			@polymerMixin
 			Calls D2L.EntityStore.fetch for relevant subentities to be prefetched
@@ -31,10 +34,15 @@
 
 				// fetch interesting entity and iterate through the constructors
 				static _doPrefetch(href, token, elements) {
+					if (prefetching >= concurrency) {
+						Polymer.Async.idlePeriod.run(() => this._doPrefetch(href, token, elements));
+						return;
+					}
 					console.debug(`prefetch "${href}" - start`);
 					const fetchResult = D2L.EntityStore.fetch(href, token);
 					for (const interestingElement of elements) {
 						if ( fetchResult.status === 'fetching') {
+							prefetching++;
 							console.debug(`prefetch "${href}" - fetching`);
 							const interestingListener = {
 								href: href,
@@ -45,8 +53,11 @@
 								console.debug(`prefetch "${href}" - removing listener`);
 								interestingListeners.delete(interestingListener);
 								D2L.EntityStore.removeListener(href, token, interestingListener.listener);
+								prefetching--;
 								console.debug(`prefetch "${href}" - starting next prefetch`);
-								interestingElement.beginPrefetch && interestingElement.beginPrefetch(interestingEntity, token);
+								if (interestingEntity) {
+									interestingElement.beginPrefetch && interestingElement.beginPrefetch(interestingEntity, token);
+								}
 							};
 
 							console.debug(`prefetch "${href}" - adding listener`);

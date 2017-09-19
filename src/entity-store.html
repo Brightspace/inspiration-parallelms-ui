@@ -49,6 +49,9 @@
 					})
 					.then(function(json) {
 						this.update(entityId, token, json);
+					}.bind(this))
+					.catch(function(err) {
+						this.setError(entityId, token, err);
 					}.bind(this));
 			}
 			return this._store.get(token).get(entityId);
@@ -62,6 +65,18 @@
 				this._notify(entityId, token, entity);
 
 				resolve(entity);
+
+			});
+		},
+
+		setError: function(entityId, token, error) {
+			this._initContainer(this._store, entityId, token);
+			return new Promise((resolve) => {
+
+				this._store.get(token).set(entityId, { 'status': 'error', 'entity': null, 'error': error });
+				this._notifyError(entityId, token, error);
+
+				resolve(error);
 
 			});
 		},
@@ -81,6 +96,13 @@
 			for (const listener of listenerSet) {
 				listener(entity);
 			}
+		},
+
+		_notifyError: function(entityId, token, error) {
+			const listenerSet = this._initContainer(this._listeners, entityId, token, new Set());
+			for (const listener of listenerSet) {
+				listener(null, error);
+			}
 		}
 
 	};
@@ -90,4 +112,3 @@
 
 })();
 </script>
-<script type="text/javascript" src="../data/items.js"></script>
