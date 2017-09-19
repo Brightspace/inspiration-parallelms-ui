@@ -15,14 +15,9 @@
 				display: inline-block;
 				width: 100%;
 			}
-			paper-card {
-				height: 650px;
-				overflow-y: scroll;
-				width: 100%;
-			}
 		</style>
 
-		<paper-card>
+		<paper-card class="medium-card-size">
 			<div class="card-header">
 				<h2 class="card-header-text">New Updates</h2>
 				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color: white>
@@ -32,13 +27,23 @@
 			</div>
 			<iron-pages selected="{{selected}}">
 				<div>
-					<template is="dom-repeat" items="[[newsUpdates]]" strip-whitespace>
-						<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item>
+					<template is="dom-if" if="{{hasUpdates}}">
+						<template is="dom-repeat" items="[[newsUpdates]]" strip-whitespace>
+							<d2l-update-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item>
+						</template>
+					</template>
+					<template is="dom-if" if="{{!hasUpdates}}">
+						<span>There are no updates</span>
 					</template>
 				</div>
 				<div>
-					<template is="dom-repeat" items="[[gradeUpdates]]" strip-whitespace>
-						<d2l-update-item-grades href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item-grades>
+					<template is="dom-if" if="{{hasGrades}}">
+						<template is="dom-repeat" items="[[gradeUpdates]]" strip-whitespace>
+							<d2l-update-item-grades href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-update-item-grades>
+						</template>
+					</template>
+					<template is="dom-if" if="{{!hasGrades}}">
+						<span>There are no grades</span>
 					</template>
 				</div>
 			</iron-pages>
@@ -64,7 +69,15 @@
 						type: Array,
 						value: []
 					},
-					token: String
+					token: String,
+					hasUpdates: {
+						type: Boolean,
+						value: false
+					},
+					hasGrades: {
+						type: Boolean,
+						value: false
+					}
 				};
 			}
 
@@ -77,6 +90,8 @@
 			_changed(entity) {
 				this.newsUpdates = entity.getSubEntitiesByClass('news');
 				this.gradeUpdates = entity.getSubEntitiesByClass('grade');
+				this.hasUpdates = this.newsUpdates.length > 0;
+				this.hasGrades = this.gradeUpdates.length > 0;
 			}
 
 			_getSelfLink(entity) {

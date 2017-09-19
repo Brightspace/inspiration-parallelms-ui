@@ -56,9 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
 		<div class="not">
-			<template is="dom-if" if="{{renderActivityUsageList}}">
-				<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}" class="card-item" has-activites="{{renderActivityUsageList}}"></d2l-user-activity-usage-list>
-			</template>
+			<!-- <template is="dom-if" if="{{renderActivityUsageList}}"> -->
+			<d2l-user-activity-usage-list href="{{myActivities.href}}" token="{{token}}" class="card-item" has-activites="{{renderActivityUsageList}}"></d2l-user-activity-usage-list>
+			<!-- </template> -->
 			<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}" class="card-item"></d2l-courses-card>
 			<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}" class="card-item"></d2l-discussions-forum-list><br>
 			<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}" class="card-item"></d2l-updates-card>

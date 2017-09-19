@@ -21,17 +21,24 @@
 		<paper-card class="medium-card-size">
 			<div class="card-header">
 				<h2 class="card-header-text">Discussions</h2>
-				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
-					<template is="dom-repeat" items="[[forums]]">
-						<paper-tab>[[item.properties.name]]</paper-tab>
-					</template>
-				</paper-tabs>
-			</div>
-			<iron-pages selected="{{selected}}">
-				<template is="dom-repeat" items="[[forums]]">
-					<d2l-discussions-forum-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-forum-item>
+				<template is="dom-if" if="{{hasForums}}">
+					<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
+						<template is="dom-repeat" items="[[forums]]">
+							<paper-tab>[[item.properties.name]]</paper-tab>
+						</template>
+					</paper-tabs>
 				</template>
-			</iron-pages>
+			</div>
+			<template is="dom-if" if="{{hasForums}}">
+				<iron-pages selected="{{selected}}">
+					<template is="dom-repeat" items="[[forums]]">
+						<d2l-discussions-forum-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-forum-item>
+					</template>
+				</iron-pages>
+			</template>
+			<template is="dom-if" if="{{!hasForums}}">
+				<span>There are no discussions</span>
+			</template>
 		</paper-card>
 		<slot></slot>
 	</template>
@@ -53,7 +60,11 @@
 						value: 0
 					},
 					token: String,
-					href: String
+					href: String,
+					hasForums: {
+						type: Boolean,
+						value: false
+					}
 				};
 			}
 
@@ -65,6 +76,7 @@
 
 			_changed(entity) {
 				this.forums = entity.entities;
+				this.hasForums = this.forums.length > 0;
 			}
 
 			getHref(item) {
