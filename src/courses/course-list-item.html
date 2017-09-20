@@ -5,7 +5,7 @@
 <link rel="import" href="../siren-entity.html">
 <link rel="import" href="../localization-mixin.html">
 
-<dom-module id="d2l-course-item">
+<dom-module id="d2l-course-list-item">
 	<template>
 		<style>
 			:host {
@@ -27,10 +27,12 @@
 				margin: 0px;
 			}
 		</style>
-			<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}} ></d2l-siren-entity>
+			<d2l-siren-entity href="{{organization.href}}" token="{{token}}" entity="{{organizationEntity}}"></d2l-siren-entity>
+			<d2l-siren-entity href="{{courseImage.href}}" token="{{token}}" entity="{{courseImageEntity}}"></d2l-siren-entity>
+
 			<paper-card is-active image="[[image.href]]">
 				<div>
-					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
+					<h4>[[organizationEntity.properties.name]] ([[organizationEntity.properties.code]])</h4>
 				</div>
 				<template is="dom-if" if="[[startDate]]" />
 					<div>Start Date: [[startDate]]</div>
@@ -44,9 +46,9 @@
 	<script>
 		/* @mixes LocalizationMixin
 		   @mixes SirenEntityMixin */
-		class CourseItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
+		class CourseListItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
 
-			static get is() { return 'd2l-course-item'; }
+			static get is() { return 'd2l-course-list-item'; }
 
 			static get properties() {
 				return {
@@ -62,14 +64,19 @@
 						type: String,
 						value: ''
 					},
+					organization: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organization")'
+					},
+					organizationEntity: Object,
 					courseImage: {
 						type: Object,
-						computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/organization-image")'
+						computed: '_getSubEntityByRel(organizationEntity, "https://api.brightspace.com/rels/organization-image")'
 					},
 					courseImageEntity: Object,
 					image: {
 						type: Object,
-						value: { href: ''},
+						value: { href: '' },
 						computed: '_getLinkByClass(courseImageEntity, "banner")'
 					}
 				};
@@ -77,22 +84,22 @@
 
 			static get observers() {
 				return [
-					'_changed(entity)'
+					'_changed(organizationEntity)'
 				];
 			}
 
-			_changed(entity) {
-				this.isActive = entity.properties.isActive;
+			_changed(organizationEntity) {
+				this.isActive = organizationEntity.properties.isActive;
 
-				if (entity.properties.startDate) {
-					this.startDate = this._formatDate(entity.properties.startDate, this.locale);
+				if (organizationEntity.properties.startDate) {
+					this.startDate = this._formatDate(organizationEntity.properties.startDate, this.locale);
 				}
-				if (entity.properties.endDate) {
-					this.endDate = this._formatDate(entity.properties.endDate, this.locale);
+				if (organizationEntity.properties.endDate) {
+					this.endDate = this._formatDate(organizationEntity.properties.endDate, this.locale);
 				}
 			}
 		}
 
-		window.customElements.define(CourseItem.is, CourseItem);
+		window.customElements.define(CourseListItem.is, CourseListItem);
 	</script>
 </dom-module>

@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="course-list-item.html">
+
+<dom-module id="d2l-courses-drawer">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: flex;
+				flex-direction: column;
+			}
+
+			d2l-course-list-item {
+				display: flex;
+			}
+		</style>
+
+		<d2l-siren-entity href="{{user.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{myEnrollments.href}}" token="{{token}}" entity="{{myEnrollmentsEntity}}"></d2l-siren-entity>
+
+		<template is="dom-repeat" items="{{myEnrollmentsEntity.entities}}">
+			<d2l-course-list-item href="{{item.href}}" token="{{token}}"></d2l-course-list-item>
+		</template>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CoursesDrawer extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-courses-drawer'; }
+
+			static get properties() {
+				return {
+					user: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")'
+					},
+					userEntity: Object,
+					myEnrollments: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
+					},
+					myEnrollmentsEntity: Object
+				};
+			}
+		}
+
+		window.customElements.define(CoursesDrawer.is, CoursesDrawer);
+	</script>
+</dom-module>

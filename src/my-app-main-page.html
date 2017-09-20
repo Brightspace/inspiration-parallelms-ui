@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="courses/courses-card.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
@@ -28,13 +28,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				align-items: stretch;
 			}
 
-			.courses-item {
-				max-width: 1200px;
-				width: calc(20%);
-				padding: 20px 0px 0px 20px;
-				margin-left: 0; margin-right: auto;
-			}
-
 			.calendar {
 				width: calc(80% - 50px);
 				margin: 20px 20px 0px 10px;
@@ -44,7 +37,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		</style>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 		<div class="layout">
-			<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}" class="courses-item"></d2l-courses-card>
 			<paper-card class="calendar">
 				<button on-tap="_goToPage">Go to View1</button>
 			</paper-card>

@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
@@ -21,10 +23,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="my-icons.html">
-<link rel="import" href="course-name.html">
 <link rel="import" href="root/root.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="user/user-card.html">
+<link rel="import" href="courses/courses-drawer.html">
 <link rel="import" href="search-results-page.html">
 
 <link rel="lazy-import" href="my-app-main-page.html">
@@ -41,12 +43,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			:host {
 				--app-primary-color: #4285f4;
 				--app-secondary-color: black;
-
 				display: block;
 			}
 
-
-			app-header {
+			app-header-layout {
 				color: #fff;
 				background-color: var(--app-primary-color);
 			}
@@ -55,14 +55,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				--paper-icon-button-ink-color: white;
 			}
 
-			paper-toolbar {
-				--paper-toolbar-background: #E87511;
+			app-toolbar {
+				background-color: #E87511;
 			}
 
-			.title {
-				align-self: center;
-				color: white;
+			app-drawer {
+				flex-direction: column;
 			}
+
+			app-drawer > * {
+				display: flex;
+			}
+
 			a:active {
 				color: blue;
 			}
@@ -85,35 +89,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			data="{{routeData}}"
 			tail="{{subroute}}"></app-route>
 
-		<paper-toolbar>
-			<div slot="top" class="flex-parent" style="width: 100%">
-				<a href="./" class="title flex-1">ParalleLMS</a>
-				<template  is="dom-if" if="{{token}}">
-					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
-					<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
-				</template>
-			</div>
-		</paper-toolbar>
+		<app-drawer-layout>
+			<app-drawer slot="drawer">
+				<a href="./">ParalleLMS</a>
+				<d2l-courses-drawer href="{{rootHref}}" token="{{token}}"></d2l-courses-drawer>
+			</app-drawer>
 
-		<template is="dom-if" if="{{showSearchResults}}">
-			<d2l-search-results-page results="{{searchResults}}"></d2l-search-results-page>
-		</template>
+			<app-header-layout>
+				<app-toolbar>
+					<div class="flex-parent" style="width: 100%">
+						<template  is="dom-if" if="{{token}}">
+							<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
+							<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+						</template>
+					</div>
+				</app-toolbar>
+			</app-header-layout>
 
-		<template is="dom-if" if="{{!showSearchResults}}">
-			<iron-pages
-				selected="[[page]]"
-				attr-for-selected="name"
-				fallback-selection="view404"
-				role="main">
-				<my-app-main-page name="app-main-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-app-main-page>
-				<my-view1 name="view1" token="{{token}}" href="{{rootHref}}"></my-view1>
-				<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
-				<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
-				<my-view2 name="view2"></my-view2>
-				<my-view3 name="view3"></my-view3>
-				<my-view404 name="view404"></my-view404>
-			</iron-pages>
-		</template>
+			<template is="dom-if" if="{{showSearchResults}}">
+				<d2l-search-results-page results="{{searchResults}}"></d2l-search-results-page>
+			</template>
+
+			<template is="dom-if" if="{{!showSearchResults}}">
+				<iron-pages
+					selected="[[page]]"
+					attr-for-selected="name"
+					fallback-selection="view404"
+					role="main">
+					<my-app-main-page name="app-main-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-app-main-page>
+					<my-view1 name="view1" token="{{token}}" href="{{rootHref}}"></my-view1>
+					<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
+					<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
+					<my-view2 name="view2"></my-view2>
+					<my-view3 name="view3"></my-view3>
+					<my-view404 name="view404"></my-view404>
+				</iron-pages>
+			</template>
+		</app-drawer-layout>
 	</template>
 
 	<script>
