@@ -2,6 +2,8 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="course-almost-name.html">
+<link rel="import" href="../siren-entity.html">
 
 <dom-module id="d2l-course-selector">
 	<template>
@@ -15,9 +17,16 @@
 				--paper-tabs-selection-bar-color: white;
 			}
 		</style>
+
+		<button on-click="_selectionChanged">test</button>
 		<paper-tabs selected="{{selectedCourse}}" scrollable class="course-selector">
+			<paper-tab>
+				Org. Home
+			</paper-tab>
 			<template is="dom-repeat" items="[[myCourses]]">
-				<paper-tab>Poopy</paper-tab>
+				<paper-tab>
+					<d2l-course-almost-name href="{{item.href}}" token="{{token}}"></d2l-course-almost-name>
+				</paper-tab>
 			</template>
 		</paper-tabs>
 		<slot></slot>
@@ -39,8 +48,8 @@
 					},
 					myCourses: {
 						type: Array,
-						value: [1, 2, 3, 4]
-					},
+						value: []
+					}
 				};
 			}
 
@@ -51,7 +60,7 @@
 			}
 
 			_changed(entity) {
-				console.log(entity);
+				this.myCourses = entity.entities;
 			}
 		}
 

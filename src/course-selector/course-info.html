@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="d2l-course-info">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+
+		<span>[[entity.properties.name]]</span>
+		<slot></slot>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CourseInfo extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-course-info'; }
+
+			static get properties() {
+				return {
+					token: String,
+					href: String
+				};
+			}
+		}
+
+		window.customElements.define(CourseInfo.is, CourseInfo);
+	</script>
+</dom-module>
