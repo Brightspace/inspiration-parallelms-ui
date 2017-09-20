@@ -12,6 +12,10 @@
 			:host {
 				display: block;
 			}
+			.header {
+				text-align: center;
+				font-weight: lighter;
+			}
 			.login-container {
 				width: 300px;
 				height: auto;
@@ -29,7 +33,7 @@
 			<d2l-siren-entity href="{{entrypoint}}" token="{{token}}" entity="{{rootEntity}}"></d2l-siren-entity>
 		</template>
 		<div class="login-container">
-			<h2>Login</h2>
+			<h2 class="header">ParalleLMS</h2>
 			<paper-dropdown-menu label="Endpoints" class="endpoints-dropdown">
 				<paper-listbox slot="dropdown-content" selected="{{selected}}">
 					<template is="dom-repeat" items="{{endpoints}}">
@@ -38,7 +42,7 @@
 				</paper-listbox>
 			</paper-dropdown-menu>
 			<paper-input label="Token" value="{{token}}"></paper-input>
-			<paper-button class="login-button" on-tap="_login">Goooo</paper-button>
+			<paper-button class="login-button" on-tap="_login">Log In</paper-button>
 		</div>
 		<slot></slot>
 	</template>
@@ -92,14 +96,17 @@
 			}
 
 			_login() {
-				if (this.token !== '') this.wannaLogIn = true;
+				if (this.token && this.token !== '') this.wannaLogIn = true;
+				else this.wannaLogIn = false;
 			}
 
 			_rootEntityChanged() {
-				var rootEntityLink = this.rootEntity && this.rootEntity.getLinkByRel('self').href;
+				var rootEntityLink = this.rootEntity && this.rootEntity.getLinkByRel('self') && this.rootEntity.getLinkByRel('self').href;
 				if (rootEntityLink) this.href = rootEntityLink;
-				if (this.href !== '') {
+				if (this.href && this.href !== '') {
 					this.set('route.path', 'welcome-page');
+				} else {
+					this.wannaLogIn = false;
 				}
 			}
 		}

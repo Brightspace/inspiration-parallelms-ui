@@ -44,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				--app-secondary-color: black;
 
 				display: block;
+				height: 100vh;
 			}
 
 
@@ -87,13 +88,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			tail="{{subroute}}"></app-route>
 
 		<paper-toolbar>
-			<div slot="top" class="flex-parent" style="width: 100%">
-				<a href="./" class="title flex-1">ParalleLMS</a>
-				<template  is="dom-if" if="{{token}}">
-					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
-					<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
-				</template>
-			</div>
+				<div slot="top" class="flex-parent" style="width: 100%">
+					<a href="./" class="title flex-1">ParalleLMS</a>
+					<template  is="dom-if" if="{{showSearch}}">
+						<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
+						<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+					</template>
+				</div>
 		</paper-toolbar>
 
 		<template is="dom-if" if="{{showSearchResults}}">
@@ -146,6 +147,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					},
 					token: {
 						type: String
+					},
+					showSearch: {
+						type: Boolean,
+						value: false
 					}
 				};
 			}
@@ -166,6 +171,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				// If no page was found in the route data, page will be an empty string.
 				// Default to 'login-page' in that case.
 				this.page = page || 'login-page';
+				if (page === '' || page === 'welcome-page' || page === 'login-page') {
+					this.showSearch = false;
+				} else if (this.token !== '') {
+					this.showSearch = true;
+				}
 			}
 
 			_pageChanged(page) {
