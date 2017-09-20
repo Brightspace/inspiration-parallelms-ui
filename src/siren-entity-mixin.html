@@ -26,6 +26,10 @@
 				return entity && entity.getLinkByRel(rel);
 			}
 
+			_getLinkByClass(entity, cls) {
+				return entity && entity.getLinkByClass(cls);
+			}
+
 			_getActionByName(entity, name) {
 				return entity && entity.getActionByName(name);
 			}

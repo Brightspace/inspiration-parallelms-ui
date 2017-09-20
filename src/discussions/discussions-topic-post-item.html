@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../user/user-name.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
@@ -78,9 +79,22 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
 		/* @mixes SirenActionMixin */
-		class DiscussionsTopicPostItem extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+		/* @mixes PrefetchMixin */
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getActionByName('get-all-posts'),
+						elements: [window.customElements.get('d2l-discussions-topic-post-reply-list')]
+					}, {
+						getLinks: entity => entity.getLinkByRel('author'),
+						elements: [window.customElements.get('d2l-user-name')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-topic-post-item'; }
 
@@ -144,7 +158,7 @@
 				else this.readClass = 'read';
 				this.$.topicitem.classList.add(this.readClass);
 				// THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
-				this.$.message.innerHTML = this.post.properties.message;
+				this.$.message.innerHTML = this.get('entity.properties.message');
 				// I MEAN IT!! THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
 			}
 

@@ -86,8 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<paper-toolbar>
 			<div slot="top" class="flex-parent" style="width: 100%">
 				<a href="./" class="title flex-1">ParalleLMS</a>
-				<paper-input label="Search" class="search-bar" value="{{searchString}}"></paper-input>
-				<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+				<template  is="dom-if" if="{{token}}">
+					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}"></d2l-search-input>
+					<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+				</template>
 			</div>
 		</paper-toolbar>
 

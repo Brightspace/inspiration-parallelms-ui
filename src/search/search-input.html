@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../global-search.html">
+<link rel="import" href="../discussions/discussions-topic.html">
+
+<dom-module id="d2l-search-input">
+	<template>
+		<paper-input label="Search" value="{{value}}"></paper-input>
+		<template is="dom-repeat" items="[[update(value)]]">
+			<d2l-discussions-topic href="[[item.href]]" token="[[item.token]]" ></d2l-discussions-topic>
+		</template>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class SearchInput extends Polymer.Element {
+
+			static get is() { return 'd2l-search-input'; }
+
+			static get properties() {
+				return {
+					value: {
+						type: String,
+						value: ''
+					}
+				};
+			}
+
+			constructor() {
+				super();
+			}
+
+			update(text) {
+				if ( text.length > 1) {
+					return D2L.GlobalSearch.search( text );
+				}
+				return [];
+			}
+		}
+
+		window.customElements.define(SearchInput.is, SearchInput);
+	</script>
+</dom-module>
