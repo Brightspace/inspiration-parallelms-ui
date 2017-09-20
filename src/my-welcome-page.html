@@ -18,12 +18,14 @@
 			}
 			.welcome-message {
 				text-align: center;
+				font-weight: lighter;
+				font-size: 40px;
 			}
 			.user-image {
 				border-radius: 50%;
 				overflow: hidden;
-				width: 200px;
-				height: 200px;
+				width: 300px;
+				height: 300px;
 				margin: 0 auto;
 			}
 			.go-button {
@@ -31,13 +33,13 @@
 				color: white;
 				height: 100%;
 				width: 100%;
-				margin-top: 10px;
+				margin-top: 30px;
 			}
 		</style>
 		<div class="welcome-container">
 			<h2 class="welcome-message">Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
 			<d2l-user-image class="user-image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
-			<paper-button class="go-button" on-tap="_goToLandingPage">Go</paper-button>
+			<paper-button class="go-button" on-tap="_goToLandingPage">I'm Ready</paper-button>
 		</div>
 		<slot></slot>
 	</template>
