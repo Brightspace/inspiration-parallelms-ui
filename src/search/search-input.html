@@ -7,9 +7,6 @@
 <dom-module id="d2l-search-input">
 	<template>
 		<paper-input label="Search" value="{{value}}"></paper-input>
-		<template is="dom-repeat" items="[[update(value)]]">
-			<d2l-discussions-topic href="[[item.href]]" token="[[item.token]]" ></d2l-discussions-topic>
-		</template>
 	</template>
 
 	<script>
@@ -24,6 +21,10 @@
 						type: String,
 						value: '',
 						notify: true
+					},
+					results: {
+						type: Array,
+						notify: true
 					}
 				};
 			}
@@ -32,11 +33,17 @@
 				super();
 			}
 
-			update(text) {
+			static get observers() {
+				return [
+					'_searchResultChanged(value)'
+				];
+			}
+
+			_searchResultChanged(text) {
+				this.results = [];
 				if ( text.length > 1) {
-					return D2L.GlobalSearch.search( text );
+					this.results = D2L.GlobalSearch.search( text );
 				}
-				return [];
 			}
 		}
 

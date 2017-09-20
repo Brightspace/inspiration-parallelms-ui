@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <dom-module id="d2l-search-results-page">
 	<template>
@@ -22,6 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				display: flex;
 				flex-wrap: wrap;
 				width: calc(100%);
+				padding-top: 20px; padding-bottom: 20px;
 			}
 
 			.col {
@@ -44,7 +46,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
-		<span>SEARCH PAGE</span>
+		<div class="not">
+			<template is="dom-repeat" items="{{results}}">
+				<paper-card class="card-item">[[item.href]]</paper-card>
+			</template>
+		</div>
 	</template>
 
 	<script>
@@ -54,7 +60,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
+					results: Array
 				};
+			}
+
+			static get observers() {
+				return [
+					'_searchResultChanged(results)'
+				];
+			}
+
+			_searchResultChanged(results) {
+				// console.log(results);
 			}
 
 		}

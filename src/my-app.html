@@ -88,14 +88,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<div slot="top" class="flex-parent" style="width: 100%">
 				<a href="./" class="title flex-1">ParalleLMS</a>
 				<template  is="dom-if" if="{{token}}">
-					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}"></d2l-search-input>
+					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
 					<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
 				</template>
 			</div>
 		</paper-toolbar>
 
 		<template is="dom-if" if="{{showSearchResults}}">
-			<d2l-search-results-page></d2l-search-results-page>
+			<d2l-search-results-page results="{{searchResults}}"></d2l-search-results-page>
 		</template>
 
 		<template is="dom-if" if="{{!showSearchResults}}">
@@ -137,6 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: String,
 						value: false
 					},
+					searchResults: Array,
 					rootHref: {
 						type: String
 					},
