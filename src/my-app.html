@@ -59,6 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			.title {
 				align-self: center;
+				color: white;
+			}
+			a:active {
+				color: blue;
 			}
 
 			.search-bar {
@@ -81,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 		<paper-toolbar>
 			<div slot="top" class="flex-parent" style="width: 100%">
-				<span class="title flex-1">ParalleLMS</span>
+				<a href="./" class="title flex-1">ParalleLMS</a>
 				<template  is="dom-if" if="{{token}}">
 					<d2l-search-input label="Search" class="search-bar" value="{{searchString}}"></d2l-search-input>
 					<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
