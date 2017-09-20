@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-entity.html">
 <link rel="import" href="../localization-mixin.html">
 
 <dom-module id="d2l-course-item">
@@ -35,15 +36,18 @@
 				padding-left: 10px;
 			}
 		</style>
-			<paper-card is-active>
+			<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}} ></d2l-siren-entity>
+			<paper-card is-active image="[[image.href]]">
 				<div class="header">
 					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
 				</div>
-				<div class="date">Start Date: [[startDate]]</div>
-				<div class="date">End Date: [[endDate]]</div>
-			</div>
+				<template is="dom-if" if="[[startDate]]" />
+					<div class="date">Start Date: [[startDate]]</div>
+				</template>
+				<template is="dom-if" if="[[startDate]]" />
+					<div class="date">End Date: [[endDate]]</div>
+				</template>
 			</paper-card>
-
 	</template>
 
 	<script>
@@ -66,6 +70,16 @@
 					endDate: {
 						type: String,
 						value: ''
+					},
+					courseImage: {
+						type: Object,
+						computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/organization-image")'
+					},
+					courseImageEntity: Object,
+					image: {
+						type: Object,
+						value: { href: ''},
+						computed: '_getLinkByClass(courseImageEntity, "tile")'
 					}
 				};
 			}
