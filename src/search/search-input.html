@@ -6,8 +6,8 @@
 
 <dom-module id="d2l-search-input">
 	<template>
-		<paper-input label="Search" value="{{text}}"></paper-input>
-		<template is="dom-repeat" items="[[update(text)]]">
+		<paper-input label="Search" value="{{value}}"></paper-input>
+		<template is="dom-repeat" items="[[update(value)]]">
 			<d2l-discussions-topic href="[[item.href]]" token="[[item.token]]" ></d2l-discussions-topic>
 		</template>
 	</template>
@@ -20,7 +20,7 @@
 
 			static get properties() {
 				return {
-					text: {
+					value: {
 						type: String,
 						value: ''
 					}
