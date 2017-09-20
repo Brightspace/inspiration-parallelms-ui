@@ -28,7 +28,7 @@
 		if (entity.class) {
 			if (entity.class.indexOf('user') !== -1 ) {
 				const displayName = entity.entities.filter(function(subEntity) {
-					return subEntity.class.indexOf('display') !== -1 && subEntity.class.indexOf('name') !== -1;
+					return subEntity.class && subEntity.class.indexOf('display') !== -1 && subEntity.class.indexOf('name') !== -1;
 				});
 				if (displayName.length !== 1) {
 					return null;
@@ -104,7 +104,7 @@
 						this.field('secondaryText');
 						for (const [token, hrefStore] of store.entries()) {
 							for (const [href, entity] of hrefStore.entries()) {
-								if (entity.status === 'fetching') {
+								if (entity.status === 'fetching' || entity.status === 'error') {
 									continue;
 								}
 								for (const handler of _handlers) {
