@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="root/root.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="user/user-card.html">
+<link rel="import" href="search-results-page.html">
 
 <link rel="lazy-import" href="my-login-page.html">
 <link rel="lazy-import" href="my-welcome-page.html">
@@ -93,19 +94,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</div>
 		</paper-toolbar>
 
+		<template is="dom-if" if="{{showSearchResults}}">
+			<d2l-search-results-page></d2l-search-results-page>
+		</template>
 
-		<iron-pages
-			selected="[[page]]"
-			attr-for-selected="name"
-			fallback-selection="view404"
-			role="main">
-			<my-view1 name="view1" href="{{rootHref}}" token="{{token}}"></my-view1>
-			<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
-			<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
-			<my-view2 name="view2"></my-view2>
-			<my-view3 name="view3"></my-view3>
-			<my-view404 name="view404"></my-view404>
-		</iron-pages>
+		<template is="dom-if" if="{{!showSearchResults}}">
+			<iron-pages
+				selected="[[page]]"
+				attr-for-selected="name"
+				fallback-selection="view404"
+				role="main">
+				<my-view1 name="view1" href="{{rootHref}}" token="{{token}}"></my-view1>
+				<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
+				<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
+				<my-view2 name="view2"></my-view2>
+				<my-view3 name="view3"></my-view3>
+				<my-view404 name="view404"></my-view404>
+			</iron-pages>
+		</template>
 	</template>
 
 	<script>
@@ -127,6 +133,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					// Polymer.Element#rootPath
 					rootPath: String,
 					searchString: String,
+					showSearchResults: {
+						type: String,
+						value: false
+					},
 					rootHref: {
 						type: String
 					},
@@ -138,7 +148,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get observers() {
 				return [
-					'_routePageChanged(routeData.page)'
+					'_routePageChanged(routeData.page)',
+					'_searchResultChanged(searchString)'
 				];
 			}
 
@@ -166,6 +177,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			_showPage404() {
 				this.page = 'view404';
+			}
+
+			_searchResultChanged() {
+				this.showSearchResults = this.searchString.length > 1;
 			}
 		}
 
