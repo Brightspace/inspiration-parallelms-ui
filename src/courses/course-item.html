@@ -16,36 +16,27 @@
 				--adjusting-background: white;
 			}
 			paper-card {
-				width: calc(100% - 20px);
-				margin: 10px;
+				width: 100%;
 				padding: 0px;
 				background-color: var(--adjusting-background);
 			}
 			div {
 				margin: 10px;
 			}
-			.header {
-				background-color: lightgray;
-				color: white;
-				padding: 10px;
-			}
 			h4 {
 				margin: 0px;
-			}
-			.date {
-				padding-left: 10px;
 			}
 		</style>
 			<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}} ></d2l-siren-entity>
 			<paper-card is-active image="[[image.href]]">
-				<div class="header">
+				<div>
 					<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
 				</div>
 				<template is="dom-if" if="[[startDate]]" />
-					<div class="date">Start Date: [[startDate]]</div>
+					<div>Start Date: [[startDate]]</div>
 				</template>
 				<template is="dom-if" if="[[startDate]]" />
-					<div class="date">End Date: [[endDate]]</div>
+					<div>End Date: [[endDate]]</div>
 				</template>
 			</paper-card>
 	</template>
@@ -79,7 +70,7 @@
 					image: {
 						type: Object,
 						value: { href: ''},
-						computed: '_getLinkByClass(courseImageEntity, "tile")'
+						computed: '_getLinkByClass(courseImageEntity, "banner")'
 					}
 				};
 			}
