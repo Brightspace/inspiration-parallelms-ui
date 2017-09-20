@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="updates/updates-card.html">
+<link rel="import" href="search/search-input.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
 
@@ -41,8 +42,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 
 			.card-item {
-				width: calc(50% - 40px);
+				max-width: 1200px;
+				width: calc(100% - 40px);
 				padding: 20px;
+				margin-left: auto; margin-right: auto;
 			}
 
 			@media (max-width:1000px) {

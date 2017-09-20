@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="discussions/discussions-topic-post-item.html">
+<link rel="import" href="discussions/discussions-forum-item.html">
+<link rel="import" href="discussions/discussions-topic.html">
+
+<dom-module id="d2l-search-result-item">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+
+		<div>
+			<template is="dom-if" if="{{isThread}}">
+				<d2l-discussions-topic-post-item href="{{result.href}}" token="{{result.token}}"></d2l-discussions-topic-post-item>
+			</template>
+			<template is="dom-if" if="{{isForum}}">
+				<d2l-discussions-forum-item href="{{result.href}}" token="{{result.token}}"></d2l-discussions-forum-item>
+			</template>
+			<template is="dom-if" if="{{isTopic}}">
+				<d2l-discussions-topic href="{{result.href}}" token="{{result.token}}"></d2l-discussions-topic>
+			</template>
+			<template is="dom-if" if="{{isAMystery}}">
+				What the HYPERMEDIA is this?
+			</template>
+		</div>
+	</template>
+
+	<script>
+		class SearchResultItem extends Polymer.Element {
+
+			static get is() { return 'd2l-search-result-item'; }
+
+			static get properties() {
+				return {
+					result: Object,
+					isThread: Boolean,
+					isForum: Boolean,
+					isTopic: Boolean,
+					isAMystery: Boolean
+				};
+			}
+
+			static get observers() {
+				return [
+					'_resultChanged(result)'
+				];
+			}
+
+			_resultChanged(result) {
+				this.isAMystery = false;
+				this.isThread = this.isForum = this.isTopic = false;
+				switch (result.type) {
+					case 'thread':
+						this.isThread = true;
+						break;
+					case 'forum':
+						this.isForum = true;
+						break;
+					case 'topic':
+						this.isTopic = true;
+						break;
+					default:
+						this.isAMystery = true;
+				}
+			}
+
+		}
+
+		window.customElements.define(SearchResultItem.is, SearchResultItem);
+	</script>
+</dom-module>
