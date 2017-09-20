@@ -1,0 +1,111 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="activities/user-activity-usage-list.html">
+<link rel="import" href="course-name.html">
+<link rel="import" href="courses/courses-card.html">
+<link rel="import" href="user/user-card.html">
+<link rel="import" href="discussions/discussions-forum-list.html">
+<link rel="import" href="link/auth-link.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="updates/updates-card.html">
+<link rel="import" href="search/search-input.html">
+<link rel="import" href="siren-entity.html">
+<link rel="import" href="siren-entity-mixin.html">
+
+<dom-module id="my-app-main-page">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+
+			.flex-box {
+				display: flex;
+				flex-wrap: wrap;
+				width: calc(100%);
+				align-items: stretch;
+			}
+
+			.col {
+				flex: 1;
+				width: 50%;
+				padding: 20px;
+			}
+
+			.courses-item {
+				max-width: 1200px;
+				width: calc(20%);
+				padding: 20px 0px 0px 20px;
+				margin-left: 0; margin-right: auto;
+			}
+
+			.calendar {
+				width: calc(80% - 50px);
+				margin: 20px 20px 0px 10px;
+				height: 800px;
+			}
+
+			@media (max-width:1000px) {
+				.card-item {
+					width: calc(100% - 40px);
+				}
+			}
+		</style>
+		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<div class="flex-box">
+			<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}" class="courses-item"></d2l-courses-card>
+			<paper-card class="calendar">
+				<button on-tap="_goToPage">Go to View1</button>
+			</paper-card>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class AppMainPage extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'my-app-main-page'; }
+
+			static get properties() {
+				return {
+					token: {
+						type: String,
+					},
+					entity: Object,
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					},
+					myEnrollments: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
+					},
+					userEntity: Object,
+					route: Object
+				};
+			}
+
+			_getLinkByRel(entity, rel) {
+				return entity && entity.getLinkByRel(rel);
+			}
+
+			_goToPage() {
+				this.set('route.path', 'view1');
+			}
+
+		}
+
+		window.customElements.define(AppMainPage.is, AppMainPage);
+	</script>
+</dom-module>
