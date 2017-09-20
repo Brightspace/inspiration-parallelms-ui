@@ -1,0 +1,104 @@
+<script>
+(function() {
+	'use strict';
+
+	const _dates = {};
+	const _viewed = {};
+	let _keys = [];
+	const _activityDateHandler = function(href, token, entity) {
+		if (entity.class && entity.class.indexOf('activity') !== -1) {
+			for ( const sub of entity.entities ) {
+				if (sub.class.indexOf('date') !== -1) {
+					return 	_formatResult(
+						href,
+						token,
+						sub.properties.date,
+						'activity'
+					);
+				}
+			}
+		}
+		return null;
+	};
+
+	const _discussionsDateHandler = function(href, token, entity) {
+		if (entity.class && entity.class.indexOf('thread') !== -1) {
+			for ( const sub of entity.entities ) {
+				if (sub.class.indexOf('date') !== -1) {
+					return 	_formatResult(
+						href,
+						token,
+						sub.properties.date,
+						'thread'
+					);
+				}
+			}
+		}
+		return null;
+	};
+
+	const _formatResult = function(href, token, date, type) {
+		return 	{
+			type: type,
+			date: date,
+			href: href,
+			token: token
+		};
+	};
+
+	const _formatDate = function(date) {
+		const d = new Date(date);
+		return `${ d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+	};
+
+	const _handlers = [
+		_activityDateHandler,
+		_discussionsDateHandler
+	];
+
+	const Dates = {
+		add: (href, token, entity) => {
+			if (entity.status === 'fetching') {
+				return;
+			}
+			for (const handler of _handlers) {
+				const result = handler(href, token, entity.entity || entity);
+				if (result && _viewed[href] !== token) {
+					const key = _formatDate(result.date);
+					const current =  _dates[key] || [];
+					current.push(result);
+					current.sort(function(a, b) {
+						return a.date > b.date;
+					});
+
+					_dates[key] = current;
+					_keys = Object
+						.keys(_dates)
+						.sort(function(a, b) {
+							return a > b;
+						});
+					_viewed[result.href] = href.token;
+					break;
+				}
+			}
+		},
+		search: (start, end) => {
+			const s = _formatDate(start);
+			const e = _formatDate(end);
+			const results =_keys
+				.filter(function(key) {
+					return key >= s && key <= e;
+				})
+				.map(function(key) {
+					return _dates[key];
+				});
+			// flatten arrays
+			return [].concat.apply([], results);
+		}
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.Dates = Dates;
+
+})();
+</script>
