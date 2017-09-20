@@ -11,7 +11,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="search-result-item.html">
+<link rel="import" href="paginate-mixin.html">
 
 <dom-module id="d2l-search-results-page">
 	<template>
@@ -47,25 +49,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				margin: 0 auto 0 auto;
 			}
 
+			iron-scroll-threshold {
+				display: none;
+			}
+
 			@media (max-width:1000px) {
 				.card-item {
 					width: calc(100% - 40px);
 				}
 			}
 		</style>
-
 		<div class="not">
-			<template is="dom-repeat" items="{{results}}">
+			<template is="dom-repeat" items="{{paginated}}">
 				<span class="item-header">[[item.type]]</span>
 				<paper-card class="card-item">
 					<d2l-search-result-item result="{{item}}"></d2l-search-result-item>
 				</paper-card>
 			</template>
 		</div>
+
+		<iron-scroll-threshold scroll-target="document" on-lower-threshold="loadMoreData"></iron-scroll-threshold>
 	</template>
 
 	<script>
-		class SearchResultsPage extends Polymer.Element {
+		/* @mixes PaginateMixin */
+		class SearchResultsPage extends PaginateMixin('results', Polymer.Element) {
 
 			static get is() { return 'd2l-search-results-page'; }
 
