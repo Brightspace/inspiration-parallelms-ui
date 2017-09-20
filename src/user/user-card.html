@@ -16,13 +16,16 @@
 				width: 50px;
 				height: 50px;
 			}
+			.center {
+				align-self: center;
+			}
 		</style>
 
-		<paper-card class="flex-parent" style="width:100%;">
+		<paper-card class="flex-parent" style="width:100%; padding: 10px;">
 			<div class="flex-1">
 				<d2l-user-image class="image" href="{{href}}" token="{{token}}"></d2l-user-image>
 			</div>
-			<div class="flex-right">
+			<div class="flex-right center">
 				<d2l-user-name href="{{href}}" token="{{token}}"></d2l-user-name>
 			</div>
 		</paper-card>

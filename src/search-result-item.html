@@ -14,6 +14,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="discussions/discussions-topic-post-item.html">
 <link rel="import" href="discussions/discussions-forum-item.html">
 <link rel="import" href="discussions/discussions-topic.html">
+<link rel="import" href="user/user-card.html">
+<link rel="import" href="courses/course-item.html">
 
 <dom-module id="d2l-search-result-item">
 	<template>
@@ -33,6 +35,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<template is="dom-if" if="{{isTopic}}">
 				<d2l-discussions-topic href="{{result.href}}" token="{{result.token}}"></d2l-discussions-topic>
 			</template>
+			<template is="dom-if" if="{{isCourseOffering}}">
+				<d2l-course-item href="{{result.href}}" token="{{result.token}}"></d2l-course-item>
+			</template>
+			<template is="dom-if" if="{{isUser}}">
+				<d2l-user-card href="{{result.href}}" token="{{result.token}}"></d2l-user-card>
+			</template>
 			<template is="dom-if" if="{{isAMystery}}">
 				What the HYPERMEDIA is this?
 			</template>
@@ -50,6 +58,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					isThread: Boolean,
 					isForum: Boolean,
 					isTopic: Boolean,
+					isCourseOffering: Boolean,
+					isUser: Boolean,
 					isAMystery: Boolean
 				};
 			}
@@ -62,7 +72,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			_resultChanged(result) {
 				this.isAMystery = false;
-				this.isThread = this.isForum = this.isTopic = false;
+				this.isThread = this.isForum = this.isTopic = this.isCourseOffering = this.isUser = false;
 				switch (result.type) {
 					case 'thread':
 						this.isThread = true;
@@ -72,6 +82,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						break;
 					case 'topic':
 						this.isTopic = true;
+						break;
+					case 'course-offering':
+						this.isCourseOffering = true;
+						break;
+					case 'user':
+						this.isUser = true;
 						break;
 					default:
 						this.isAMystery = true;
