@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="user-name.html">
+<link rel="import" href="user-image.html">
+<link rel="import" href="../shared-styles.html">
+
+
+<dom-module id="d2l-user-card-top">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+			.image {
+				width: 50px;
+				height: 50px;
+			}
+		</style>
+
+		<paper-card class="flex-parent" style="width:100%;">
+			<div class="flex-1">
+				<d2l-user-image class="image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
+			</div>
+			<div class="flex-right">
+				<d2l-user-name href="{{whoami.href}}" token="{{token}}"></d2l-user-name>
+			</div>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class UserCardTop extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-user-card-top'; }
+
+			static get properties() {
+				return {
+					token: {
+						type: String,
+						notify: true
+					},
+					href: String,
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
+						notify: true
+					},
+				};
+			}
+		}
+
+		window.customElements.define(UserCardTop.is, UserCardTop);
+	</script>
+</dom-module>
