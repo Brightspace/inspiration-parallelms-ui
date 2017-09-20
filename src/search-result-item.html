@@ -1,0 +1,61 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="discussions/discussions-topic-post-item.html">
+
+<dom-module id="d2l-search-result-item">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+
+		<div>
+			<template is="dom-if" if="{{isTopic}}">
+				<d2l-discussions-topic-post-item href="{{result.href}}" token="{{result.token}}"></d2l-discussions-topic-post-item>
+			</template>
+			<template is="dom-if" if="{{!isTopic}}">
+				Not a topic
+			</template>
+		</div>
+	</template>
+
+	<script>
+		class SearchResultItem extends Polymer.Element {
+
+			static get is() { return 'd2l-search-result-item'; }
+
+			static get properties() {
+				return {
+					result: Object,
+					isTopic: Boolean
+				};
+			}
+
+			static get observers() {
+				return [
+					'_resultChanged(result)'
+				];
+			}
+
+			_resultChanged(result) {
+				this.isTopic = false;
+				if (result.type === 'topic') this.isTopic = true;
+			}
+
+		}
+
+		window.customElements.define(SearchResultItem.is, SearchResultItem);
+	</script>
+</dom-module>
