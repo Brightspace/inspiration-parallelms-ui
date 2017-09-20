@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../localization-mixin.html">
+
+<dom-module id="d2l-award-item">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--adjusting-background: whitesmoke;
+			}
+			:host([is-active]) {
+				--adjusting-background: white;
+			}
+			paper-card {
+				width: calc(100% - 20px);
+				margin: 10px;
+				padding: 0px;
+				background-color: var(--adjusting-background);
+			}
+			div {
+				margin: 10px;
+			}
+			.header {
+				background-color: lightgray;
+				color: white;
+				padding: 10px;
+			}
+			h4 {
+				margin: 0px;
+			}
+			.date {
+				padding-left: 10px;
+			}
+		</style>
+			<paper-card is-active>
+				<div class="header">
+					<h4>[[item.properties.name]]</h4>
+				</div>
+			</div>
+			</paper-card>
+
+	</template>
+
+	<script>
+		class AwardItem extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-award-item'; }
+
+			static get properties() {
+				return {
+					item: {
+						type: Object,
+						reflectToAttribute: true
+					}
+				};
+			}
+		}
+
+		window.customElements.define(AwardItem.is, AwardItem);
+	</script>
+</dom-module>

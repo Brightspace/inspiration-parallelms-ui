@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="award-item.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="d2l-awards-card">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+		<paper-card class="medium-card-size">
+			<div class="card-header">
+				<h2 class="card-header-text">My Awards</h2>
+			</div>
+			<template is="dom-if" if="{{hasAwards}}">
+				<template is="dom-repeat" items="{{entity.entities}}">
+					<d2l-award-item item="[[item]]"></d2l-award-item>
+				</template>
+			</template>
+			<template is="dom-if" if="{{!hasAwards}}">
+				<span>You have no awards</span>
+			</template>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class AwardsCard extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-awards-card'; }
+
+			static get properties() {
+				return {
+					entity: Object,
+					hasAwards: {
+						type: Boolean,
+						value: true
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.hasAwards = (entity.entities && entity.entities.length > 0);
+			}
+		}
+
+		window.customElements.define(AwardsCard.is, AwardsCard);
+	</script>
+</dom-module>
