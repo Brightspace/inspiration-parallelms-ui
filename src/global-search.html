@@ -82,7 +82,7 @@
 			type: type,
 			primaryText: primaryText,
 			secondaryText: secondaryText,
-			key: `${token}${SPLITTER}${href}`
+			key: `${token}${SPLITTER}${href}${SPLITTER}${type}`
 		};
 	};
 	const _handlers = [
@@ -127,7 +127,8 @@
 					const parts = result.ref.split(SPLITTER);
 					return {
 						token: parts[0],
-						href: parts[1]
+						href: parts[1],
+						type: parts[2]
 					};
 				});
 		}
