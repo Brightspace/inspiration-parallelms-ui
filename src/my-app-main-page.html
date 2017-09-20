@@ -9,16 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="activities/user-activity-usage-list.html">
-<link rel="import" href="course-name.html">
 <link rel="import" href="courses/courses-card.html">
-<link rel="import" href="user/user-card.html">
-<link rel="import" href="discussions/discussions-forum-list.html">
-<link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="updates/updates-card.html">
-<link rel="import" href="search/search-input.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
 
@@ -29,17 +21,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				display: block;
 			}
 
-			.flex-box {
+			.layout {
 				display: flex;
 				flex-wrap: wrap;
 				width: calc(100%);
 				align-items: stretch;
-			}
-
-			.col {
-				flex: 1;
-				width: 50%;
-				padding: 20px;
 			}
 
 			.courses-item {
@@ -54,15 +40,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				margin: 20px 20px 0px 10px;
 				height: 800px;
 			}
-
-			@media (max-width:1000px) {
-				.card-item {
-					width: calc(100% - 40px);
-				}
 			}
 		</style>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
-		<div class="flex-box">
+		<div class="layout">
 			<d2l-courses-card href="{{myEnrollments.href}}" token="{{token}}" class="courses-item"></d2l-courses-card>
 			<paper-card class="calendar">
 				<button on-tap="_goToPage">Go to View1</button>
