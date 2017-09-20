@@ -5,7 +5,7 @@
 (function() {
 	'use strict';
 
-	var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com', 'protocolOne');
+	var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
 	var clientId = guid();
 	var listeners = {};
 
