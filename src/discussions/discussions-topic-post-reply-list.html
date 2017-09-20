@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="discussions-topic-post-reply-item.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -21,8 +22,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class DiscussionsTopicPostReplyList extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class DiscussionsTopicPostReplyList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
+						elements: [window.customElements.get('d2l-discussions-topic-post-reply-item')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-topic-post-reply-list'; }
 
