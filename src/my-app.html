@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="user/user-card.html">
 <link rel="import" href="search-results-page.html">
 
+<link rel="lazy-import" href="my-app-main-page.html">
 <link rel="lazy-import" href="my-login-page.html">
 <link rel="lazy-import" href="my-welcome-page.html">
 <link rel="lazy-import" href="my-view1.html">
@@ -104,7 +105,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				attr-for-selected="name"
 				fallback-selection="view404"
 				role="main">
-				<my-view1 name="view1" href="{{rootHref}}" token="{{token}}"></my-view1>
+				<my-app-main-page name="app-main-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-app-main-page>
+				<my-view1 name="view1" token="{{token}}" href="{{rootHref}}"></my-view1>
 				<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
 				<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
 				<my-view2 name="view2"></my-view2>
