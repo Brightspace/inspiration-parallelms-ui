@@ -52,14 +52,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					width: calc(100% - 40px);
 				}
 			}
+
+			.load-more {
+				display: flex;
+				margin-left: auto;
+				margin-right: auto;
+				width: fit-content;
+				padding-left: 20px;
+				padding-right: 20px;
+				background:#006FBF;
+				margin-top: 20px;
+				color: white;
+				margin-bottom: 20px
+			}
 		</style>
 
 		<div class="not">
-			<template is="dom-repeat" items="{{results}}">
+			<template is="dom-repeat" items="{{shownResults}}">
 				<span class="item-header">[[item.type]]</span>
 				<paper-card class="card-item">
 					<d2l-search-result-item result="{{item}}"></d2l-search-result-item>
 				</paper-card>
+			</template>
+			<template is="dom-if" if="{{showLoadMo}}">
+				<div style="width: 100%">
+					<paper-button class="load-more" on-tap="_loadMo">Load Mo</paper-button>
+				</div>
 			</template>
 		</div>
 	</template>
@@ -71,20 +89,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
-					results: Array
+					results: Array,
+					shownResults: Array,
+					numOfResults: {
+						type: Number,
+						value: 10
+					},
+					showLoadMo: {
+						type: Boolean,
+						value: false
+					}
 				};
 			}
 
-			// static get observers() {
-			// 	return [
-			// 		'_searchResultChanged(results)'
-			// 	];
-			// }
+			static get observers() {
+				return [
+					'_searchResultChanged(results)'
+				];
+			}
 
-			// _searchResultChanged(results) {
-			// 	console.log(results);
-			// }
+			_searchResultChanged(results) {
+				this.shownResults = results.slice(0, this.numOfResults);
+				this.showLoadMo = this.results.length !== this.shownResults.length;
+			}
 
+			_loadMo() {
+				this.numOfResults += 10;
+				this.shownResults = this.results.slice(0, this.numOfResults);
+				this.showLoadMo = this.results.length !== this.shownResults.length;
+			}
 		}
 
 		window.customElements.define(SearchResultsPage.is, SearchResultsPage);
