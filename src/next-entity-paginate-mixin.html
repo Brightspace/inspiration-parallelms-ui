@@ -6,16 +6,27 @@
 		return class extends superClass {
 			static get properties() {
 				return {
-					paginated: Array,
+					paginatedFetched: Array,
 					nextLink: Object,
-					nextEntity: Object
+					nextEntity: Object,
+
+					paginated: Array,
+					renderSize: {
+						type: Number,
+						value: 10
+					},
+					renderPage: {
+						type: Number,
+						value: 1
+					}
 				};
 			}
 
 			static get observers() {
 				return [
 					'__tokenChanged(token)',
-					`_itemsChanged(${propName})`
+					`_itemsChanged(${propName})`,
+					'_pageChanged(paginatedFetched, renderSize, renderPage)'
 				];
 			}
 
@@ -35,12 +46,16 @@
 			}
 
 			get hasMore() {
-				return !!this.nextLink;
+				return !!this.nextLink || this.hasHidden;
+			}
+
+			get hasHidden() {
+				return this.paginatedFetched && this.paginated && (this.paginatedFetched.length > this.paginated.length);
 			}
 
 			_nextEntityChanged() {
 				this.nextEntity = this.sirenEntityElement.entity;
-				this.paginated = this.paginated.concat(this.nextEntity.entities);
+				this.paginatedFetched = this.paginated.concat(this.nextEntity.entities);
 				this.nextLink = this.nextEntity.getLinkByRel('next');
 				this.__target.clearTriggers();
 			}
@@ -52,12 +67,22 @@
 			}
 
 			_itemsChanged() {
-				this.paginated = this.get(propName).entities;
+				this.renderPage = 1;
+				this.paginatedFetched = this.get(propName).entities;
 				this.nextLink = this.get(propName).getLinkByRel('next');
+				this._pageChanged();
+			}
+
+			_pageChanged() {
+				this.paginated = this.paginatedFetched && this.paginatedFetched.slice(0, this.renderSize * this.renderPage);
 			}
 
 			loadMoreData(e) {
-				if (this.hasMore) {
+				if (this.hasHidden) {
+					this.renderPage++;
+					e.target.clearTriggers();
+				} else if (this.hasMore) {
+					this.renderPage++;
 					this.sirenEntityElement.href = this.nextLink.href;
 					this.__target = e.target;
 				} else {
