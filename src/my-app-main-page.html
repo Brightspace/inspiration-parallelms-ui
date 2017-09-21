@@ -10,7 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/mp-calendar/mp-calendar.html">
+<link rel="import" href="global-search.html">
+<link rel="import" href="search-results-page.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
@@ -39,9 +40,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 		<div class="layout">
 			<paper-card class="calendar">
-				<mp-calendar></mp-calendar>
-				<button on-tap="_goToPage">Go to View1</button>
+				<search-results-page results={{events}}></search-results-page>
 			</paper-card>
+			<button on-tap="_goToPage">Go to View1</button>
 		</div>
 	</template>
 
@@ -67,14 +68,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
 					},
 					userEntity: Object,
-					route: Object
+					route: Object,
+					events: Array
 				};
 			}
-
+			constructor() {
+				super();
+				setInterval(this._getThisWeek, 2000);
+			}
 			_getLinkByRel(entity, rel) {
 				return entity && entity.getLinkByRel(rel);
 			}
-
+			_getThisWeek() {
+				var start = new Date();
+				start.setDate(start.getDate() - 3);
+				var end = new Date();
+				end.setDate(end.getDate() + 3);
+				this.events = D2L.GlobalSearch.dates(start, end);
+			}
 			_goToPage() {
 				this.set('route.path', 'view1');
 			}
