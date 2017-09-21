@@ -47,7 +47,7 @@
 				</paper-listbox>
 			</paper-dropdown-menu>
 			<paper-input label="Token" value="{{token}}" id="tokenInput"></paper-input>
-			<paper-checkbox checked="{{enableOffline}}">Enable offline mode (downloads your course information)</paper-checkbox>
+			<paper-checkbox checked="{{enableOffline}}" id="checkbox">Enable offline mode</paper-checkbox>
 			<paper-button class="login-button" on-tap="_login" id="loginButton">Log In</paper-button>
 		</div>
 		<slot></slot>
@@ -137,6 +137,9 @@
 							setTimeout(function() {
 								self.$.loginButton.classList.add(animation);
 								self.$.loginButton.classList.add('animated');
+
+								self.$.checkbox.classList.add(animation);
+								self.$.checkbox.classList.add('animated');
 							}, delay);
 						}, delay);
 					}, delay);
@@ -176,6 +179,10 @@
 						self.$.loginButton.classList.remove(animation);
 						self.$.loginButton.classList.remove('animated');
 						self.$.loginButton.classList.remove('invisible');
+
+						self.$.checkbox.classList.remove(animation);
+						self.$.checkbox.classList.remove('animated');
+						self.$.checkbox.classList.remove('invisible');
 					}, 3500);
 					self.wannaLogIn = false;
 				} else {
