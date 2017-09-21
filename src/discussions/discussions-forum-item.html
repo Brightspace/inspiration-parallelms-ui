@@ -56,7 +56,7 @@
 
 			_changed(entity) {
 				this.forum = entity;
-				this.topics = entity.entities;
+				this.topics = entity.getSubEntitiesByClass('topic');
 			}
 
 			getHref(item) {

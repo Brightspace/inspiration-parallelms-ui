@@ -14,8 +14,7 @@
 	<template>
 		<style include="shared-styles">
 			:host {
-				display: inline-block;
-				width: 100%;
+				display: block;
 			}
 		</style>
 
@@ -76,6 +75,7 @@
 
 			static get properties() {
 				return {
+					organizationFilter: String,
 					selected: {
 						type: Number,
 						value: 0
@@ -88,7 +88,6 @@
 						type: Array,
 						value: []
 					},
-					token: String,
 					hasUpdates: {
 						type: Boolean,
 						value: true
@@ -108,13 +107,33 @@
 
 			static get observers() {
 				return [
-					'_changed(updatesFeedEntity)'
+					'_changed(updatesFeedEntity, organizationFilter)'
 				];
 			}
 
-			_changed(updatesFeedEntity) {
-				this.newsUpdates = updatesFeedEntity.getSubEntitiesByClass('news');
-				this.gradeUpdates = updatesFeedEntity.getSubEntitiesByClass('grade');
+			_changed(updatesFeedEntity, organizationFilter) {
+				if (!updatesFeedEntity) {
+					return;
+				}
+
+				var newsEntities = updatesFeedEntity.getSubEntitiesByClass('news') || [];
+				var gradeEntities = updatesFeedEntity.getSubEntitiesByClass('grade') || [];
+
+				if (organizationFilter) {
+					newsEntities = newsEntities.filter(function(item) {
+						return item.links.some(function(link) {
+							return link.href === organizationFilter;
+						});
+					});
+					gradeEntities = gradeEntities.filter(function(item) {
+						return item.links.some(function(link) {
+							return link.href === organizationFilter;
+						});
+					});
+				}
+
+				this.newsUpdates = newsEntities;
+				this.gradeUpdates = gradeEntities;
 				this.hasUpdates = this.newsUpdates && this.newsUpdates.length > 0;
 				this.hasGrades = this.gradeUpdates && this.gradeUpdates.length > 0;
 			}
