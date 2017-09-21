@@ -112,7 +112,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						<paper-icon-button icon="menu" on-click="_toggleDrawer"></paper-icon-button>
 						<template is="dom-if" if="{{showSearch}}">
 							<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
-							<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+							<template is="dom-if" if="{{token}}">
+								<d2l-user-card-top class="flex-right" style="white-space:nowrap; align-self: center;" token="{{token}}" href="{{rootHref}}"></d2l-user-card-top>
+							</template>
 						</template>
 					</app-toolbar>
 				</app-header>

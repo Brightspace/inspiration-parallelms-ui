@@ -1,7 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<!-- <link rel="import" href="../../bower_components/paper-card/paper-card.html"> -->
-<!-- <link rel="import" href="user-name.html"> -->
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="user-name.html">
 <link rel="import" href="user-image-top.html">
 
 
@@ -20,9 +21,31 @@
 				align-items: center;
 				justify-content: center;
 			}
+			.user-name {
+				color: black;
+				margin: 0 auto;
+			}
+			a:link, a:visited {
+				background-color: cornflowerblue;
+				color: white;
+				padding: 5px 10px;
+				border-radius: 5%;
+				text-align: center;
+				text-decoration: none;
+				margin: 0 auto;
+			}
+			.logout-link {
+				margin: 0;
+			}
 		</style>
 
-		<d2l-user-image-top class="image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image-top>
+		<paper-menu-button horizontal-align="right" vertical-offset="58">
+			<d2l-user-image-top class="image" href="{{whoami.href}}" token="{{token}}" slot="dropdown-trigger"></d2l-user-image-top>
+
+			<paper-item slot="dropdown-content"><d2l-user-name href="{{whoami.href}}" token="{{token}}" class="user-name"></d2l-user-name></paper-item>
+			<paper-item slot="dropdown-content" class="logout-link"><a href="./">Logout</a></paper-item>
+		</paper-menu-button>
+  	<slot></slot>
 	</template>
 
 	<script>
