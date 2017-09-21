@@ -9,14 +9,23 @@
 			container {
 				display: flex;
 			}
-
+			.header {
+				text-align: center;
+				font-size: 2em;
+				font-weight: bold;
+			}
+			.course-image-container {
+				justify-content: center;
+				align-content: center;
+				margin: 0 auto;
+			}
 		</style>
 
 		<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}}></d2l-siren-entity>
 		<div class="container">
 			<div class="header">[[entity.properties.name]]</div>
 
-			<div>
+			<div class="flex-parent course-image-container basic-top-bottom-padding">
 				<img src="[[imageHref]]"/>
 			</div>
 		</div>
