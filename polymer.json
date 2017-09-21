@@ -8,7 +8,8 @@
     "src/my-view1.html",
     "src/my-view2.html",
     "src/my-view3.html",
-    "src/my-view404.html"
+    "src/my-view404.html",
+    "src/my-course-page.html"
   ],
   "sources": [
     "src/**/*",
