@@ -1,17 +1,17 @@
-<script src="https://unpkg.com/lunr@1.0.0/lunr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
 <script>
 (function() {
 	'use strict';
-	/*global lunr*/
+	/*global elasticlunr*/
 	/*eslint no-undef: "error"*/
 	/*eslint no-invalid-this: "error"*/
 
-	const _index = lunr(/* @this */ function() {
-		this.ref('key');
-		this.field('type');
-		this.field('primaryText', { boost: 3 });
-		this.field('secondaryText');
-		this.field('dates', {boost: 10});
+	const _index = elasticlunr(/* @this */ function() {
+		this.setRef('key');
+		this.addField('type');
+		this.addField('primaryText', { boost: 3 });
+		this.addField('secondaryText');
+		this.addField('dates', {boost: 10});
 	});
 	let _debouncer;
 	const _dates = {};
@@ -217,7 +217,7 @@
 			for (const handler of _handlers) {
 				const result = handler(href, token, entity.entity);
 				if (result) {
-					_index.add(result);
+					_index.addDoc(result);
 					break;
 				}
 			}
