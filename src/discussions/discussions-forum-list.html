@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-forum-item.html">
 <link rel="import" href="../shared-styles.html">
@@ -44,8 +45,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class DiscussionsForumList extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class DiscussionsForumList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
+						elements: [window.customElements.get('d2l-discussions-forum-item')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-forum-list'; }
 

@@ -4,7 +4,10 @@
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="siren-entity.html">
+
+<link rel="lazy-import" href="courses/courses-drawer.html">
 
 <dom-module id="my-login-page">
 	<template>
@@ -42,6 +45,7 @@
 				</paper-listbox>
 			</paper-dropdown-menu>
 			<paper-input label="Token" value="{{token}}"></paper-input>
+			<paper-checkbox checked="{{enableOffline}}">Enable offline mode (downloads your course information)</paper-checkbox>
 			<paper-button class="login-button" on-tap="_login">Log In</paper-button>
 		</div>
 		<slot></slot>
@@ -87,8 +91,15 @@
 						type: Boolean,
 						value: false
 					},
-					route: Object
+					route: Object,
+					enableOffline: Boolean
 				};
+			}
+
+			static get observers() {
+				return [
+					'_startPrefetch(enableOffline, entrypoint, token)'
+				];
 			}
 
 			_endpointChanged() {
@@ -107,6 +118,18 @@
 					this.set('route.path', 'welcome-page');
 				} else {
 					this.wannaLogIn = false;
+				}
+			}
+
+			_startPrefetch(enableOffline, entrypoint, token) {
+				if (enableOffline && entrypoint && token) {
+					var resolvedPageUrl = this.resolveUrl('courses/courses-drawer.html');
+					Polymer.importHref(
+						resolvedPageUrl,
+						() => window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token),
+						null,
+						true
+					);
 				}
 			}
 		}

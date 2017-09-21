@@ -65,7 +65,7 @@
 			<template is="dom-if" if="{{!hideReplies}}">
 				<d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
 				<div hidden="{{!canReply}}" class="flex-parent new-thread-container basic-left-padding">
-					<paper-input class="flex-1" style="width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
+					<paper-input class="flex-1" style="width: 100%" label="Reply to this thread" value="{{reply}}"></paper-input>
 					<paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">
 						<template is="dom-if" if="{{!sendingReply}}">
 							<span>Send</span>
