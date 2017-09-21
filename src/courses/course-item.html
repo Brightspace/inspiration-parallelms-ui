@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-entity.html">
 <link rel="import" href="../localization-mixin.html">
@@ -47,8 +48,18 @@
 
 	<script>
 		/* @mixes LocalizationMixin
+		   @mixes PrefetchMixin
 		   @mixes SirenEntityMixin */
-		class CourseItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
+		class CourseItem extends LocalizationMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getSubEntityByRel('https://api.brightspace.com/rels/organization-image'),
+						elements: []
+					}
+				];
+			}
 
 			static get is() { return 'd2l-course-item'; }
 

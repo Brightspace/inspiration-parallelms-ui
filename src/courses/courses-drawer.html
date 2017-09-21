@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-entity.html">
@@ -12,7 +13,6 @@
 				display: block;
 			}
 		</style>
-		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{rootEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="[[userLink.href]]" token="[[token]]" entity="{{userEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="[[myEnrollmentsLink.href]]" token="[[token]]" entity="{{myEnrollmentsEntity}}"></d2l-siren-entity>
 
@@ -27,8 +27,24 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class CoursesDrawer extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class CoursesDrawer extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
+						elements: [this]
+					}, {
+						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/my-enrollments'),
+						elements: [this]
+					}, {
+						getLinks: entity => entity.hasClass('enrollments') && entity.entities,
+						elements: [window.customElements.get('d2l-enrollment-item')]
+					}
+				];
+			}
+
 			static get is() { return 'd2l-courses-drawer'; }
 
 			static get properties() {
@@ -37,7 +53,6 @@
 						type: Boolean,
 						value: true
 					},
-					rootEntity: Object,
 					userEntity: Object,
 					userLink: {
 						type: Object,
