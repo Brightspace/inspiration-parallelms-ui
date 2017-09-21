@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="courses-list.html">
+<link rel="import" href="enrollment-item.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-courses-card">
@@ -21,7 +21,7 @@
 			</div>
 			<template is="dom-if" if="{{hasCourses}}">
 				<template is="dom-repeat" items="{{entity.entities}}">
-					<d2l-courses-list href="[[item.href]]" token="{{token}}"></d2l-courses-list>
+					<d2l-enrollment-item href="[[item.href]]" token="{{token}}"></d2l-enrollment-item>
 				</template>
 			</template>
 			<template is="dom-if" if="{{!hasCourses}}">
