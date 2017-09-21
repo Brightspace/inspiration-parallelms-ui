@@ -31,7 +31,7 @@
 
 	function listenForChanges(resource, token)  {
 		if (listeners[resource]) {
-			if (listeners[resource].includes(token)) {
+			if (!listeners[resource].includes(token)) {
 				listeners[resource].push(token);
 			}
 		} else {
