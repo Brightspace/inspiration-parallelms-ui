@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../bower_components/d2l-icons/tier1-icons.html">
+<link rel="import" href="../../bower_components/d2l-image/d2l-image.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../siren-entity-mixin.html">
 
@@ -26,18 +27,6 @@
 			div {
 				margin: 10px;
 			}
-			.header {
-				background-color: lightgray;
-				color: white;
-				padding: 10px;
-				height: 100%;
-			}
-			h4 {
-				margin: 0px;
-			}
-			.date {
-				padding-left: 10px;
-			}
 			.award-image {
 				width: 50px;
 				height: 50px;
@@ -50,21 +39,21 @@
 				float: right;
 			}
 		</style>
-			<paper-card is-active>
-				<template is="dom-if" if="{{isAwarded}}">
-					<iron-icon class="awarded" icon="d2l-tier1:check-circle"></iron-icon>
-					<paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>
-				</template>
-				<d2l-image class="award-image" image-url="{{image.href}}" token="{{token}}"></d2l-image>
-				<div>
-					[[item.properties.name]]
-					<paper-tooltip>[[item.properties.description]]</paper-tooltip>
-				</div>
-			</paper-card>
-
+		<paper-card is-active>
+			<template is="dom-if" if="[[isAwarded]]">
+				<iron-icon class="awarded" icon="d2l-tier1:check-circle"></iron-icon>
+				<paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>
+			</template>
+			<d2l-image class="award-image" image-url="[[image.href]]" token="[[token]]"></d2l-image>
+			<div>
+				[[item.properties.name]]
+				<paper-tooltip>[[item.properties.description]]</paper-tooltip>
+			</div>
+		</paper-card>
 	</template>
 
 	<script>
+		/* @mixes SirenEntityMixin */
 		class AwardItem extends SirenEntityMixin(Polymer.Element) {
 
 			static get is() { return 'd2l-award-item'; }
