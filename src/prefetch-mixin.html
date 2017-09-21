@@ -27,11 +27,6 @@
 		PrefetchMixin = function(superClass) {
 			const interestingListeners = new Set();
 			return class extends superClass {
-				_entityChanged(entity) {
-					super._entityChanged(entity);
-					this.constructor.beginPrefetch(this.entity, this.token);
-				}
-
 				static _prefetchForElements(entity, token, elements) {
 					for (const interestingElement of elements) {
 						interestingElement.beginPrefetch && interestingElement.beginPrefetch(entity, token);
@@ -46,46 +41,40 @@
 						return;
 					}
 
-					console.debug(`prefetch "${href}" - start`);
 					// actually do the fetch
 					const fetchResult = D2L.EntityStore.fetch(href, token);
 
 					if ( fetchResult.status === 'fetching') { // Wait for the entity, then prefetch for each element
 						prefetching++;
-						console.debug(`prefetch "${href}" - fetching`);
 						const interestingListener = {
 							href: href,
 							token: token
 						};
 
 						interestingListener.listener = (interestingEntity) => {
-							console.debug(`prefetch "${href}" - fetched`);
-							console.debug(`prefetch "${href}" - removing listener`);
 							interestingListeners.delete(interestingListener);
 							D2L.EntityStore.removeListener(href, token, interestingListener.listener);
 							prefetching--;
-							console.debug(`prefetch "${href}" - starting next prefetch`);
 							if (interestingEntity) {
 								this._prefetchForElements(interestingEntity, token, elements);
 							}
 						};
 
-						console.debug(`prefetch "${href}" - adding listener`);
 						interestingListeners.add(interestingListener);
 						D2L.EntityStore.addListener(href, token, interestingListener.listener);
 					} else if ( fetchResult.status !== 'error' ) { // We have the entity. Just prefetch for each element
-						console.debug(`prefetch "${href}" - fetched`);
-						console.debug(`prefetch "${href}" - starting next prefetch`);
 						this._prefetchForElements(fetchResult.entity, token, elements);
 					}
 				}
 
 				static beginPrefetch(entity, token) {
-					entity = window.D2L.Hypermedia.Siren.Parse(entity);
+					if (typeof entity === 'object') {
+						entity = window.D2L.Hypermedia.Siren.Parse(entity);
+					}
 
 					// get interesting entities
 					for (const { getLinks, elements } of this.interesting) {
-						let links = getLinks(entity);
+						let links = typeof entity === 'string' ? entity : getLinks(entity);
 						if (!links) {
 							continue;
 						}

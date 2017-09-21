@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../my-view1.html">
 <link rel="import" href="course-item.html">
 
 <dom-module id="d2l-enrollment-item">
@@ -14,8 +16,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class EnrollmentItem extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class EnrollmentItem extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('my-view1')]
+					}
+				];
+			}
+
 			static get is() { return 'd2l-enrollment-item'; }
 
 			_getOrganizationLink(entity) {

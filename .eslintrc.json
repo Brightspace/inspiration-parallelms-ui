@@ -12,7 +12,9 @@
     "LocalizationMixin": false,
     "PerformanceObserver": false,
     "PrefetchMixin": false,
-    "ttiPolyfill": false
+    "ttiPolyfill": false,
+    "PaginateMixin": false,
+    "NextEntityPaginateMixin": false
   },
   "parserOptions": {
     "ecmaVersion": 6
