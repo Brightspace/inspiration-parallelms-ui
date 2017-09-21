@@ -8,8 +8,28 @@
 
 	let _index = lunr(function() {});
 	let _debouncer;
+	const _dates = {};
+	const _viewed = {};
+	let _keys = [];
 
-	const _courseOfferingSirenHandler = function(href, token, entity) {
+	const _activitySearchHandler = function(href, token, entity) {
+		const type = 'activity';
+		if (entity.class && entity.class.indexOf(type) !== -1) {
+			var date = _getDateForEntity(href, token, entity, type);
+			_addDate(date);
+			return 	_formatResult(
+				href,
+				token,
+				type,
+				null,
+				type,
+				_formatDateWords(date)
+			);
+		}
+		return null;
+	};
+
+	const _courseOfferingSearchHandler = function(href, token, entity) {
 		if (entity.class) {
 			if (entity.class.indexOf('course-offering') !== -1) {
 				return 	_formatResult(
@@ -23,8 +43,7 @@
 		}
 		return null;
 	};
-
-	const _userSirenHandler = function(href, token, entity) {
+	const _userSearchHandler = function(href, token, entity) {
 		if (entity.class) {
 			if (entity.class.indexOf('user') !== -1 ) {
 				const displayName = entity.entities.filter(function(subEntity) {
@@ -45,7 +64,7 @@
 		return null;
 	};
 
-	const _discussionsSirenHandler = function(href, token, entity) {
+	const _discussionsSearchHandler = function(href, token, entity) {
 		if (entity.class) {
 			if (entity.class.indexOf('topic') !== -1) {
 				return 	_formatResult(
@@ -55,7 +74,8 @@
 					entity.properties.description && entity.properties.description.Text || '',
 					'topic'
 				);
-			} else if (entity.class.indexOf('forum') !== -1) {
+			}
+			if (entity.class.indexOf('forum') !== -1) {
 				return 	_formatResult(
 					href,
 					token,
@@ -64,31 +84,116 @@
 					'forum'
 				);
 
-			} else if (entity.class.indexOf('thread') !== -1) {
+			}
+			if (entity.class.indexOf('thread') !== -1) {
+				const type = 'thread';
+				const date = _getDateForEntity(href, token, entity, type);
+				_addDate(date);
 				return 	_formatResult(
 					href,
 					token,
 					entity.properties.subject,
 					entity.properties.message,
-					'thread'
+					type,
+					_formatDateWords(date)
+				);
+			}
+			if (entity.class.indexOf('post') !== -1) {
+				const type = 'post';
+				const date = _getDateForEntity(href, token, entity, type);
+				_addDate(date);
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.subject,
+					entity.properties.message,
+					type,
+					_formatDateWords(date)
 				);
 			}
 		}
 		return null;
 	};
 	const SPLITTER = '|';
-	const _formatResult = function(href, token, primaryText, secondaryText, type) {
+	const _formatDateWords = function(date) {
+		//TODO(eknutson): format other words like, Today, Tomorrow, September 20 etc
+		const key = _formatDate(date.date),
+			today  = _formatDate(new Date()),
+			tomorrow = _formatDate(new Date().setDate(new Date().getDate() + 1)),
+			yesterday = _formatDate(new Date().setDate(new Date().getDate() + 1));
+		if ( key === today) {
+			return `${ key } today`;
+		}
+		if ( key === tomorrow) {
+			return `${ key } tomorrow`;
+		}
+		if ( key === today) {
+			return `${ key } yeserday`;
+		}
+	}
+
+	const _addDate = function(result) {
+		if (result && _viewed[result.href] !== result.token) {
+			const key = _formatDate(result.date);
+			const current =  _dates[key] || [];
+			current.push(result);
+			current.sort(function(a, b) {
+				return a.date > b.date;
+			});
+
+			_dates[key] = current;
+			_keys = Object
+				.keys(_dates)
+				.sort(function(a, b) {
+					return a > b;
+				});
+			_viewed[result.href] = result.token;
+		}
+	};
+
+	const _formatResult = function(href, token, primaryText, secondaryText, type, dates) {
 		return 	{
 			type: type,
 			primaryText: primaryText,
 			secondaryText: secondaryText,
+			dates: dates,
 			key: `${token}${SPLITTER}${href}${SPLITTER}${type}`
 		};
 	};
+
+	const _getDateForEntity = function(href, token, entity, type) {
+		for ( const sub of entity.entities ) {
+			if (sub.class.indexOf('date') !== -1) {
+				return 	_formatDateResult(
+					href,
+					token,
+					sub.properties.date,
+					type
+				);
+			}
+		}
+		return null;
+	}
+
+	const _formatDateResult = function(href, token, date, type) {
+		return 	{
+			type: type,
+			date: date,
+			href: href,
+			token: token
+		};
+	};
+
+	const _formatDate = function(date) {
+		const d = new Date(date);
+		return `${ d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+	};
+
 	const _handlers = [
-		_userSirenHandler,
-		_courseOfferingSirenHandler,
-		_discussionsSirenHandler
+		_activitySearchHandler,
+		_userSearchHandler,
+		_courseOfferingSearchHandler,
+		_discussionsSearchHandler
 	];
 
 	const GlobalSearch = {
@@ -102,6 +207,7 @@
 						this.field('type');
 						this.field('primaryText', { boost: 3 });
 						this.field('secondaryText');
+						this.field('dates', {boost: 10});
 						for (const [token, hrefStore] of store.entries()) {
 							for (const [href, entity] of hrefStore.entries()) {
 								if (entity.status === 'fetching' || entity.status === 'error') {
@@ -119,6 +225,19 @@
 					});
 				}
 			);
+		},
+		dates: (start, end) => {
+			const s = _formatDate(start);
+			const e = _formatDate(end);
+			const results =_keys
+				.filter(function(key) {
+					return key >= s && key <= e;
+				})
+				.map(function(key) {
+					return _dates[key];
+				});
+			// flatten arrays
+			return [].concat.apply([], results);
 		},
 		search: (term) => {
 			return _index

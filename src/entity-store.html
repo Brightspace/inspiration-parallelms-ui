@@ -1,6 +1,5 @@
 <link rel="import" href="siren-parser.html">
 <link rel="import" href="global-search.html">
-<link rel="import" href="global-dates.html">
 
 <script>
 (function() {
@@ -121,7 +120,6 @@
 				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
 
 				D2L.GlobalSearch.update(this._store);
-				D2L.Dates.add(entityId, token, this._store.get(token).get(entityId));
 				this._notify(entityId, token, entity);
 
 				resolve(entity);
