@@ -1,0 +1,69 @@
+<script>
+	/*
+		@polymerMixin
+	*/
+	NextEntityPaginateMixin = function(propName, superClass) {
+		return class extends superClass {
+			static get properties() {
+				return {
+					paginated: Array,
+					nextLink: Object,
+					nextEntity: Object
+				};
+			}
+
+			static get observers() {
+				return [
+					'__tokenChanged(token)',
+					`_itemsChanged(${propName})`
+				];
+			}
+
+			constructor() {
+				super();
+				this._boundNextEntityChanged = this._nextEntityChanged.bind(this);
+			}
+
+			get sirenEntityElement() {
+				if (!this.__sirenEntityElement) {
+					this.__sirenEntityElement = document.createElement('d2l-siren-entity');
+					this.__sirenEntityElement.token = this.token;
+					this.__sirenEntityElement.addEventListener('entity-changed', this._boundNextEntityChanged);
+					this.shadowRoot.appendChild(this.__sirenEntityElement);
+				}
+				return this.__sirenEntityElement;
+			}
+
+			get hasMore() {
+				return !!this.nextLink;
+			}
+
+			_nextEntityChanged() {
+				this.nextEntity = this.sirenEntityElement.entity;
+				this.paginated = this.paginated.concat(this.nextEntity.entities);
+				this.nextLink = this.nextEntity.getLinkByRel('next');
+				this.__target.clearTriggers();
+			}
+
+			__tokenChanged(token) {
+				if (this.__sirenEntityElement) {
+					this.__sirenEntityElement.token = token;
+				}
+			}
+
+			_itemsChanged() {
+				this.paginated = this.get(propName).entities;
+				this.nextLink = this.get(propName).getLinkByRel('next');
+			}
+
+			loadMoreData(e) {
+				if (this.hasMore) {
+					this.sirenEntityElement.href = this.nextLink.href;
+					this.__target = e.target;
+				} else {
+					e.target.clearTriggers();
+				}
+			}
+		};
+	};
+</script>

@@ -13,7 +13,8 @@
     "PerformanceObserver": false,
     "PrefetchMixin": false,
     "ttiPolyfill": false,
-    "PaginateMixin": false
+    "PaginateMixin": false,
+    "NextEntityPaginateMixin": false
   },
   "parserOptions": {
     "ecmaVersion": 6
