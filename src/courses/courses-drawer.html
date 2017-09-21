@@ -1,0 +1,67 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="enrollment-item.html">
+
+<dom-module id="d2l-courses-drawer">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+		</style>
+		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{rootEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[userLink.href]]" token="[[token]]" entity="{{userEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[myEnrollmentsLink.href]]" token="[[token]]" entity="{{myEnrollmentsEntity}}"></d2l-siren-entity>
+
+		<template is="dom-if" if="{{hasCourses}}">
+			<template is="dom-repeat" items="{{myEnrollmentsEntity.entities}}">
+				<d2l-enrollment-item href="[[item.href]]" token="{{token}}"></d2l-enrollment-item>
+			</template>
+		</template>
+		<template is="dom-if" if="{{!hasCourses}}">
+			<span>You have no courses</span>
+		</template>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CoursesDrawer extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-courses-drawer'; }
+
+			static get properties() {
+				return {
+					hasCourses: {
+						type: Boolean,
+						value: true
+					},
+					rootEntity: Object,
+					userEntity: Object,
+					userLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")'
+					},
+					myEnrollmentsEntity: Object,
+					myEnrollmentsLink: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(myEnrollmentsEntity)'
+				];
+			}
+
+			_changed(myEnrollmentsEntity) {
+				this.hasCourses = myEnrollmentsEntity.entities && myEnrollmentsEntity.entities.length > 0;
+			}
+		}
+
+		window.customElements.define(CoursesDrawer.is, CoursesDrawer);
+	</script>
+</dom-module>
