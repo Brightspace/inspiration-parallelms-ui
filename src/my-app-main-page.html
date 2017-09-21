@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/mp-calendar/mp-calendar.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
@@ -38,6 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 		<div class="layout">
 			<paper-card class="calendar">
+				<mp-calendar></mp-calendar>
 				<button on-tap="_goToPage">Go to View1</button>
 			</paper-card>
 		</div>
