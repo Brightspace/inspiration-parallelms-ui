@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="course-name.html">
 <link rel="import" href="root/root.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="user/user-card.html">
+<link rel="import" href="user/user-card-top.html">
 <link rel="import" href="search-results-page.html">
 <link rel="import" href="search/search-input.html">
 <link rel="import" href="courses/courses-drawer.html">
@@ -101,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<app-drawer-layout force-narrow>
 			<app-drawer opened="{{drawerOpened}}" slot="drawer" id="drawer">
 				<div class="drawer-contents">
-					<a href="./" class="title">ParalleLMS</a>
+					<a href="./app-main-page" class="title">ParalleLMS</a>
 					<a href="view1" class="title">I'm confused, take me back to View1</a>
 					<d2l-courses-drawer href="{{rootHref}}" token="{{token}}"></d2l-courses-drawer>
 				</div>
@@ -112,7 +112,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						<paper-icon-button icon="menu" on-click="_toggleDrawer"></paper-icon-button>
 						<template is="dom-if" if="{{showSearch}}">
 							<d2l-search-input label="Search" class="search-bar" value="{{searchString}}" results="{{searchResults}}"></d2l-search-input>
-							<div class="flex-right" style="white-space:nowrap; align-self: center;">I'm a user</div>
+							<template is="dom-if" if="{{token}}">
+								<d2l-user-card-top class="flex-right" style="white-space:nowrap; align-self: center;" token="{{token}}" href="{{rootHref}}"></d2l-user-card-top>
+							</template>
 						</template>
 					</app-toolbar>
 				</app-header>
