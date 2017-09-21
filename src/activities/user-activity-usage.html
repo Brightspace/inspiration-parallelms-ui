@@ -2,6 +2,7 @@
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../course-name.html">
 <link rel="import" href="activity-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
 <dom-module id="d2l-user-activity-usage">
 	<template>
@@ -12,26 +13,48 @@
 
 			.info-box {
 				display: flex;
+				padding: 10px;
+				width: 100%;
 			}
 
 			.info-box > * {
-				margin-right: 20px;
+				align-self: center;
+			}
+
+			.completion {
+				padding: 10px;
+				border-radius: 10px;
+				color:white;
+				font-weight: 400;
+				width: max-content;
+			}
+
+			.right-space {
+				margin-right: 10px;
+				align-self: center;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
 		</style>
 
-		<div class="info-box">
-			<d2l-activity-card href="{{activityHref}}" token="{{token}}"></d2l-activity-card>
-			<d2l-course-name href="{{organizationHref}}" token="{{token}}"></d2l-course-name>
-			<span>Due [[dueDate]]</span>
-			<div>
-				<template is="dom-if" if="{{complete}}">
-					Complete!
-				</template>
-				<template is="dom-if" if="{{!complete}}">
-					Not yet complete
-				</template>
+
+		<paper-item>
+			<div class="info-box">
+				<div style="flex: 1; display: flex;">
+					<div class="right-space">
+						<template is="dom-if" if="{{complete}}">
+							<div class="completion" style="background: #46A661;">COMPLETE</div>
+						</template>
+						<template is="dom-if" if="{{!complete}}">
+							<div class="completion" style="background: #CD2026;">NOT COMPLETE</div>
+						</template>
+					</div>
+					<d2l-activity-card class="right-space" href="{{activityHref}}" token="{{token}}" style="font-weight: bold"></d2l-activity-card>
+					<span style="align-self: center;">in&nbsp;</span><d2l-course-name href="{{organizationHref}}" token="{{token}}" class="right-space"></d2l-course-name>
+				</div>
+				<span style="display: inline-block;">Due [[dueDate]]</span>
 			</div>
-		</div>
+		</paper-item>
 	</template>
 
 	<script>
@@ -57,7 +80,11 @@
 
 			_changed(entity) {
 				if (entity.hasSubEntityByClass('due-date')) {
-					this.dueDate = entity.getSubEntityByClass('due-date').properties.date;
+					var dateEntity = entity.getSubEntityByClass('due-date');
+					if (dateEntity) {
+						var uglyAssDate = dateEntity.properties.date;
+						this.dueDate = new Intl.DateTimeFormat(this.locale, { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }).format(new Date(uglyAssDate));
+					}
 				}
 				if (entity.hasLinkByRel('https://api.brightspace.com/rels/assignment')) {
 					this.activityHref = entity.getLinkByRel('https://api.brightspace.com/rels/assignment').href;
