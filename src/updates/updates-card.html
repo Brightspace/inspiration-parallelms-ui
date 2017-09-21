@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
 <link rel="import" href="update-item-grades.html">
@@ -51,8 +52,22 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class UpdatesCard extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class UpdatesCard extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getSubEntitiesByClass('news'),
+						elements: [window.customElements.get('d2l-update-item')]
+					}, {
+						getLinks: entity => entity.getSubEntitiesByClass('grade'),
+						elements: [window.customElements.get('d2l-update-item-grades')]
+					}
+				];
+			}
+
 			static get is() { return 'd2l-updates-card'; }
 
 			static get properties() {
