@@ -1,4 +1,4 @@
-<script src="https://unpkg.com/lunr/lunr.js"></script>
+<script src="https://unpkg.com/lunr@1.0.0/lunr.js"></script>
 <script>
 (function() {
 	'use strict';
@@ -6,7 +6,13 @@
 	/*eslint no-undef: "error"*/
 	/*eslint no-invalid-this: "error"*/
 
-	let _index = lunr(function() {});
+	const _index = lunr(/* @this */ function() {
+		this.ref('key');
+		this.field('type');
+		this.field('primaryText', { boost: 3 });
+		this.field('secondaryText');
+		this.field('dates', {boost: 10});
+	});
 	let _debouncer;
 	const _dates = {};
 	const _viewed = {};
@@ -197,34 +203,25 @@
 	];
 
 	const GlobalSearch = {
-		update: (store) => {
+		update: (href, token, entity) => {
+			/*
 			_debouncer = Polymer.Debouncer.debounce(
 				_debouncer,
 				Polymer.Async.timeOut.after(500),
 				function() {
-					_index = lunr(/* @this */ function() {
-						this.ref('key');
-						this.field('type');
-						this.field('primaryText', { boost: 3 });
-						this.field('secondaryText');
-						this.field('dates', {boost: 10});
-						for (const [token, hrefStore] of store.entries()) {
-							for (const [href, entity] of hrefStore.entries()) {
-								if (entity.status === 'fetching' || entity.status === 'error') {
-									continue;
-								}
-								for (const handler of _handlers) {
-									const result = handler(href, token, entity.entity);
-									if (result) {
-										this.add(result);
-										break;
-									}
-								}
-							}
-						}
-					});
+			*/
+
+			if (entity.status === 'fetching' || entity.status === 'error') {
+				return;
+			}
+			for (const handler of _handlers) {
+				const result = handler(href, token, entity.entity);
+				if (result) {
+					_index.add(result);
+					break;
 				}
-			);
+			}
+			_viewed[href] = token;
 		},
 		dates: (start, end) => {
 			const s = _formatDate(start);
