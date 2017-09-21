@@ -57,6 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 
+		<d2l-siren-entity href="{{enrolledUserLink.href}}" token="{{token}}" entity="{{enrolledUserEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="{{organization.href}}" token="{{token}}" entity="{{orgEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 
@@ -87,6 +88,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						getLinks: entity => (entity.hasClass('root') || entity.hasClass('enrollment')) && entity.getLinkByRel('https://api.brightspace.com/rels/organization'),
 						elements: [this]
 					}, {
+						getLinks: entity => entity.hasClass('enrolled') && entity.hasClass('user') && entity.getLinkByRel('https://users.api.brightspace.com/rels/canonical-user'),
+						elements: [this]
+					}, {
 						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://activities.api.brightspace.com/rels/my-activities'),
 						elements: [window.customElements.get('d2l-user-activity-usage-list')]
 					}, {
@@ -96,10 +100,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/my-enrollments'),
 						elements: [window.customElements.get('d2l-courses-card')]
 					}, {
-						getLinks: entity => entity.hasClass('organization') && entity.getLinkByRel('https://api.brightspace.com/rels/discussions'),
+						getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/discussions'),
 						elements: [window.customElements.get('d2l-discussions-forum-list')]
 					}, {
-						getLinks: entity => entity.hasClass('organization') && entity.getLinkByRel('https://api.brightspace.com/rels/my-organization-awards'),
+						getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/my-organization-awards'),
 						elements: [window.customElements.get('d2l-awards-card')]
 					}
 				];
@@ -113,10 +117,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organization")'
 					},
-					whoami: {
-						type: Object,
-						computed: '_getUserLink(entity)'
-					},
+					whoami: Object,
+					enrolledUserEntity: Object,
 					orgEntity: Object,
 					myActivities: {
 						type: Object,
@@ -147,14 +149,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				};
 			}
 
+			static get observers() {
+				return [
+					'_getUserLink(entity)',
+					'_getUserLinkFromEnrolledUser(enrolledUserEntity)'
+				];
+			}
+
 			_getLinkByRel(entity, rel) {
 				return entity && entity.getLinkByRel(rel);
 			}
 
 			_getUserLink(entity) {
-				return entity &&
-					entity.getLinkByRel('https://api.brightspace.com/rels/whoami') ||
-					entity.getLinkByRel('https://api.brightspace.com/rels/user');
+				if (entity.hasLinkByRel('https://api.brightspace.com/rels/whoami')) {
+					this.whoami = entity.getLinkByRel('https://api.brightspace.com/rels/whoami');
+				} else {
+					this.enrolledUserLink = entity.getLinkByRel('https://api.brightspace.com/rels/user');
+				}
+			}
+
+			_getUserLinkFromEnrolledUser(enrolledUserEntity) {
+				this.whoami = enrolledUserEntity && enrolledUserEntity.getLinkByRel('https://users.api.brightspace.com/rels/canonical-user');
 			}
 
 		}
