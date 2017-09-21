@@ -9,7 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="activities/user-activity-usage-list.html">
+<link rel="import" href="discussions/discussions-forum-list.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
 
 <dom-module id="my-course-page">
@@ -19,9 +22,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				display: block;
 				padding: 10px;
 			}
+
+			.card-item {
+				max-width: 1200px;
+				width: calc(100% - 40px);
+				padding: 20px;
+				margin-left: auto; margin-right: auto;
+			}
 		</style>
 
-		This is the page for {{route.__queryParams.course}}
+		<d2l-siren-entity href="[[route.__queryParams.course]]" token="[[token]]" entity="{{organizationEntity}}"></d2l-siren-entity>
+
+		<d2l-user-activity-usage-list href="{{activitiesLink.href}}" token="{{token}}" class="card-item"></d2l-user-activity-usage-list>
+		<d2l-discussions-forum-list href="{{discussionsLink.href}}" token="{{token}}" class="card-item"></d2l-discussions-forum-list><br>
   </template>
 
 	<script>
@@ -31,7 +44,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 			static get properties() {
 				return {
-					route: Object
+					route: Object,
+					organizationEntity: Object,
+					activitiesLink: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "https://activities.api.brightspace.com/rels/my-organization-activities")'
+					},
+					discussionsLink: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/discussions")'
+					}
 				};
 			}
 		}
