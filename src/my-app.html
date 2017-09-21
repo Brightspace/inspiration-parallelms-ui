@@ -39,6 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
+<link rel="lazy-import" href="my-course-page.html">
 
 <dom-module id="my-app">
 	<template>
@@ -72,6 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			.title {
 				margin-top: 20px;
 				margin-bottom: 20px;
+				text-align: center;
 			}
 
 			a:active {
@@ -97,9 +99,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			tail="{{subroute}}"></app-route>
 
 		<app-drawer-layout force-narrow>
-			<app-drawer slot="drawer" id="drawer">
+			<app-drawer opened="{{drawerOpened}}" slot="drawer" id="drawer">
 				<div class="drawer-contents">
 					<a href="./" class="title">ParalleLMS</a>
+					<a href="view1" class="title">I'm confused, take me back to View1</a>
 					<d2l-courses-drawer href="{{rootHref}}" token="{{token}}"></d2l-courses-drawer>
 				</div>
 			</app-drawer>
@@ -132,6 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 							<my-view2 name="view2"></my-view2>
 							<my-view3 name="view3"></my-view3>
 							<my-view404 name="view404"></my-view404>
+							<my-course-page name="course-page" token="{{token}}" route="{{route}}"></my-course-page>
 						</iron-pages>
 					</template>
 				</div>
@@ -173,7 +177,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					showSearch: {
 						type: Boolean,
 						value: false
-					}
+					},
+					drawerOpened: Boolean
 				};
 			}
 
@@ -198,6 +203,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				// Default to 'login-page' in that case.
 				this.page = page || 'login-page';
 				this.searchString = '';
+				this.drawerOpened = false;
 				if (page === '' || page === 'welcome-page' || page === 'login-page') {
 					this.showSearch = false;
 				} else if (this.token !== '') {
