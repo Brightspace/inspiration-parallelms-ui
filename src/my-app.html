@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="user/user-card.html">
 <link rel="import" href="search-results-page.html">
 <link rel="import" href="search/search-input.html">
+<link rel="import" href="courses/courses-drawer.html">
 
 <link rel="lazy-import" href="my-app-main-page.html">
 <link rel="lazy-import" href="my-login-page.html">
@@ -99,6 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<app-drawer slot="drawer" id="drawer">
 				<div class="drawer-contents">
 					<a href="./" class="title">ParalleLMS</a>
+					<d2l-courses-drawer href="{{rootHref}}" token="{{token}}"></d2l-courses-drawer>
 				</div>
 			</app-drawer>
 			<app-header-layout>
