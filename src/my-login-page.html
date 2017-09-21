@@ -121,7 +121,7 @@
 			_animateShit() {
 				var self = this;
 				var delay = 500;
-				var animation = 'bounceOutRight'
+				var animation = 'bounceOutRight';
 				setTimeout(function() {
 					self.$.headerText.classList.add(animation);
 					self.$.headerText.classList.add('animated');
@@ -153,7 +153,6 @@
 			}
 
 			_rootEntityChanged() {
-				var self = this;
 				var rootEntityLink = this.rootEntity && this.rootEntity.getLinkByRel('self') && this.rootEntity.getLinkByRel('self').href;
 				if (rootEntityLink) this.href = rootEntityLink;
 				this._performLogin();
@@ -163,7 +162,7 @@
 				var self = this;
 				if (this.href && this.href !== '') {
 					this._animateShit();
-					var animation = 'bounceOutRight'
+					var animation = 'bounceOutRight';
 					setTimeout(function() {
 						self.set('route.path', 'welcome-page');
 						self.$.headerText.classList.remove('invisible');

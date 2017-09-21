@@ -77,7 +77,7 @@
 				];
 			}
 
-			_changed(entity) {
+			_changed() {
 				this._animateShit();
 			}
 
@@ -95,7 +95,7 @@
 			_animateShit() {
 				var self = this;
 				var delay = 500;
-				var animation = 'bounceInLeft'
+				var animation = 'bounceInLeft';
 				setTimeout(function() {
 					self.$.welcome.classList.add(animation);
 					self.$.welcome.classList.add('animated');
@@ -112,13 +112,13 @@
 							self.$.go.classList.remove('invisible');
 						}, delay);
 					}, delay);
-				}, delay)
+				}, delay);
 			}
 
 			_animateShitOut() {
 				var self = this;
 				var delay = 500;
-				var animation = 'bounceOutRight'
+				var animation = 'bounceOutRight';
 				setTimeout(function() {
 					self.$.welcome.classList.remove('bounceInLeft');
 					self.$.welcome.classList.add(animation);
@@ -135,7 +135,7 @@
 							self.$.go.classList.add('animated');
 						}, delay);
 					}, delay);
-				}, delay)
+				}, delay);
 			}
 
 		}
