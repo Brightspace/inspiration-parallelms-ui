@@ -9,6 +9,7 @@
 		<style>
 			:host {
 				display: block;
+				overflow:hidden;
 			}
 
 			.info-box {
@@ -34,13 +35,26 @@
 				align-self: center;
 				white-space: nowrap;
 				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			.completion-info {
+				flex: 1; display: flex;
+			}
+			@media (max-width:800px) {
+				.completion-info {
+					flex: 1;
+					display: block;
+				}
+				.info-box {
+					display: block;
+				}
 			}
 		</style>
 
 
 		<paper-item>
 			<div class="info-box">
-				<div style="flex: 1; display: flex;">
+				<div class="completion-info">
 					<div class="right-space">
 						<template is="dom-if" if="{{complete}}">
 							<div class="completion" style="background: #46A661;">COMPLETE</div>
