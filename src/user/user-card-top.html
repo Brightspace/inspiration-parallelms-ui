@@ -1,9 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="user-name.html">
-<link rel="import" href="user-image.html">
-<link rel="import" href="../shared-styles.html">
+<!-- <link rel="import" href="../../bower_components/paper-card/paper-card.html"> -->
+<!-- <link rel="import" href="user-name.html"> -->
+<link rel="import" href="user-image-top.html">
 
 
 <dom-module id="d2l-user-card-top">
@@ -15,17 +14,15 @@
 			.image {
 				width: 50px;
 				height: 50px;
+				border-radius: 50%;
+				overflow: hidden;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 		</style>
 
-		<paper-card class="flex-parent" style="width:100%;">
-			<div class="flex-1">
-				<d2l-user-image class="image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
-			</div>
-			<div class="flex-right">
-				<d2l-user-name href="{{whoami.href}}" token="{{token}}"></d2l-user-name>
-			</div>
-		</paper-card>
+		<d2l-user-image-top class="image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image-top>
 	</template>
 
 	<script>
@@ -44,7 +41,7 @@
 						type: Object,
 						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
 						notify: true
-					},
+					}
 				};
 			}
 		}
