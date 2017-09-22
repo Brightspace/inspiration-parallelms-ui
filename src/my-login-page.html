@@ -255,6 +255,11 @@
 					null,
 					true
 				);
+
+				window.D2L.EntityStore.addInvalidationListener(() => {
+					window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token);
+					window.customElements.get('my-welcome-page').beginPrefetch(entrypoint, token);
+				});
 			}
 		}
 	}
