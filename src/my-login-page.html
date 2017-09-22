@@ -9,6 +9,7 @@
 <link rel="import" href="shared-styles.html">
 
 <link rel="lazy-import" href="courses/courses-drawer.html">
+<link rel="lazy-import" href="my-welcome-page.html">
 
 <dom-module id="my-login-page">
 	<template>
@@ -191,10 +192,21 @@
 
 			_startPrefetch(enableOffline, entrypoint, token) {
 				if (enableOffline && entrypoint && token) {
-					var resolvedPageUrl = this.resolveUrl('courses/courses-drawer.html');
+					// the entities in my-app.html that get passed the rootEntity and we link too
+					var resolvedCoursesDrawerUrl = this.resolveUrl('courses/courses-drawer.html');
+					var resolvedMainPageUrl = this.resolveUrl('my-welcome-page.html');
+
+					// The courses-drawer is always shown
 					Polymer.importHref(
-						resolvedPageUrl,
+						resolvedCoursesDrawerUrl,
 						() => window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token),
+						null,
+						true
+					);
+					// We link to the welcome-page
+					Polymer.importHref(
+						resolvedMainPageUrl,
+						() => window.customElements.get('my-welcome-page').beginPrefetch(entrypoint, token),
 						null,
 						true
 					);
