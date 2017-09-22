@@ -1,11 +1,11 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../prefetch-mixin.html">
-<link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="../shared-styles.html">
-<link rel="import" href="user-activity-usage.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="user-activity-usage.html">
 
 <dom-module id="d2l-user-activity-usage-list">
 	<template>
@@ -13,22 +13,23 @@
 			:host {
 				display: block;
 			}
-
 		</style>
 
-			<paper-card class="medium-card-size">
-				<div class="card-header">
-					<h2 class="card-header-text">Upcoming Work</h2>
-				</div>
-				<template is="dom-if" if="{{hasActivites}}">
-					<template is="dom-repeat" items="{{entity.entities}}">
-						<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
-					</template>
+		<d2l-siren-entity href="[[customDateRangeHref]]" token="[[token]]" entity="{{activitiesUsagesEntity}}"></d2l-siren-entity>
+
+		<paper-card class="medium-card-size">
+			<div class="card-header">
+				<h2 class="card-header-text">Upcoming Work</h2>
+			</div>
+			<template is="dom-if" if="{{hasActivites}}">
+				<template is="dom-repeat" items="{{activitiesUsagesEntity.entities}}">
+					<d2l-user-activity-usage href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-user-activity-usage>
 				</template>
-				<template is="dom-if" if="{{!hasActivites}}">
-					<span>There is no upcoming working</span>
-				</template>
-			</paper-card>
+			</template>
+			<template is="dom-if" if="{{!hasActivites}}">
+				<span>There is no upcoming working</span>
+			</template>
+		</paper-card>
 	</template>
 
 	<script>
@@ -49,10 +50,13 @@
 
 			static get properties() {
 				return {
-					entity: Object,
 					hasActivites: {
 						type: Boolean,
 						value: true
+					},
+					customDateRangeHref: {
+						type: String,
+						computed: '_getMonthDateRangeHref(entity)'
 					}
 				};
 			}
@@ -67,12 +71,22 @@
 				];
 			}
 
-			_changed(entity) {
-				if (entity.entities && entity.entities.length > 0) {
+			_changed(activitiesUsagesEntity) {
+				if (activitiesUsagesEntity.entities && activitiesUsagesEntity.entities.length > 0) {
 					this.hasActivites = true;
 				} else {
 					this.hasActivites = false;
 				}
+			}
+
+			_getMonthDateRangeHref(entity) {
+				var action = entity.getActionByName('select-custom-date-range');
+				var now = new Date();
+				var firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+				var lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+				var href = action.href + '?start=' + encodeURIComponent(firstDay.toISOString()) + '&end=' + encodeURIComponent(lastDay.toISOString());
+				return href;
 			}
 
 		}
