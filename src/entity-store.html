@@ -61,6 +61,8 @@
 
 		_listeners: new Map(),
 
+		_invalidationListeners: new Set(),
+
 		_initContainer(map, entityId, token, init) {
 			if (!map.has(token)) {
 				map.set(token, new Map());
@@ -80,6 +82,14 @@
 
 			this._initContainer(this._listeners, entityId, token, new Set()).add(listener);
 
+		},
+
+		addInvalidationListener: function(listener) {
+			this._invalidationListeners.add(listener);
+		},
+
+		removeInvalidationListener: function(listener) {
+			this._invalidationListeners.delete(listener);
 		},
 
 		fetch: function(entityId, token, bypassCache) {
@@ -104,6 +114,11 @@
 					})
 					.then(function(json) {
 						this.update(entityId, token, json);
+						if (bypassCache) {
+							for (const listener of this._invalidationListeners) {
+								listener(entityId, token, json);
+							}
+						}
 					}.bind(this))
 					.catch(function(err) {
 						this.setError(entityId, token, err);
