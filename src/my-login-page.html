@@ -48,7 +48,7 @@
 				</paper-listbox>
 			</paper-dropdown-menu>
 			<paper-input label="Token" value="{{token}}" id="tokenInput"></paper-input>
-			<paper-input label="LMS URL" value="{{lmsUrl}}"></paper-input>
+			<paper-input label="LMS URL" value="{{lmsUrl}}" id="lms"></paper-input>
 			<paper-checkbox class="basic-top-bottom-padding" checked="{{enableOffline}}" id="checkbox">Enable offline mode</paper-checkbox>
 			<paper-button class="login-button" on-tap="_login" id="loginButton">Log In</paper-button>
 		</div>
@@ -175,6 +175,9 @@
 						self.$.tokenInput.classList.add(animation);
 						self.$.tokenInput.classList.add('animated');
 
+						self.$.lms.classList.add(animation);
+						self.$.lms.classList.add('animated');
+
 						setTimeout(function() {
 							self.$.loginButton.classList.add(animation);
 							self.$.loginButton.classList.add('animated');
@@ -215,6 +218,10 @@
 					self.$.tokenInput.classList.remove(animation);
 					self.$.tokenInput.classList.remove('animated');
 					self.$.tokenInput.classList.remove('invisible');
+
+					self.$.lms.classList.remove(animation);
+					self.$.lms.classList.remove('animated');
+					self.$.lms.classList.remove('invisible');
 
 					self.$.loginButton.classList.remove(animation);
 					self.$.loginButton.classList.remove('animated');
