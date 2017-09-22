@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="../next-entity-paginate-mixin.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../siren-entity-mixin.html">
@@ -16,14 +18,16 @@
 				max-height: 800px;
 			}
 		</style>
-		<paper-card class="courses-card medium-card-size">
+		<paper-card id="card" class="courses-card medium-card-size">
 			<div class="card-header">
 				<h2 class="card-header-text">My Courses</h2>
 			</div>
 			<template is="dom-if" if="{{hasCourses}}">
-				<template is="dom-repeat" items="{{entity.entities}}">
-					<d2l-enrollment-item href="[[item.href]]" token="{{token}}"></d2l-enrollment-item>
-				</template>
+				<iron-scroll-threshold scroll-target="card" on-lower-threshold="loadMoreData">
+					<template is="dom-repeat" items="{{paginated}}">
+						<d2l-enrollment-item href="[[item.href]]" token="{{token}}"></d2l-enrollment-item>
+					</template>
+				</iron-scroll-threshold>
 			</template>
 			<template is="dom-if" if="{{!hasCourses}}">
 				<span>You have no courses</span>
@@ -33,8 +37,9 @@
 
 	<script>
 		/* @mixes PrefetchMixin
+		   @mixes NextEntityPaginateMixin
 		   @mixes SirenEntityMixin */
-		class CoursesCard extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+		class CoursesCard extends PrefetchMixin(NextEntityPaginateMixin('entity', SirenEntityMixin(Polymer.Element))) {
 			static get interesting() {
 				return [
 					{
