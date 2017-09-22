@@ -3,6 +3,8 @@
 <link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="user/user-first-name.html">
 <link rel="import" href="user/user-image.html">
+<link rel="import" href="my-app-main-page.html">
+<link rel="import" href="prefetch-mixin.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-welcome-page">
@@ -51,8 +53,21 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class WelcomePage extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class WelcomePage extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('my-app-main-page')] // We link to it, so we need to prefetch it
+					}, {
+						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
+						elements: [window.customElements.get('d2l-user-image')]
+					}
+				];
+			}
 
 			static get is() { return 'my-welcome-page'; }
 
@@ -115,7 +130,7 @@
 							self.$.go.classList.remove('invisible');
 						}, delay);
 					}, delay);
-				}, delay);
+				}, 4000);
 			}
 
 			_animateShitOut() {

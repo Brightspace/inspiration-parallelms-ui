@@ -12,11 +12,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="global-search.html">
+<link rel="import" href="prefetch-mixin.html">
 <link rel="import" href="search-result-item.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="calendar/calendar.html">
+
+<link rel="import" href="my-view1.html">
 
 <dom-module id="my-app-main-page">
 	<template>
@@ -46,13 +49,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<paper-card class="calendar">
 				<d2l-calendar data="{{events}}"></d2l-calendar>
 			</paper-card>
-			<button on-tap="_goToPage">Go to View1</button>
 		</div>
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class AppMainPage extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class AppMainPage extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('my-view1')] // we link to view1
+					}
+				];
+			}
 
 			static get is() { return 'my-app-main-page'; }
 

@@ -1,6 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../search-results-page.html">
 
 <link rel="import" href="calendar-item.html">
 <dom-module id="d2l-calendar">
@@ -29,16 +31,25 @@
 			.date:hover {
 				background-color: #dedede
 			}
+			.selected {
+				background: #006FBF;
+				color: white;
+			}
 		</style>
+
 		<div class="calendar">
 			<template is="dom-repeat" items="{{_getWeeks(data)}}" >
 				<div class="row">
-					<template is="dom-repeat" items={{item}} >
-						<calendar-item class="date" day="{{item.day}}" data="{{item.data}}"></calendar-item>
+					<template is="dom-repeat" items={{item}}>
+						<calendar-item on-tap="itemTapped" class="date" day="{{item.day}}" data="{{item.data}}"></calendar-item>
 					</template>
 				</div>
 			</template>
 		</div>
+		<template is="dom-if" if="{{selectedItem}}">
+			<span style="display: block; align-self: center; background: #E6EAF0; padding: 10px; width: calc(100% - 20px); text-align: center;">Items for [[selectedDay]]</span>
+			<d2l-search-results-page style="padding-bottom: 20px; background: #E6EAF0" results="{{selectedResults}}"></d2l-search-results-page>
+		</template>
 	</template>
 	<script>
 		class D2LCalendar extends Polymer.Element {
@@ -51,8 +62,26 @@
 					weeks: {
 						type: Array,
 						computed: '_getWeeks(data)'
+					},
+					selectedItem: {
+						type: Boolean,
+						value: false
+					},
+					selectedResults: {
+						type: Array,
+						value: []
+					},
+					selectedDay: {
+						type: Number,
+						value: 0
 					}
 				};
+			}
+
+			itemTapped(e) {
+				this.selectedResults = e.model.item.data;
+				this.selectedItem = true;
+				this.selectedDay = e.model.item.day;
 			}
 
 			// strait up lifted form https://codepen.io/odran037/pen/RrjjOr
