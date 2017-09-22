@@ -31,6 +31,7 @@
 			}
 			.topic-header {
 				background: lightgrey; color: white; padding: 10px;
+				display: block;
 			}
 			.create-threads-input-container {
 				padding:5px 10px 0 16px; background-color: lightgrey
@@ -45,6 +46,7 @@
 		<paper-card class="topic">
 			<paper-item class="topic-header" on-tap="_toggleShowPosts">
 				<h4>[[topic.properties.name]]</h4>
+				<span id="desc"></span>
 			</paper-item>
 			<template is="dom-if" if="{{showPosts}}">
 				<d2l-discussions-topic-post-list href="{{getThreadsHref}}" token="{{token}}"></d2l-discussions-topic-post-list>
@@ -127,6 +129,8 @@
 				this.topic = entity;
 				this.getThreadsHref = entity.getActionByName('get-threads') &&  entity.getActionByName('get-threads').href;
 				this.canCreateThread = this.topic.hasActionByName('create-thread');
+				// not safe don't do this
+				this.$.desc.innerHTML = this.get('entity.properties.description');
 			}
 
 			_sendReply() {
