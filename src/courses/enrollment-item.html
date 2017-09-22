@@ -2,7 +2,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
-<link rel="import" href="../my-view1.html">
+<link rel="import" href="../my-course-page-prefetcher.html">
 <link rel="import" href="course-item.html">
 
 <dom-module id="d2l-enrollment-item">
@@ -23,7 +23,10 @@
 				return [
 					{
 						getLinks: entity => entity.getLinkByRel('self'),
-						elements: [window.customElements.get('my-view1')]
+						elements: [window.D2L.MyCoursePagePrefetcher]
+					}, {
+						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/organization'),
+						elements: [window.customElements.get('d2l-course-item')]
 					}
 				];
 			}
