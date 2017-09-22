@@ -61,7 +61,7 @@
 			static get interesting() {
 				return [
 					{
-						getLinks: entity => entity.hasClass('root') && entity.getSubEntitiesByClass('feed'),
+						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('feed'),
 						elements: [this]
 					}, {
 						getLinks: entity => entity.hasClass('feed') && entity.getSubEntitiesByClass('news'),
