@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-forum-item.html">
@@ -18,8 +19,11 @@
 			paper-tabs{
 				--paper-tabs-selection-bar-color: white;
 			}
+			iron-scroll-threshold {
+				display: none;
+			}
 		</style>
-		<paper-card class="medium-card-size">
+		<paper-card id="card" class="medium-card-size">
 			<div class="card-header">
 				<h2 class="card-header-text">Discussions</h2>
 				<template is="dom-if" if="{{hasForums}}">
@@ -31,7 +35,7 @@
 				</template>
 			</div>
 			<template is="dom-if" if="{{hasForums}}">
-				<iron-pages selected="{{selected}}">
+				<iron-pages selected="{{selected}}" selected-item="{{forumItem}}">
 					<template is="dom-repeat" items="[[forums]]">
 						<d2l-discussions-forum-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-forum-item>
 					</template>
@@ -42,6 +46,7 @@
 			</template>
 		</paper-card>
 		<slot></slot>
+		<iron-scroll-threshold scroll-target="card" on-lower-threshold="loadMoreData"></iron-scroll-threshold>
 	</template>
 
 	<script>
@@ -66,6 +71,7 @@
 						type: Array,
 						value: []
 					},
+					forumItem: Object,
 					selected: {
 						type: Number,
 						value: 0
@@ -92,6 +98,11 @@
 
 			getHref(item) {
 				return item.getLinkByRel('self') && item.getLinkByRel('self').href;
+			}
+
+			loadMoreData(e) {
+				this.forumItem && this.forumItem.loadMoreData(e);
+				e.target.clearTriggers();
 			}
 
 		}

@@ -10,7 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="activities/user-activity-usage-list.html">
+<link rel="import" href="awards/awards-card.html">
 <link rel="import" href="discussions/discussions-forum-list.html">
+<link rel="import" href="updates/updates-card.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
@@ -33,9 +35,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 		<d2l-siren-entity href="[[route.__queryParams.course]]" token="[[token]]" entity="{{organizationEntity}}"></d2l-siren-entity>
 
-		<d2l-user-activity-usage-list href="{{activitiesLink.href}}" token="{{token}}" class="card-item"></d2l-user-activity-usage-list>
-		<d2l-discussions-forum-list href="{{discussionsLink.href}}" token="{{token}}" class="card-item"></d2l-discussions-forum-list><br>
-  </template>
+		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{rootEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[userLink.href]]" token="[[token]]" entity="{{userEntity}}"></d2l-siren-entity>
+
+		<d2l-updates-card organization-filter="[[route.__queryParams.course]]" href="[[updatesLink.href]]" token="[[token]]" class="card-item"></d2l-updates-card>
+		<d2l-awards-card href="[[awardsLink.href]]" token="[[token]]" class="card-item"></d2l-awards-card>
+		<d2l-user-activity-usage-list href="[[activitiesLink.href]]" token="[[token]]" class="card-item"></d2l-user-activity-usage-list>
+		<d2l-discussions-forum-list href="[[discussionsLink.href]]" token="[[token]]" class="card-item"></d2l-discussions-forum-list>
+	</template>
 
 	<script>
 		/* @mixes SirenEntityMixin */
@@ -50,9 +57,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(organizationEntity, "https://activities.api.brightspace.com/rels/my-organization-activities")'
 					},
+					awardsLink: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/my-organization-awards")'
+					},
 					discussionsLink: {
 						type: Object,
 						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/discussions")'
+					},
+					rootEntity: Object,
+					userLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")'
+					},
+					userEntity: Object,
+					updatesLink: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/updates")'
 					}
 				};
 			}

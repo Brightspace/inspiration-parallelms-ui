@@ -4,19 +4,22 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../prefetch-mixin.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../siren-entity.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="update-item.html">
 <link rel="import" href="update-item-grades.html">
-<link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-updates-card">
 	<template>
 		<style include="shared-styles">
 			:host {
-				display: inline-block;
-				width: 100%;
+				display: block;
 			}
 		</style>
+
+		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{updatesRootEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[updatesFeedLink.href]]" token="[[token]]" entity="{{updatesFeedEntity}}"></d2l-siren-entity>
 
 		<paper-card class="medium-card-size">
 			<div class="card-header">
@@ -72,6 +75,7 @@
 
 			static get properties() {
 				return {
+					organizationFilter: String,
 					selected: {
 						type: Number,
 						value: 0
@@ -84,7 +88,6 @@
 						type: Array,
 						value: []
 					},
-					token: String,
 					hasUpdates: {
 						type: Boolean,
 						value: true
@@ -92,19 +95,45 @@
 					hasGrades: {
 						type: Boolean,
 						value: true
-					}
+					},
+					updatesRootEntity: Object,
+					updatesFeedLink: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "feed")'
+					},
+					updatesFeedEntity: Object
 				};
 			}
 
 			static get observers() {
 				return [
-					'_changed(entity)'
+					'_changed(updatesFeedEntity, organizationFilter)'
 				];
 			}
 
-			_changed(entity) {
-				this.newsUpdates = entity.getSubEntitiesByClass('news');
-				this.gradeUpdates = entity.getSubEntitiesByClass('grade');
+			_changed(updatesFeedEntity, organizationFilter) {
+				if (!updatesFeedEntity) {
+					return;
+				}
+
+				var newsEntities = updatesFeedEntity.getSubEntitiesByClass('news') || [];
+				var gradeEntities = updatesFeedEntity.getSubEntitiesByClass('grade') || [];
+
+				if (organizationFilter) {
+					newsEntities = newsEntities.filter(function(item) {
+						return item.links.some(function(link) {
+							return link.href === organizationFilter;
+						});
+					});
+					gradeEntities = gradeEntities.filter(function(item) {
+						return item.links.some(function(link) {
+							return link.href === organizationFilter;
+						});
+					});
+				}
+
+				this.newsUpdates = newsEntities;
+				this.gradeUpdates = gradeEntities;
 				this.hasUpdates = this.newsUpdates && this.newsUpdates.length > 0;
 				this.hasGrades = this.gradeUpdates && this.gradeUpdates.length > 0;
 			}
