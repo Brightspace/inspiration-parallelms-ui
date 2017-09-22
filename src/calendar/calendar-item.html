@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="calendar-item">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+			.number {
+				margin-right: 0px;
+			}
+			.header {
+				text-align: right;
+			}
+			.card {
+				background-color: #aeaeae;
+				color: #fafafa;
+				font-size: 1.5em;
+			}
+		</style>
+		<div class="day">
+			<div class="header">
+				<span class="number">{{day}}</span>
+			</div>
+			<div>
+				<template is="dom-if" if="{{showCount}}" >
+					<span class="card">{{count}}</span>
+				</template>
+			</div>
+		</div>
+	</template>
+	<script>
+		class CalendarItem extends Polymer.Element {
+
+			static get is() { return 'calendar-item'; }
+
+			static get properties() {
+				return {
+					data: Array,
+					day: String,
+					count: {
+						value: 0,
+						computed: '_getCount(data)',
+						notify: true
+					},
+					showCount: {
+						type: Boolean,
+						computed: '_showCount(count)'
+					}
+				};
+			}
+			_getCount (data) {
+				return data.length;
+			}
+			_showCount (count) {
+				return count > 0;
+			}
+		}
+
+		window.customElements.define(CalendarItem.is, CalendarItem);
+	</script>
+</dom-module>

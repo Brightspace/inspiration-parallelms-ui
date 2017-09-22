@@ -1,0 +1,114 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="calendar-item.html">
+<dom-module id="d2l-calendar">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+			.calendar {
+				width: 100%;
+			}
+			.row {
+				display: flex;
+				flex-wrap: nowrap	;
+				justify-content: space-between;
+				border-left: 2px solid #fafafa;
+			}
+			.date {
+				flex:1;
+				padding: 2%;
+				height: auto;
+				width: auto;
+				border-right: 2px solid #fafafa;
+				border-bottom: 2px solid #fafafa;
+			}
+			.date:hover {
+				background-color: #dedede
+			}
+		</style>
+		<div class="calendar">
+			<template is="dom-repeat" items="{{_getWeeks(data)}}" >
+				<div class="row">
+					<template is="dom-repeat" items={{item}} >
+						<calendar-item class="date" day="{{item.day}}" data="{{item.data}}"></calendar-item>
+					</template>
+				</div>
+			</template>
+		</div>
+	</template>
+	<script>
+		class D2LCalendar extends Polymer.Element {
+
+			static get is() { return 'd2l-calendar'; }
+
+			static get properties() {
+				return {
+					data: Array,
+					weeks: {
+						type: Array,
+						computed: '_getWeeks(data)'
+					}
+				}
+			};
+
+			// strait up lifted form https://codepen.io/odran037/pen/RrjjOr
+			_getWeeks (data) {
+				var d = new Date();
+				function monthDays(month, year) {
+					var result = [];
+					var days = new Date(year, month, 0).getDate();
+					for (var i = 1; i <= days; i++) {
+						result.push(i);
+					}
+					return result;
+				}
+				Date.prototype.monthDays = function() {
+					var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);
+					return d.getDate();
+				};
+
+				var details = {
+				// totalDays: monthDays(d.getMonth(), d.getFullYear()),
+					totalDays: d.monthDays(),
+					weekDays: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
+					months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+				};
+				var start = new Date(d.getFullYear(), d.getMonth()).getDay();
+				var cal = [];
+				var day = 1;
+
+				var dataPerDay = {};
+				for (const dataPoint of data) {
+					const day = new Date(dataPoint.date).getDate();
+					dataPerDay[day] = dataPerDay[day] || [];
+					dataPerDay[day].push(dataPoint);
+				}
+
+				for (var i = 0; i <= 6; i++) {
+					cal[i] = [];
+					for (var j = 0; j < 7; j++) {
+						if (i === 0) {
+							cal[i].push({ day: details.weekDays[j], data: [], readOnly: true });
+						} else if (day > details.totalDays) {
+							//cal[i].push({ day: 'wer', data: [] });
+						} else {
+							if (i === 1 && j < start) {
+								cal[i].push({ day: '', data: [] });
+							} else {
+								cal[i].push({ day: day, data: dataPerDay[day] || [] });
+								day++;
+							}
+						}
+					}
+				}
+				return cal;
+			}
+		}
+
+		window.customElements.define(D2LCalendar.is, D2LCalendar);
+	</script>
+</dom-module>

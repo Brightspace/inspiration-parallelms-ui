@@ -8,13 +8,15 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="global-search.html">
-<link rel="import" href="search-results-page.html">
+<link rel="import" href="search-result-item.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
+<link rel="import" href="calendar/calendar.html">
 
 <dom-module id="my-app-main-page">
 	<template>
@@ -33,14 +35,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			.calendar {
 				width: 100%;
 				margin: 20px 20px 0px 10px;
-				height: 800px;
+			}
+			.row {
+				width: 100%
 			}
 
 		</style>
 		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
 		<div class="layout">
 			<paper-card class="calendar">
-				<search-results-page results={{events}}></search-results-page>
+				<d2l-calendar data="{{events}}"></d2l-calendar>
 			</paper-card>
 			<button on-tap="_goToPage">Go to View1</button>
 		</div>
@@ -69,13 +73,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					},
 					userEntity: Object,
 					route: Object,
-					events: Array
+					events: {
+						type: Array,
+						computed: '_getThisWeek()'
+					},
+					values: String,
+					count: String
 				};
 			}
-			constructor() {
-				super();
-				setInterval(this._getThisWeek, 2000);
-			}
+
 			_getLinkByRel(entity, rel) {
 				return entity && entity.getLinkByRel(rel);
 			}
@@ -84,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				start.setDate(start.getDate() - 3);
 				var end = new Date();
 				end.setDate(end.getDate() + 3);
-				this.events = D2L.GlobalSearch.dates(start, end);
+				return D2L.GlobalSearch.dates(start, end);
 			}
 			_goToPage() {
 				this.set('route.path', 'view1');

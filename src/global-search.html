@@ -9,9 +9,9 @@
 	const _index = elasticlunr(/* @this */ function() {
 		this.setRef('key');
 		this.addField('type');
-		this.addField('primaryText', { boost: 3 });
+		this.addField('primaryText', { boost: 3, boolean: 'AND' });
 		this.addField('secondaryText');
-		this.addField('dates', {boost: 10});
+		this.addField('dates', {boost: 10, boolean: 'AND'});
 	});
 	let _debouncer;
 	const _dates = {};
@@ -238,7 +238,7 @@
 		},
 		search: (term) => {
 			return _index
-				.search(term)
+				.search(term, {expand: true})
 				.map(function(result) {
 					const parts = result.ref.split(SPLITTER);
 					return {
