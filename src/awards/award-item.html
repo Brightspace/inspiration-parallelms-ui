@@ -10,7 +10,7 @@
 	<template>
 		<style>
 			:host {
-				display: block;
+				display: inline-block;
 				--adjusting-background: whitesmoke;
 			}
 			:host([is-active]) {
@@ -20,12 +20,7 @@
 				color: grey;
 				width: 350px;
 				margin: 10px;
-				padding: 0px;
 				background-color: var(--adjusting-background);
-				float: left;
-			}
-			div {
-				margin: 10px;
 			}
 			.award-image {
 				width: 50px;
@@ -33,10 +28,17 @@
 				padding: 5px;
 				margin-left: auto;
 				margin-right: auto;
-				float: left;
 			}
 			.awarded {
+				padding: 5px;
 				float: right;
+			}
+			.award-title {
+				overflow: hidden;
+			    text-overflow: ellipsis;
+				white-space: nowrap;
+				margin: 5px;
+				text-align: center;
 			}
 		</style>
 		<paper-card is-active>
@@ -44,10 +46,15 @@
 				<iron-icon class="awarded" icon="d2l-tier1:check-circle"></iron-icon>
 				<paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>
 			</template>
-			<d2l-image class="award-image" image-url="[[image.href]]" token="[[token]]"></d2l-image>
 			<div>
-				[[item.properties.name]]
+				<d2l-image class="award-image" image-url="[[image.href]]" token="[[token]]"></d2l-image>
 				<paper-tooltip>[[item.properties.description]]</paper-tooltip>
+			</div>
+			<div>
+				<div class="award-title">
+					[[item.properties.name]]
+				</div>
+				<paper-tooltip>[[item.properties.name]]</paper-tooltip>
 			</div>
 		</paper-card>
 	</template>
