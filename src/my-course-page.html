@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
+<link rel="import" href="courses/course-banner.html">
 
 <dom-module id="my-course-page">
 	<template>
@@ -31,9 +32,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				padding: 20px;
 				margin-left: auto; margin-right: auto;
 			}
+
+
 		</style>
 
 		<d2l-siren-entity href="[[route.__queryParams.course]]" token="[[token]]" entity="{{organizationEntity}}"></d2l-siren-entity>
+		<d2l-course-banner token="{{token}}" href="[[organizationLink.href]]" class="banner"></d2l-course-banner>
 
 		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{rootEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="[[userLink.href]]" token="[[token]]" entity="{{userEntity}}"></d2l-siren-entity>
@@ -65,6 +69,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/discussions")'
 					},
+					organizationLink: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "self")'
+					},
 					rootEntity: Object,
 					userLink: {
 						type: Object,
@@ -75,6 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						type: Object,
 						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/updates")'
 					}
+
 				};
 			}
 		}
