@@ -117,9 +117,9 @@
 			this._initContainer(this._store, entityId, token);
 			listenForChanges(entityId, token);
 			return new Promise((resolve) => {
-				D2L.GlobalSearch.update(this._store);
-
 				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
+
+				D2L.GlobalSearch.update(entityId, token, this._store.get(token).get(entityId));
 				this._notify(entityId, token, entity);
 
 				resolve(entity);
