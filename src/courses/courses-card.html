@@ -40,6 +40,9 @@
 					{
 						getLinks: entity => entity.entities,
 						elements: [window.customElements.get('d2l-enrollment-item')]
+					}, {
+						getLinks: entity => entity.getLinkByRel('next'),
+						elements: [this] // prefetch all the next links
 					}
 				];
 			}

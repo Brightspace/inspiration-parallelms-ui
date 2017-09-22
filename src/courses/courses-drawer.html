@@ -40,13 +40,13 @@
 				return [
 					{
 						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
-						elements: [this]
+						elements: [this] // need whoami (class user)
 					}, {
 						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/my-enrollments'),
-						elements: [this]
+						elements: [this] // need my-enrollments from whoami (class enrollments)
 					}, {
 						getLinks: entity => entity.hasClass('enrollments') && entity.getLinkByRel('next'),
-						elements: [this]
+						elements: [this] // prefetch all the next links
 					}, {
 						getLinks: entity => entity.hasClass('enrollments') && entity.entities,
 						elements: [window.customElements.get('d2l-enrollment-item')]
