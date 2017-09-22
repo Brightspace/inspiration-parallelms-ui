@@ -52,12 +52,10 @@
 			}
 
 			_getRightImage(courseImageEntity) {
-				var links = this._getLinksByClass(courseImageEntity, "wide");
-				console.log(links)
+				var links = this._getLinksByClass(courseImageEntity, 'wide');
 				links = links.filter(function(link) {
-					return link.class.includes("max") && link.class.includes("low-density");
+					return link.class.includes('max') && link.class.includes('low-density');
 				});
-				console.log(links);
 				return links[0].href;
 			}
 
