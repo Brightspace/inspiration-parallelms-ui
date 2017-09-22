@@ -64,10 +64,10 @@
 						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('feed'),
 						elements: [this]
 					}, {
-						getLinks: entity => entity.hasClass('feed') && entity.getSubEntitiesByClass('news'),
+						getLinks: entity => entity.hasClass('feed') && entity.getSubEntitiesByClass('news').map(entity => entity.getLinkByRel('self')),
 						elements: [window.customElements.get('d2l-update-item')]
 					}, {
-						getLinks: entity => entity.hasClass('feed') && entity.getSubEntitiesByClass('grade'),
+						getLinks: entity => entity.hasClass('feed') && entity.getSubEntitiesByClass('grade').map(entity => entity.getLinkByRel('self')),
 						elements: [window.customElements.get('d2l-update-item-grades')]
 					}
 				];
