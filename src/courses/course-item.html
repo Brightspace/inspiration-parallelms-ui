@@ -57,6 +57,9 @@
 					{
 						getLinks: entity => entity.getSubEntityByRel('https://api.brightspace.com/rels/organization-image'),
 						elements: []
+					}, {
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.D2L.MyCoursePagePrefetcher]
 					}
 				];
 			}

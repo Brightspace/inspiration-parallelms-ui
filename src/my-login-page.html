@@ -10,6 +10,7 @@
 
 <link rel="lazy-import" href="courses/courses-drawer.html">
 <link rel="lazy-import" href="my-app-main-page.html">
+<link rel="lazy-import" href="my-course-page-prefetcher.html">
 
 <dom-module id="my-login-page">
 	<template>
@@ -194,6 +195,7 @@
 				if (enableOffline && entrypoint && token) {
 					var resolvedCoursesDrawerUrl = this.resolveUrl('courses/courses-drawer.html');
 					var resolvedMainPageUrl = this.resolveUrl('my-app-main-page.html');
+					var resolvedCoursePagePrefetcherUrl = this.resolveUrl('my-course-page-prefetcher.html');
 					Polymer.importHref(
 						resolvedCoursesDrawerUrl,
 						() => window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token),
@@ -203,6 +205,12 @@
 					Polymer.importHref(
 						resolvedMainPageUrl,
 						() => window.customElements.get('my-app-main-page').beginPrefetch(entrypoint, token),
+						null,
+						true
+					);
+					Polymer.importHref(
+						resolvedCoursePagePrefetcherUrl,
+						() => window.D2L.MyCoursePagePrefetcher.beginPrefetch(entrypoint, token),
 						null,
 						true
 					);

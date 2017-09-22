@@ -22,9 +22,6 @@
 			static get interesting() {
 				return [
 					{
-						getLinks: entity => entity.getLinkByRel('self'),
-						elements: [window.D2L.MyCoursePagePrefetcher]
-					}, {
 						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/organization'),
 						elements: [window.customElements.get('d2l-course-item')]
 					}
