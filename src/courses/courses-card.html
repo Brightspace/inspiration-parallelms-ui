@@ -37,6 +37,7 @@
 
 	<script>
 		/* @mixes PrefetchMixin
+		   @mixes NextEntityPaginateMixin
 		   @mixes SirenEntityMixin */
 		class CoursesCard extends PrefetchMixin(NextEntityPaginateMixin('entity', SirenEntityMixin(Polymer.Element))) {
 			static get interesting() {
