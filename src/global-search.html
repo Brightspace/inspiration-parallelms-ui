@@ -11,9 +11,8 @@
 		this.addField('type');
 		this.addField('primaryText', { boost: 3, boolean: 'AND' });
 		this.addField('secondaryText');
-		this.addField('dates', {boost: 10, boolean: 'AND'});
+		this.addField('dates', {boost: 10, boolean: 'OR'});
 	});
-	let _debouncer;
 	const _dates = {};
 	const _viewed = {};
 	let _keys = [];
@@ -126,17 +125,17 @@
 		const key = _formatDate(date.date),
 			today  = _formatDate(new Date()),
 			tomorrow = _formatDate(new Date().setDate(new Date().getDate() + 1)),
-			yesterday = _formatDate(new Date().setDate(new Date().getDate() + 1));
+			yesterday = _formatDate(new Date().setDate(new Date().getDate() - 1));
 		if ( key === today) {
-			return `${ key } today`;
+			return `today ${ key }`;
 		}
 		if ( key === tomorrow) {
-			return `${ key } tomorrow`;
+			return `tomorrow ${ key }`;
 		}
-		if ( key === today) {
-			return `${ key } yeserday`;
+		if ( key === yesterday) {
+			return `yesterday ${ key }`;
 		}
-	}
+	};
 
 	const _addDate = function(result) {
 		if (result && _viewed[result.href] !== result.token) {
@@ -179,7 +178,7 @@
 			}
 		}
 		return null;
-	}
+	};
 
 	const _formatDateResult = function(href, token, date, type) {
 		return 	{
@@ -226,7 +225,7 @@
 		dates: (start, end) => {
 			const s = _formatDate(start);
 			const e = _formatDate(end);
-			const results =_keys
+			const results = _keys
 				.filter(function(key) {
 					return key >= s && key <= e;
 				})
@@ -238,7 +237,7 @@
 		},
 		search: (term) => {
 			return _index
-				.search(term, {expand: true})
+				.search(term)
 				.map(function(result) {
 					const parts = result.ref.split(SPLITTER);
 					return {

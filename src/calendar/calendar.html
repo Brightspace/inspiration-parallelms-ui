@@ -52,20 +52,13 @@
 						type: Array,
 						computed: '_getWeeks(data)'
 					}
-				}
-			};
+				};
+			}
 
 			// strait up lifted form https://codepen.io/odran037/pen/RrjjOr
-			_getWeeks (data) {
+			_getWeeks(data) {
 				var d = new Date();
-				function monthDays(month, year) {
-					var result = [];
-					var days = new Date(year, month, 0).getDate();
-					for (var i = 1; i <= days; i++) {
-						result.push(i);
-					}
-					return result;
-				}
+
 				Date.prototype.monthDays = function() {
 					var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);
 					return d.getDate();
@@ -75,7 +68,7 @@
 				// totalDays: monthDays(d.getMonth(), d.getFullYear()),
 					totalDays: d.monthDays(),
 					weekDays: ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'],
-					months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+					months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 				};
 				var start = new Date(d.getFullYear(), d.getMonth()).getDay();
 				var cal = [];
