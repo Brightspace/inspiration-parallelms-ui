@@ -19,7 +19,8 @@
   "extraDependencies": [
     "manifest.json",
     "bower_components/webcomponentsjs/*.js",
-    "bower_components/file-saver/*.js"
+    "bower_components/file-saver/*.js",
+    "bower_components/tti-polyfill/tti-polyfill.js"
   ],
   "lint": {
     "rules": ["polymer-2"]
