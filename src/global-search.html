@@ -223,11 +223,12 @@
 			_viewed[href] = token;
 		},
 		dates: (start, end) => {
-			const s = _formatDate(start);
-			const e = _formatDate(end);
+			const s = new Date(_formatDate(start));
+			const e = new Date(_formatDate(end));
 			const results = _keys
 				.filter(function(key) {
-					return key >= s && key <= e;
+					const keyDate = new Date(key);
+					return keyDate >= s && keyDate <= e;
 				})
 				.map(function(key) {
 					return _dates[key];
