@@ -17,6 +17,38 @@
 	const _viewed = {};
 	let _keys = [];
 
+
+	const _updatesSearchHandler = function(href, token, entity) {
+		 if (entity.class && entity.class.indexOf('feed-item') !== -1) {
+			 if (entity.class && entity.class.indexOf('news') !== -1) {
+	 			var date = _formatDateResult(href, token, entity.properties.date, 'news');
+	 			_addDate(date);
+	 			return 	_formatResult(
+	 				href,
+	 				token,
+	 				entity.properties.title,
+	 				entity.properties.body,
+	 				'news',
+	 				_formatDateWords(date)
+	 			);
+	 		}
+	 		if (entity.class && entity.class.indexOf('grade') !== -1) {
+	 			var date = _formatDateResult(href, token, entity.properties.date, 'grade');
+	 			_addDate(date);
+	 			return 	_formatResult(
+	 				href,
+	 				token,
+	 				entity.properties.title,
+	 				entity.properties.comments,
+	 				'grade',
+	 				_formatDateWords(date)
+	 			);
+	 		}
+		 }
+
+		return null;
+	};
+
 	const _activitySearchHandler = function(href, token, entity) {
 		const type = 'activity';
 		if (entity.class && entity.class.indexOf(type) !== -1) {
@@ -195,6 +227,7 @@
 	};
 
 	const _handlers = [
+		_updatesSearchHandler,
 		_activitySearchHandler,
 		_userSearchHandler,
 		_courseOfferingSearchHandler,
