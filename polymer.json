@@ -2,12 +2,14 @@
   "entrypoint": "index.html",
   "shell": "src/my-app.html",
   "fragments": [
+    "src/my-app-main-page.html",
     "src/my-login-page.html",
     "src/my-welcome-page.html",
     "src/my-view1.html",
     "src/my-view2.html",
     "src/my-view3.html",
-    "src/my-view404.html"
+    "src/my-view404.html",
+    "src/my-course-page.html"
   ],
   "sources": [
     "src/**/*",
@@ -16,7 +18,9 @@
   ],
   "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/*.js"
+    "bower_components/webcomponentsjs/*.js",
+    "bower_components/file-saver/*.js",
+    "bower_components/tti-polyfill/tti-polyfill.js"
   ],
   "lint": {
     "rules": ["polymer-2"]

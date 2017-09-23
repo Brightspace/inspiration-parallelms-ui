@@ -1,8 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-entity.html">
 <link rel="import" href="../localization-mixin.html">
 <link rel="import" href="../content/content-module-list.html">
 
@@ -17,24 +19,15 @@
 				--adjusting-background: white;
 			}
 			paper-card {
-				width: calc(100% - 20px);
-				margin: 10px;
+				width: 100%;
 				padding: 0px;
 				background-color: var(--adjusting-background);
 			}
 			div {
 				margin: 10px;
 			}
-			.header {
-				background-color: lightgray;
-				color: white;
-				padding: 10px;
-			}
 			h4 {
 				margin: 0px;
-			}
-			.date {
-				padding-left: 10px;
 			}
 		</style>
 			<paper-card is-active>
@@ -44,19 +37,48 @@
 				<div class="date">Start Date: [[startDate]]</div>
 				<div class="date">End Date: [[endDate]]</div>
 				<div>
-					<paper-button on-click="toggle">Show Content</paper-button>
+					<paper-button on-click="_toggle">Show Content</paper-button>
 				</div>
 				<iron-collapse id="collapse">
 					<d2l-content-module-list href="{{content.href}}" token="{{token}}"></d2l-content-module-list>
 				</iron-collapse>
 			</paper-card>
 
+			<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}} ></d2l-siren-entity>
+			<a href="[[_coursePageHref]]">
+				<paper-button on-tap="_goToCoursePage">
+					<paper-card is-active image="[[image.href]]">
+						<div>
+							<h4>[[entity.properties.name]] ([[entity.properties.code]]) </h4>
+						</div>
+						<template is="dom-if" if="[[startDate]]" />
+							<div>Start Date: [[startDate]]</div>
+						</template>
+						<template is="dom-if" if="[[startDate]]" />
+							<div>End Date: [[endDate]]</div>
+						</template>
+					</paper-card>
+				</paper-button>
+			</a>
 	</template>
 
 	<script>
 		/* @mixes LocalizationMixin
+		   @mixes PrefetchMixin
 		   @mixes SirenEntityMixin */
-		class CourseItem extends LocalizationMixin(SirenEntityMixin(Polymer.Element)) {
+		class CourseItem extends LocalizationMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getSubEntityByRel('https://api.brightspace.com/rels/organization-image'),
+						elements: [] // Just prefetch the org image and we use it directly
+					}, {
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.D2L.MyCoursePagePrefetcher] // We link to course-page
+					}
+				];
+			}
 
 			static get is() { return 'd2l-course-item'; }
 
@@ -76,7 +98,20 @@
 					},
 					content: {
 						type: Object,
-						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/sequence")'
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/sequence")',
+					courseImage: {
+						type: Object,
+						computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/organization-image")'
+					},
+					courseImageEntity: Object,
+					image: {
+						type: Object,
+						value: { href: ''},
+						computed: '_getLinkByClass(courseImageEntity, "banner")'
+					},
+					_coursePageHref: {
+						type: String,
+						computed: '_computeCoursePageHref(href)'
 					}
 				};
 			}
@@ -98,8 +133,12 @@
 				}
 			}
 
-			toggle() {
+			_toggle() {
 				this.$.collapse.toggle();
+      }
+        
+			_computeCoursePageHref(href) {
+				return 'course-page?course=' + href;
 			}
 		}
 

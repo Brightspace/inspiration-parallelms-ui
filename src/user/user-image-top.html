@@ -4,31 +4,33 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../siren-entity-mixin.html">
 
-<dom-module id="d2l-user-image">
+
+<dom-module id="d2l-user-image-top">
 	<template>
 		<style>
 			:host {
 				display: block;
 			}
 
-			d2l-image {
-				max-height: 400px;
-				max-width: 400px;
+			.user-image-top {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
 			}
 		</style>
 		<template is="dom-if" if="{{!isDefault}}">
-			<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+			<d2l-image class="user-image-top" image-url="{{image.href}}" token="{{token}}"></d2l-image>
 		</template>
 		<template  is="dom-if" if="{{isDefault}}">
-			<iron-icon style="width:100%; height: 100%" icon="d2l-tier3:profile-pic"></iron-icon>
+			<iron-icon class="user-image-top" icon="d2l-tier3:profile-pic"></iron-icon>
 		</template>
 	</template>
 
 	<script>
 		/* @mixes SirenEntityMixin */
-		class UserImage extends SirenEntityMixin(Polymer.Element) {
+		class UserImageTop extends SirenEntityMixin(Polymer.Element) {
 
-			static get is() { return 'd2l-user-image'; }
+			static get is() { return 'd2l-user-image-top'; }
 
 			static get properties() {
 				return {
@@ -52,6 +54,6 @@
 			}
 		}
 
-		window.customElements.define(UserImage.is, UserImage);
+		window.customElements.define(UserImageTop.is, UserImageTop);
 	</script>
 </dom-module>

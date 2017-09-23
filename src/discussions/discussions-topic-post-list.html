@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-topic-post-item.html">
 
@@ -18,8 +19,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class DiscussionsTopicPostList extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
+						elements: [window.customElements.get('d2l-discussions-topic-post-item')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-topic-post-list'; }
 

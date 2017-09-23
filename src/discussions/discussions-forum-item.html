@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../prefetch-mixin.html">
+<link rel="import" href="../paginate-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="discussions-topic.html">
 
@@ -10,15 +12,26 @@
 			}
 		</style>
 		<span>[[forum.properties.description.Text]]<span>
-		<template is="dom-repeat" items="[[topics]]">
+		<template is="dom-repeat" items="[[paginated]]">
 			<d2l-discussions-topic href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic>
 		</template>
 		<slot></slot>
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class DiscussionsForumItem extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes PaginateMixin
+		   @mixes SirenEntityMixin */
+		class DiscussionsForumItem extends PrefetchMixin(PaginateMixin('topics', SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
+						elements: [window.customElements.get('d2l-discussions-topic')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-forum-item'; }
 
@@ -45,7 +58,7 @@
 
 			_changed(entity) {
 				this.forum = entity;
-				this.topics = entity.entities;
+				this.topics = entity.getSubEntitiesByClass('topic');
 			}
 
 			getHref(item) {

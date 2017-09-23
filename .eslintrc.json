@@ -11,9 +11,15 @@
     "SirenEntityMixin": false,
     "LocalizationMixin": false,
     "PerformanceObserver": false,
-    "ttiPolyfill": false
+    "PrefetchMixin": false,
+    "ttiPolyfill": false,
+    "PaginateMixin": false,
+    "NextEntityPaginateMixin": false
   },
   "parserOptions": {
     "ecmaVersion": 6
+  },
+  "rules": {
+    "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
   }
 }

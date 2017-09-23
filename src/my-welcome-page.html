@@ -3,12 +3,16 @@
 <link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="user/user-first-name.html">
 <link rel="import" href="user/user-image.html">
+<link rel="import" href="my-app-main-page.html">
+<link rel="import" href="prefetch-mixin.html">
+<link rel="import" href="shared-styles.html">
 
 <dom-module id="my-welcome-page">
 	<template>
-		<style>
+		<style include="shared-styles">
 			:host {
 				display: block;
+				overflow: hidden;
 			}
 			.welcome-container {
 				width: 300px;
@@ -18,33 +22,52 @@
 			}
 			.welcome-message {
 				text-align: center;
+				font-weight: lighter;
+				font-size: 40px;
 			}
 			.user-image {
 				border-radius: 50%;
 				overflow: hidden;
-				width: 200px;
-				height: 200px;
+				width: 300px;
+				height: 300px;
 				margin: 0 auto;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex: 1 1 auto;
 			}
 			.go-button {
 				background-color: cornflowerblue;
 				color: white;
 				height: 100%;
 				width: 100%;
-				margin-top: 10px;
+				margin-top: 30px;
 			}
 		</style>
 		<div class="welcome-container">
-			<h2 class="welcome-message">Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
-			<d2l-user-image class="user-image" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
-			<paper-button class="go-button" on-tap="_goToLandingPage">Go</paper-button>
+			<h2 class="welcome-message invisible" id="welcome">Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
+			<d2l-user-image id="image" class="user-image invisible" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
+			<paper-button id="go" class="go-button invisible" on-tap="_goToLandingPage">I'm Ready</paper-button>
 		</div>
 		<slot></slot>
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class WelcomePage extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class WelcomePage extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('my-app-main-page')] // We link to it, so we need to prefetch it
+					}, {
+						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
+						elements: [window.customElements.get('d2l-user-image')]
+					}
+				];
+			}
 
 			static get is() { return 'my-welcome-page'; }
 
@@ -66,8 +89,71 @@
 				};
 			}
 
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed() {
+				this._animateShit();
+			}
+
 			_goToLandingPage() {
-				this.set('route.path', 'view1');
+				var self = this;
+				this._animateShitOut();
+				setTimeout(function() {
+					self.set('route.path', 'app-main-page');
+					self.$.welcome.classList.remove('bounceOutRight');
+					self.$.image.classList.remove('bounceOutRight');
+					self.$.go.classList.remove('bounceOutRight');
+				}, 3000);
+			}
+
+			_animateShit() {
+				var self = this;
+				var delay = 500;
+				var animation = 'bounceInLeft';
+				setTimeout(function() {
+					self.$.welcome.classList.add(animation);
+					self.$.welcome.classList.add('animated');
+					self.$.welcome.classList.remove('invisible');
+
+					setTimeout(function() {
+						self.$.image.classList.add(animation);
+						self.$.image.classList.add('animated');
+						self.$.image.classList.remove('invisible');
+
+						setTimeout(function() {
+							self.$.go.classList.add(animation);
+							self.$.go.classList.add('animated');
+							self.$.go.classList.remove('invisible');
+						}, delay);
+					}, delay);
+				}, delay);
+			}
+
+			_animateShitOut() {
+				var self = this;
+				var delay = 500;
+				var animation = 'bounceOutRight';
+				setTimeout(function() {
+					self.$.welcome.classList.remove('bounceInLeft');
+					self.$.welcome.classList.add(animation);
+					self.$.welcome.classList.add('animated');
+
+					setTimeout(function() {
+						self.$.image.classList.remove('bounceInLeft');
+						self.$.image.classList.add(animation);
+						self.$.image.classList.add('animated');
+
+						setTimeout(function() {
+							self.$.go.classList.remove('bounceInLeft');
+							self.$.go.classList.add(animation);
+							self.$.go.classList.add('animated');
+						}, delay);
+					}, delay);
+				}, delay);
 			}
 
 		}

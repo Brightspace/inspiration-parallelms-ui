@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../user/user-name.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
@@ -30,7 +31,9 @@
 				border-left: solid 3px lightskyblue;
 			}
 			.light-borders {
-				border-top: solid 1px lightgrey; border-bottom: solid 1px lightgrey;
+				border-top: solid 1px lightgrey;
+				border-bottom: solid 1px lightgrey;
+				border-right: solid 1px lightgrey;
 			}
 			span {
 				font-size: 12px;
@@ -62,7 +65,7 @@
 			<template is="dom-if" if="{{!hideReplies}}">
 				<d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token={{token}}></d2l-discussions-topic-post-reply-list>
 				<div hidden="{{!canReply}}" class="flex-parent new-thread-container basic-left-padding">
-					<paper-input class="flex-1" style="width: 100%" label="Reply to this post" value="{{reply}}"></paper-input>
+					<paper-input class="flex-1" style="width: 100%" label="Reply to this thread" value="{{reply}}"></paper-input>
 					<paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">
 						<template is="dom-if" if="{{!sendingReply}}">
 							<span>Send</span>
@@ -78,9 +81,22 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
 		/* @mixes SirenActionMixin */
-		class DiscussionsTopicPostItem extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+		/* @mixes PrefetchMixin */
+		/* @mixes SirenEntityMixin */
+		class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getActionByName('get-all-posts'),
+						elements: [window.customElements.get('d2l-discussions-topic-post-reply-list')]
+					}, {
+						getLinks: entity => entity.getLinkByRel('author'),
+						elements: [window.customElements.get('d2l-user-name')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-discussions-topic-post-item'; }
 
@@ -144,7 +160,7 @@
 				else this.readClass = 'read';
 				this.$.topicitem.classList.add(this.readClass);
 				// THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
-				this.$.message.innerHTML = this.post.properties.message;
+				this.$.message.innerHTML = this.get('entity.properties.message');
 				// I MEAN IT!! THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
 			}
 
