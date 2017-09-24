@@ -28,8 +28,8 @@
 			<template is="dom-if" if="[[isHtml]]">
 				<iframe src="[[link]]" class="content-iframe"></iframe>
 			</template>
-			<template is"dom-if" if="[[isImage]]">
-				<d2l-image image-url=="[[link]]" token="{{token}}" ></d2l-image>
+			<template is="dom-if" if="[[isImage]]">
+				<d2l-image image-url="[[link]]" token="{{token}}" ></d2l-image>
 			</template>
 		</div>
 	</template>
@@ -39,29 +39,35 @@
 		class ContentFileViewer extends SirenEntityMixin(Polymer.Element) {
 			static get is() { return 'd2l-content-file-viewer'; }
 
-			static properties() {
+			static get properties() {
 				return {
-					title: '',
-					link: '',
-					type: '',
-					isHtml: false,
-					isImage: false
+					link: {
+						type: String,
+						value: ''
+					},
+					isHtml: {
+						type: Boolean,
+						value: false
+					},
+					isImage: {
+						type: Boolean,
+						value: false
+					}
 				};
 			}
 
 			static get observers() {
 				return [
-					'_changed(entity, token)'
+					'_changed(entity)'
 				];
 			}
+
 			_changed(entity) {
 				const _this = this;
 				const fileActivity = entity.getSubEntityByClass('file-activity');
 				if (fileActivity) {
 					const file = fileActivity.getSubEntityByClass('file');
 					const _link = file.getLinkByRel('alternate');
-					_this.title = entity.properties.title;
-					_this.type = _link.type;
 					switch (_link.type) {
 						case 'text/html': {
 							_this.link = _link.href;
@@ -84,7 +90,6 @@
 				const linkActivity = entity.getSubEntityByClass('link-activity');
 				if (linkActivity) {
 					const _link = linkActivity.getLinkByRel('about');
-					_this.title = entity.properties.title;
 					_this.link = _link.href;
 					_this.isHtml = true;
 					return;
