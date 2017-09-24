@@ -3,6 +3,7 @@
 <link rel="import" href="updates/updates-card.html">
 <link rel="import" href="discussions/discussions-forum-list.html">
 <link rel="import" href="awards/awards-card.html">
+<link rel="import" href="content/content-module-list.html">
 
 <script>
 	class MyCoursePagePrefetcher extends PrefetchMixin(null) {
@@ -20,6 +21,9 @@
 				}, {
 					getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/my-organization-awards'),
 					elements: [window.customElements.get('d2l-awards-card')]
+				}, {
+					getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/sequences'),
+					elements: [window.customElements.get('d2l-content-module-list')]
 				}
 			];
 		}

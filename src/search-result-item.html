@@ -15,6 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="discussions/discussions-forum-item.html">
 <link rel="import" href="discussions/discussions-topic.html">
 <link rel="import" href="user/user-card.html">
+<link rel="import" href="content/content-activity-item.html">
+<link rel="import" href="content/content-module-card.html">
 <link rel="import" href="courses/course-item.html">
 <link rel="import" href="activities/user-activity-usage.html">
 <link rel="import" href="discussions/discussions-topic-post-reply-item.html">
@@ -58,6 +60,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<template is="dom-if" if="{{isNews}}">
 				<d2l-update-item  href="{{result.href}}" token="{{result.token}}"></<d2l-update-item >
 			</template>
+			<template is="dom-if" if="{{isModule}}">
+				<d2l-content-module-card  href="{{result.href}}" token="{{result.token}}"></<d2l-content-module-card>
+			</template>
+			<template is="dom-if" if="{{isContent}}">
+				<d2l-content-activity-item  href="{{result.href}}" token="{{result.token}}"></<d2l-content-activity-item >
+			</template>
 			<template is="dom-if" if="{{isAMystery}}">
 				What the HYPERMEDIA is this?
 			</template>
@@ -81,6 +89,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					isPost: Boolean,
 					isGrade: Boolean,
 					isNews: Boolean,
+					isContent: Boolean,
+					isModule: Boolean,
 					isAMystery: Boolean
 				};
 			}
@@ -122,6 +132,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						break;
 					case 'news':
 						this.isNews = true;
+						break;
+					case 'content':
+						this.isContent = true;
+						break;
+					case 'module':
+						this.isModule = true;
 						break;
 					default:
 						this.isAMystery = true;

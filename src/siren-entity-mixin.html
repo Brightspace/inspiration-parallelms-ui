@@ -22,6 +22,10 @@
 				return entity && entity.getSubEntitiesByRel(rel);
 			}
 
+			_getSubEntityByClass(entity, cls) {
+				return entity && entity.getSubEntityByClass(cls);
+			}
+
 			_getLinkByRel(entity, rel) {
 				return entity && entity.getLinkByRel(rel);
 			}
