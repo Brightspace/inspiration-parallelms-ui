@@ -17,6 +17,60 @@
 	const _viewed = {};
 	let _keys = [];
 
+	const _updatesSearchHandler = function(href, token, entity) {
+		if (entity.class && entity.class.indexOf('feed-item') !== -1) {
+			if (entity.class && entity.class.indexOf('news') !== -1) {
+				var date = _formatDateResult(href, token, entity.properties.date, 'news');
+				_addDate(date);
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.title,
+					entity.properties.body,
+					'news',
+					_formatDateWords(date)
+				);
+			}
+			if (entity.class && entity.class.indexOf('grade') !== -1) {
+				var gradeDate = _formatDateResult(href, token, entity.properties.date, 'grade');
+				_addDate(gradeDate);
+				return 	_formatResult(
+					href,
+					token,
+					entity.properties.title,
+					entity.properties.comments,
+					'grade',
+					_formatDateWords(gradeDate)
+				);
+			}
+		}
+
+		return null;
+	};
+
+	const _contentSearchHandler = function(href, token, entity) {
+		const type = 'content';
+		if (entity.class && entity.class.indexOf('sequenced-activity') !== -1) {
+			return 	_formatResult(
+				href,
+				token,
+				entity.properties.title,
+				null,
+				type
+			);
+		}
+		if (entity.class && entity.class.indexOf('sequence-description') !== -1) {
+			return 	_formatResult(
+				href,
+				token,
+				entity.properties.title,
+				null,
+				'module'
+			);
+		}
+		return null;
+	};
+
 	const _activitySearchHandler = function(href, token, entity) {
 		const type = 'activity';
 		if (entity.class && entity.class.indexOf(type) !== -1) {
@@ -195,6 +249,8 @@
 	};
 
 	const _handlers = [
+		_contentSearchHandler,
+		_updatesSearchHandler,
 		_activitySearchHandler,
 		_userSearchHandler,
 		_courseOfferingSearchHandler,

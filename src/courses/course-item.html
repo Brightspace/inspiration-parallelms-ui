@@ -1,10 +1,12 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-entity.html">
 <link rel="import" href="../localization-mixin.html">
+<link rel="import" href="../content/content-module-list.html">
 
 <dom-module id="d2l-course-item">
 	<template>
@@ -28,6 +30,7 @@
 				margin: 0px;
 			}
 		</style>
+
 			<d2l-siren-entity href="[[courseImage.href]]" token="[[token]]" entity={{courseImageEntity}} ></d2l-siren-entity>
 			<a href="[[_coursePageHref]]">
 				<paper-button on-tap="_goToCoursePage">
@@ -112,6 +115,10 @@
 				if (entity.properties.endDate) {
 					this.endDate = this._formatDate(entity.properties.endDate, this.locale);
 				}
+			}
+
+			toggle() {
+				this.$.collapse.toggle();
 			}
 
 			_computeCoursePageHref(href) {

@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="siren-entity.html">
 <link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="courses/course-banner.html">
+<link rel="import" href="content/content-module-list.html">
 
 <dom-module id="my-course-page">
 	<template>
@@ -42,6 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{rootEntity}}"></d2l-siren-entity>
 		<d2l-siren-entity href="[[userLink.href]]" token="[[token]]" entity="{{userEntity}}"></d2l-siren-entity>
 
+		<d2l-content-module-list href="{{content.href}}" token="{{token}}" class="card-item"></d2l-content-module-list>
 		<d2l-updates-card organization-filter="[[route.__queryParams.course]]" href="[[updatesLink.href]]" token="[[token]]" class="card-item"></d2l-updates-card>
 		<d2l-awards-card href="[[awardsLink.href]]" token="[[token]]" class="card-item"></d2l-awards-card>
 		<d2l-user-activity-usage-list href="[[activitiesLink.href]]" token="[[token]]" class="card-item"></d2l-user-activity-usage-list>
@@ -72,6 +74,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					organizationLink: {
 						type: Object,
 						computed: '_getLinkByRel(organizationEntity, "self")'
+					},
+					content: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/sequence")'
 					},
 					rootEntity: Object,
 					userLink: {
