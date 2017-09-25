@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="content-activity-list.html">
 
@@ -14,8 +15,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class ContentModuleCard extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('d2l-content-activity-list')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-content-module-card'; }
 

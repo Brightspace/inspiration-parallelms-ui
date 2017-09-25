@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="content-file-viewer.html">
 <link rel="import" href="content-activity-list.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../siren-action-mixin.html">
 
@@ -37,8 +38,21 @@
 
 	<script>
 		/* @mixes SirenEntityMixin
+		   @mixes PrefetchMixin
 		   @mixes SirenActionMixin */
-		class ContentActivityItem extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+		class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
+						elements: [window.customElements.get('d2l-content-activity-list')]
+					}, {
+						getLinks: entity => !entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
+						elements: [window.customElements.get('d2l-content-file-viewer')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-content-activity-item'; }
 

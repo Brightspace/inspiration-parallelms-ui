@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../course-name.html">
 <link rel="import" href="content-activity-item.html">
@@ -27,8 +28,18 @@
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class ContentActivityList extends SirenEntityMixin(Polymer.Element) {
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class ContentActivityList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.entities && entity.entities.map(entity => entity.getLinkByRel('self')),
+						elements: [window.customElements.get('d2l-content-activity-item')]
+					}
+				];
+			}
 
 			static get is() { return 'd2l-content-activity-list'; }
 

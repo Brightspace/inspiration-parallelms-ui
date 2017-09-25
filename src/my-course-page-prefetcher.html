@@ -22,7 +22,7 @@
 					getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/my-organization-awards'),
 					elements: [window.customElements.get('d2l-awards-card')]
 				}, {
-					getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/sequences'),
+					getLinks: entity => (entity.hasClass('organization') || entity.hasClass('course-offering')) && entity.getLinkByRel('https://api.brightspace.com/rels/sequence'),
 					elements: [window.customElements.get('d2l-content-module-list')]
 				}
 			];
