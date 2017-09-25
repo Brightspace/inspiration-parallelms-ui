@@ -81,6 +81,9 @@
 
 			_getMonthDateRangeHref(entity) {
 				var action = entity.getActionByName('select-custom-date-range');
+				if (!action) {
+					return entity.getLinkByRel('self').href;
+				}
 				var now = new Date();
 				var firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
 				var lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
