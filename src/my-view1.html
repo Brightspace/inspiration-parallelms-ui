@@ -7,6 +7,7 @@
 <link rel="import" href="user/user-card.html">
 <link rel="import" href="discussions/discussions-forum-list.html">
 <link rel="import" href="content/content-module-list.html">
+<link rel="import" href="rubrics/rubrics-list.html">
 <link rel="import" href="awards/awards-card.html">
 <link rel="import" href="link/auth-link.html">
 <link rel="import" href="shared-styles.html">
@@ -59,6 +60,7 @@
 			<d2l-discussions-forum-list href="{{discussions.href}}" token="{{token}}" class="card-item"></d2l-discussions-forum-list><br>
 			<d2l-updates-card href="{{myUpdates.href}}" token="{{token}}" class="card-item"></d2l-updates-card>
 			<d2l-awards-card href="{{myAwards.href}}" token="{{token}}" class="card-item"></d2l-awards-card>
+			<d2l-rubrics-list href="{{rubrics.href}}" token="{{token}}" class="card-item"></d2l-rubrics-list>
 			<!-- <d2l-auth-link href='{{resolveUrl("my-app.html")}}' token download="my-app.html">Download App with auth</d2l-auth-link> -->
 		</div>
 	</template>
@@ -134,6 +136,10 @@
 					myAwards: {
 						type: Object,
 						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/my-organization-awards")'
+					},
+					rubrics: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/rubrics")'
 					},
 					userEntity: Object,
 

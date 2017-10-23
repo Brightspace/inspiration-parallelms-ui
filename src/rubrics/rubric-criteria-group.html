@@ -1,0 +1,153 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<link rel="import" href="./rubric-criteria-list.html">
+
+<dom-module id="d2l-rubric-criteria-group">
+	<template>
+
+		<d2l-siren-entity href="[[levelsHref]]" token="[[token]]" entity="{{levelsEntity}}"></d2l-siren-entity>
+
+		<d2l-siren-entity href="[[criteriaCollectionHref]]" token="[[token]]" entity="{{criteriaCollectionEntity}}"></d2l-siren-entity>
+		<style>
+			:host {
+				display: block;
+			}
+			table {
+				table-layout: fixed;
+				border-collapse: collapse;
+				border: none;
+				padding: 0;
+				margin-left: .5em;
+				margin-right: .5em;
+				border-radius: 5px;
+				width: calc(100% - 1em);
+			}
+
+			th {
+				border-top: 1px solid #dedede;
+				background-color: #ddd;
+				padding: 0;
+				margin: 0;
+			}
+			th:first-child {
+				border-left: 1px solid #dedede;
+				border-top-left-radius: 3px;
+			}
+
+			th:last-child {
+					border-right: 1px solid #dedede;
+					border-top-right-radius: 3px;
+			}
+
+			tr {
+				width: 100%;
+				border-bottom: 1px solid #dedede
+			}
+
+			td {
+				padding: 1em;
+				height: 100%;
+				width: 100%;
+				word-wrap: break-word;
+				border-right: 1px solid #dedede;
+				border-bottom: 1px solid #dedede;
+			}
+
+		</style>
+		<table cell-spacing="0" cell-padding="0">
+			<thead>
+				<tr>
+					<th>Criteria</th>
+					<template is="dom-repeat" items="[[levels]]">
+						<th>{{item.properties.name}}</th>
+					</template>
+				</tr>
+			</thead>
+			<tbody>
+				<template is="dom-repeat" items="[[criteriaEntities]]">
+					<tr>
+						<td>{{item.properties.name}}</td>
+						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
+							<td>
+								<template is="dom-if" if=[[_getDescription(item)]]>
+									<div class="description">
+										[[_getDescription(item)]]
+									</div>
+								</template>
+							</td>
+						</template>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</template>
+
+	<script>
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class RubricCriteriaGroup extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get is() { return 'd2l-rubric-criteria-group'; }
+
+			static get properties() {
+				return {
+					entity: Object,
+					levelsHref: {
+						type: String,
+						computed: '_getLevelsLink(entity)'
+					},
+					levelsEntity: Object,
+					levels: {
+						type: Array,
+						computed: '_getSubEntitiesByClass(levelsEntity, "level")'
+					},
+					criteriaCollectionHref: {
+						type: Object,
+						computed: '_getCriteriaLink(entity)	'
+					},
+					criteriaCollectionEntity: Object,
+					criteriaEntities: {
+						type: Array,
+						computed:'_getSubEntitiesByClass(criteriaCollectionEntity, "criterion")'
+					}
+				}
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				this.entity = entity;
+			}
+			_getCriteriaLink(entity) {
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criteria');
+				return link && link.href || '';
+			}
+			_getLevelsLink(entity) {
+				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/levels");
+				return link && link.href || '';
+			}
+			_getCriterionCells(entity) {
+				const entities = entity && entity.getSubEntitiesByClass("criterion-cell");
+				return entities || [];
+			}
+			_getDescription(entity) {
+				const description = entity && entity.getSubEntityByClass("description");
+				return description && description.properties && description.properties.text || ''
+			}
+			_getFeedback(entity) {
+				const feedback = entity && entity.getSubEntityByClass("feedback");
+				return feedback && feedback.properties && feedback.properties.text || ''
+			}
+		}
+
+		window.customElements.define(RubricCriteriaGroup.is, RubricCriteriaGroup);
+	</script>
+</dom-module>
