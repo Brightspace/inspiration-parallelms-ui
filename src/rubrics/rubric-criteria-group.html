@@ -5,6 +5,7 @@
 <link rel="import" href="../siren-entity-mixin.html">
 
 <link rel="import" href="./rubric-criteria-list.html">
+<link rel="import" href="./rubric-level-points.html">
 
 <dom-module id="d2l-rubric-criteria-group">
 	<template>
@@ -55,15 +56,30 @@
 				word-wrap: break-word;
 				border-right: 1px solid #dedede;
 				border-bottom: 1px solid #dedede;
+				position: relative;;
+			}
+			td .points {
+				position: absolute;
+				background: #aaa;
+				border-radius: .75rem;
+				text-align: center;
+				color: #fff;
+				width: 1.5rem;
+				height: 1.5rem;
+				top: .5rem;
+				right: .5rem;
 			}
 
 		</style>
 		<table cell-spacing="0" cell-padding="0">
 			<thead>
 				<tr>
-					<th>Criteria</th>
+					<th>{{entity.properties.name}}</th>
 					<template is="dom-repeat" items="[[levels]]">
 						<th>{{item.properties.name}}</th>
+					</template>
+					<template is="dom-if" if="{{isNumeric}}" >
+						<th>Out Of: [[entity.properties.outOf]]</th>
 					</template>
 				</tr>
 			</thead>
@@ -73,6 +89,16 @@
 						<td>{{item.properties.name}}</td>
 						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
 							<td>
+								<template is="dom-if" if=[[isNumeric]]>
+									<div class="points">
+										<template is="dom-if" if="[[_isPointOverride(item)]]">
+											{{_getPoints(item)}}
+										</template>
+										<template is="dom-if" if="[[_isNotPointOverride(item)]]">
+											<d2l-rubric-level-points href=[[_getLevelLink(item)]] token={{token}} ></d2l-rubric-level-points>
+										</template>
+									</div>
+								</template>
 								<template is="dom-if" if=[[_getDescription(item)]]>
 									<div class="description">
 										[[_getDescription(item)]]
@@ -80,6 +106,11 @@
 								</template>
 							</td>
 						</template>
+						<template is="dom-if" if="{{isNumeric}}" >
+							<td>
+								/{{item.properties.outOf}}
+							</td>
+					</template>
 					</tr>
 				</template>
 			</tbody>
@@ -113,6 +144,11 @@
 					criteriaEntities: {
 						type: Array,
 						computed:'_getSubEntitiesByClass(criteriaCollectionEntity, "criterion")'
+					},
+					isNumeric: {
+						type: Boolean,
+						computed: '_isNumeric(entity)',
+						value: false
 					}
 				}
 			}
@@ -122,7 +158,18 @@
 					'_changed(entity)'
 				];
 			}
-
+			_isPointOverride(entity){
+				return entity.class && entity.class.indexOf('overridden') !== -1;
+			}
+			_isNotPointOverride(entity){
+				return !this._isPointOverride(entity);
+			}
+			_getPoints(entity){
+					return entity && entity.properties && entity.properties.points || '';
+			}
+			_isNumeric(entity){
+				return entity.class.indexOf('numeric') !== -1;
+			}
 			_changed(entity) {
 				this.entity = entity;
 			}
@@ -132,6 +179,10 @@
 			}
 			_getLevelsLink(entity) {
 				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/levels");
+				return link && link.href || '';
+			}
+			_getLevelLink(entity){
+				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/level");
 				return link && link.href || '';
 			}
 			_getCriterionCells(entity) {
