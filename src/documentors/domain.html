@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="d2l-domain">
+	<template>
+		<style include="shared-styles"></style>
+		<div class="card">
+			<h2 on-tap="_open">{{name}}</h2>
+			<iron-collapse opened="{{selected}}">
+				<pre>
+					{{_stringify(hrefs)}}
+				</pre>
+			</iron-collapse>
+		</div>
+	</template>
+
+	<script>
+		class Domain extends Polymer.Element {
+
+			static get is() { return 'd2l-domain'; }
+
+			static get properties() {
+				return {
+					name: {
+						reflectToAttribute: true,
+						type: String
+					},
+					hrefs: {
+						type: Array,
+						value: () => []
+					},
+					selected: {
+						type: Boolean,
+						value: () => false
+					}
+				};
+			}
+			_stringify() {
+				return JSON.stringify(this.hrefs, null, 2);
+			}
+			_open() {
+				this.selected = !this.selected;
+			}
+		}
+
+		window.customElements.define(Domain.is, Domain);
+	</script>
+</dom-module>
