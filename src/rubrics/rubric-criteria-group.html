@@ -5,7 +5,10 @@
 <link rel="import" href="../siren-entity-mixin.html">
 
 <link rel="import" href="./rubric-criteria-list.html">
-<link rel="import" href="./rubric-level-points.html">
+<link rel="import" href="./rubric-level-name.html">
+<link rel="import" href="./rubric-criterion-name.html">
+<link rel="import" href="./rubric-name.html">
+<link rel="import" href="./rubric-criterion-cell.html">
 
 <dom-module id="d2l-rubric-criteria-group">
 	<template>
@@ -50,24 +53,13 @@
 			}
 
 			td {
-				padding: 1em;
 				height: 100%;
 				width: 100%;
 				word-wrap: break-word;
 				border-right: 1px solid #dedede;
 				border-bottom: 1px solid #dedede;
-				position: relative;;
-			}
-			td .points {
-				position: absolute;
-				background: #aaa;
-				border-radius: .75rem;
-				text-align: center;
-				color: #fff;
-				width: 1.5rem;
-				height: 1.5rem;
-				top: .5rem;
-				right: .5rem;
+				text-align: left;
+				
 			}
 
 		</style>
@@ -76,7 +68,9 @@
 				<tr>
 					<th>{{entity.properties.name}}</th>
 					<template is="dom-repeat" items="[[levels]]">
-						<th>{{item.properties.name}}</th>
+						<th>
+							<d2l-level-name href="{{_getSelfLink(item)}}" token="[[token]]"></d2l-level-name>
+						</th>
 					</template>
 					<template is="dom-if" if="{{isNumeric}}" >
 						<th>Out Of: [[entity.properties.outOf]]</th>
@@ -86,24 +80,12 @@
 			<tbody>
 				<template is="dom-repeat" items="[[criteriaEntities]]">
 					<tr>
-						<td>{{item.properties.name}}</td>
+						<td>
+							<d2l-criterion-name href="{{_getSelfLink(item)}}" token="{{token}}"></d2l-criterion-name>
+						</td>
 						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
 							<td>
-								<template is="dom-if" if=[[isNumeric]]>
-									<div class="points">
-										<template is="dom-if" if="[[_isPointOverride(item)]]">
-											{{_getPoints(item)}}
-										</template>
-										<template is="dom-if" if="[[_isNotPointOverride(item)]]">
-											<d2l-rubric-level-points href=[[_getLevelLink(item)]] token={{token}} ></d2l-rubric-level-points>
-										</template>
-									</div>
-								</template>
-								<template is="dom-if" if=[[_getDescription(item)]]>
-									<div class="description">
-										[[_getDescription(item)]]
-									</div>
-								</template>
+								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
 							</td>
 						</template>
 						<template is="dom-if" if="{{isNumeric}}" >
@@ -158,20 +140,15 @@
 					'_changed(entity)'
 				];
 			}
-			_isPointOverride(entity){
-				return entity.class && entity.class.indexOf('overridden') !== -1;
-			}
-			_isNotPointOverride(entity){
-				return !this._isPointOverride(entity);
-			}
-			_getPoints(entity){
-					return entity && entity.properties && entity.properties.points || '';
-			}
 			_isNumeric(entity){
 				return entity.class.indexOf('numeric') !== -1;
 			}
 			_changed(entity) {
 				this.entity = entity;
+			}
+			_getSelfLink(entity){
+				const link = entity && entity.getLinkByRel('self');
+				return link && link.href || entity.href || '';
 			}
 			_getCriteriaLink(entity) {
 				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criteria');
@@ -181,22 +158,11 @@
 				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/levels");
 				return link && link.href || '';
 			}
-			_getLevelLink(entity){
-				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/level");
-				return link && link.href || '';
-			}
 			_getCriterionCells(entity) {
 				const entities = entity && entity.getSubEntitiesByClass("criterion-cell");
 				return entities || [];
 			}
-			_getDescription(entity) {
-				const description = entity && entity.getSubEntityByClass("description");
-				return description && description.properties && description.properties.text || ''
-			}
-			_getFeedback(entity) {
-				const feedback = entity && entity.getSubEntityByClass("feedback");
-				return feedback && feedback.properties && feedback.properties.text || ''
-			}
+
 		}
 
 		window.customElements.define(RubricCriteriaGroup.is, RubricCriteriaGroup);

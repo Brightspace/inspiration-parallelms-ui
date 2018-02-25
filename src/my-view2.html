@@ -1,5 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="entity-store.html">
+<link rel="import" href="./documentors/domain.html">
 
 <dom-module id="my-view2">
 	<template>
@@ -10,17 +12,58 @@
 			}
 		</style>
 
-		<div class="card">
-			<div class="circle">2</div>
-			<h1>View Two</h1>
-			<p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-			<p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
-		</div>
+		<template is="dom-repeat" items="{{_keys()}}">
+			<d2l-domain name="{{item}}" hrefs="{{_getValues(item)}}"></d2l-domain>
+		</template>
   </template>
 
 	<script>
 		class MyView2 extends Polymer.Element {
 			static get is() { return 'my-view2'; }
+			static get properties() {
+				return {
+					nameExtractor: {
+						type: Object,
+						value: () => /https:\/\/.*?\.(.*)\.api.*/g
+					},
+					opened: {
+						type: String,
+						value: () => ''
+					},
+					selected: {
+						type: Boolean,
+						computed: '_amIOpened(item)'
+					}
+				}
+			}
+			_open(event){
+				this.opened = event.model.item;
+			}
+			_amIOpened(key){
+				return this.opened == key;
+			}
+			_keys() {
+				const entities = this._getEntities();
+				return Object.keys(entities);
+			}
+			_getValues(key){
+				return this._getEntities()[key];
+			}
+			_getEntities(){
+				const entities = window.D2L.EntityStore._getAllEntities();
+				const result = {};
+				for (const entity of entities) {
+					for(const item of entity.entries()) {
+						const match = this.nameExtractor.exec(item[0]);
+						if (match != null && match[1]) {
+								const name = match[1];
+								result[name] = result[name] || [];
+								result[name].push(item[0])
+						}
+					}
+				}
+				return result;
+			}
 		}
 
 		window.customElements.define(MyView2.is, MyView2);

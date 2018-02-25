@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel-"import" href="rubric-name.html">
 <link rel="import" href="rubric-card.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -24,7 +25,9 @@
 				<h2 class="card-header-text">Rubrics</h2>
 				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
 					<template is="dom-repeat" items="[[items]]">
-						<paper-tab>[[item.properties.name]]</paper-tab>
+						<paper-tab>
+							<d2l-rubric-name href="[[_getHref(item)]]" token="{{token}}"></d2l-rubric-name>
+						</paper-tab>
 					</template>
 				</paper-tabs>
 			</div>

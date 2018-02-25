@@ -3,8 +3,10 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
-
 <link rel="import" href="./rubric-criteria-groups.html">
+<link rel="import" href="./rubric-name.html">
+<link rel="import" href="./rubric-criterion-name.html">
+<link rel="import" href="./rubric-criterion-cell.html">
 
 <dom-module id="d2l-rubric-card">
 	<template>
@@ -14,6 +16,7 @@
 			}
 		</style>
     <paper-card>
+			<slot></slot>
 			<paper-item>[[description.properties.text]]</paper-item>
 			<d2l-rubric-criteria-groups href="{{_getHref(criteriaGroup)}}" token="[[token]]"></d2l-rubric-criteria-groups>
 			<template is="dom-if" if="{{isNumeric}}" >

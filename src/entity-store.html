@@ -175,6 +175,10 @@
 			for (const listener of listenerSet) {
 				listener(null, error);
 			}
+		},
+
+		_getAllEntities: function() {
+			return this._store.values();
 		}
 
 	};
