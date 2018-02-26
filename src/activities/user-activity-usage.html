@@ -4,6 +4,7 @@
 <link rel="import" href="../course-name.html">
 <link rel="import" href="activity-card.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href='../assessments/rubric-result.html'>
 
 <dom-module id="d2l-user-activity-usage">
 	<template>
@@ -68,8 +69,18 @@
 					<span style="align-self: center;">in&nbsp;</span><d2l-course-name href="{{organizationHref}}" token="{{token}}" class="right-space"></d2l-course-name>
 				</div>
 				<span style="display: inline-block;">Due [[dueDate]]</span>
+				<span style="padding-left: 1em" >
+					<paper-icon-button noink icon="find-in-page" title="find" on-click="_toggleShowAssessment" ></paper-icon-button>
+				</span>
 			</div>
 		</paper-item>
+		<div>
+			<iron-collapse opened="[[showAssessment]]">
+				<template is="dom-repeat" items="[[assessmentHrefs]]">
+					<d2l-rubric-result href="{{item.href}}" token="{{token}}"></d2l-rubric-result>
+				</template>
+			</iron-collapse>
+		</div>
 	</template>
 
 	<script>
@@ -88,7 +99,10 @@
 					}, {
 						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/organization'),
 						elements: [window.customElements.get('d2l-course-name')]
-					}
+					}, {
+						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/assessment'),
+						elements: [window.customElements.get('d2l-activity-card')]
+					},
 				];
 			}
 
@@ -99,16 +113,26 @@
 					activityHref: String,
 					complete: Boolean,
 					dueDate: String,
-					organizationHref: String
-				};
+					organizationHref: String,
+					assessmentHrefs: {
+						type: Array,
+						value: () => []
+					},
+					showAssessment: {
+						type: Boolean,
+						value: false
+					}
 			}
+		}
 
 			static get observers() {
 				return [
 					'_changed(entity)'
 				];
 			}
-
+			_toggleShowAssessment(){
+				this.showAssessment = !this.showAssessment;
+			}
 			_changed(entity) {
 				if (entity.hasSubEntityByClass('due-date')) {
 					var dateEntity = entity.getSubEntityByClass('due-date');
@@ -125,12 +149,12 @@
 				if (entity.hasLinkByRel('https://api.brightspace.com/rels/organization')) {
 					this.organizationHref = entity.getLinkByRel('https://api.brightspace.com/rels/organization').href;
 				}
-
+				if (entity.hasLinkByRel('https://api.brightspace.com/rels/assessment')) {
+					this.assessmentHrefs = entity.getLinksByRel('https://api.brightspace.com/rels/assessment');
+				}
 				this.complete = entity.hasSubEntityByClass('complete');
 			}
-
 		}
-
 		window.customElements.define(UserActivityUsage.is, UserActivityUsage);
 	</script>
 </dom-module>

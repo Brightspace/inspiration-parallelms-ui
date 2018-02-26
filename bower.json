@@ -34,7 +34,8 @@
     "iron-collapse": "^2.0.0",
     "iron-icons": "PolymerElements/iron-icons#^2.0.1",
     "paper-checkbox": "^2.0.1",
-    "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^2.0.0"
+    "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^2.0.0",
+    "paper-toggle-button": "^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0",

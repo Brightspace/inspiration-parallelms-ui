@@ -14,8 +14,9 @@
 	<template>
 
 		<d2l-siren-entity href="[[levelsHref]]" token="[[token]]" entity="{{levelsEntity}}"></d2l-siren-entity>
-
 		<d2l-siren-entity href="[[criteriaCollectionHref]]" token="[[token]]" entity="{{criteriaCollectionEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></d2l-siren-entity>
+
 		<style>
 			:host {
 				display: block;
@@ -59,9 +60,13 @@
 				border-right: 1px solid #dedede;
 				border-bottom: 1px solid #dedede;
 				text-align: left;
-				
-			}
 
+			}
+			.selected {
+				border: 1px solid #80ff80;
+				color: #333;
+				background: #e6ffe6;
+			}
 		</style>
 		<table cell-spacing="0" cell-padding="0">
 			<thead>
@@ -85,7 +90,9 @@
 						</td>
 						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
 							<td>
-								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
+								<div class$="[[_getCellClasses(item)]]">
+									<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
+								</div>
 							</td>
 						</template>
 						<template is="dom-if" if="{{isNumeric}}" >
@@ -108,6 +115,17 @@
 
 			static get properties() {
 				return {
+					assessmentHref: {
+						type: String,
+						value: () => '',
+						reflectToAttribute: true
+					},
+					assessmentEntity: Object,
+					assessmentCellLookup: {
+						type: Object,
+						value: () => {},
+						computed: '_mapAssessmentCells(assessmentEntity)'
+					},
 					entity: Object,
 					levelsHref: {
 						type: String,
@@ -137,8 +155,37 @@
 
 			static get observers() {
 				return [
-					'_changed(entity)'
+					'_changed(entity)',
+					'_mapAssessmentCells(assessmentEntity)'
 				];
+			}
+
+			_mapAssessmentCells(entity) {
+				const result = {};
+				if (entity && entity.entities) {
+					for (const subEntity of entity.entities) {
+						for ( const cell of subEntity.entities) {
+							const link = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion-cell');
+							if( link.href ) {
+								result[link.href] = cell;
+							}
+						}
+					}
+				}
+				return result;
+			}
+			_getCellClasses(item) {
+				const selfLink = this._getSelfLink(item);
+				const self = this;
+				let classes = '';
+				if(selfLink && self.assessmentCellLookup) {
+					const cellSelection = self.assessmentCellLookup[selfLink];
+					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1) ? 'selected': ''
+				}
+				return classes;
+			}
+			_assessmentHrefChanged(newHref, oldHref){
+				console.log(`new: ${newHref} old: ${oldHref}`);
 			}
 			_isNumeric(entity){
 				return entity.class.indexOf('numeric') !== -1;

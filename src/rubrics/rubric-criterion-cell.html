@@ -10,6 +10,7 @@
 			.cell {
 				position: relative;
 				padding: .5em;
+				min-height: 3em;
 			}
 			.cell > .points {
 				position: absolute;
@@ -37,9 +38,14 @@
 			</template>
 		</div>
 		<div class="cell">
-			<template is="dom-if" if=[[_getDescription(entity)]]>
+			<template is="dom-if" if="[[_getDescription(entity)]]">
 				<div class="description">
 					[[_getDescription(entity)]]
+				</div>
+			</template>
+			<template is="dom-if" if="[[_getFeedback(entity)]]">
+				<div class="feedback">
+					[[_getFeedback(entity)]]
 				</div>
 			</template>
 		</div>
@@ -64,6 +70,11 @@
 						type: Boolean,
 						computed: '_isNumeric(criteriaEntity)',
 						value: false
+					},
+					showFeedback: {
+						type: Boolean,
+						reflectToAttribute: true,
+						value: () => false
 					}
 				};
 			}
@@ -87,11 +98,11 @@
 			}
 			_getDescription(entity) {
 				const description = entity && entity.getSubEntityByClass("description");
-				return description && description.properties && description.properties.text || ''
+				return !this.showFeedback && description && description.properties && description.properties.text || ''
 			}
 			_getFeedback(entity) {
 				const feedback = entity && entity.getSubEntityByClass("feedback");
-				return feedback && feedback.properties && feedback.properties.text || ''
+				return this.showFeedback && feedback && feedback.properties && feedback.properties.text || ''
 			}
 			_getLevelLink(entity){
 				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/level");
