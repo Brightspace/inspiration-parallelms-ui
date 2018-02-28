@@ -50,7 +50,8 @@
 
 			tr {
 				width: 100%;
-				border-bottom: 1px solid #dedede
+				border-bottom: 1px solid #dedede;
+				border-left: 1px solid #dedede;
 			}
 
 			td {
@@ -60,7 +61,11 @@
 				border-right: 1px solid #dedede;
 				border-bottom: 1px solid #dedede;
 				text-align: left;
-
+				position: relative;
+				vertical-align:top;
+			}
+			.criterion-cell {
+				flex-grow: 1
 			}
 			.selected {
 				border: 1px solid #80ff80;
@@ -89,10 +94,8 @@
 							<d2l-criterion-name href="{{_getSelfLink(item)}}" token="{{token}}"></d2l-criterion-name>
 						</td>
 						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
-							<td>
-								<div class$="[[_getCellClasses(item)]]">
-									<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
-								</div>
+							<td class$="[[_getCellClasses(item)]]">
+								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
 							</td>
 						</template>
 						<template is="dom-if" if="{{isNumeric}}" >
@@ -177,10 +180,12 @@
 			_getCellClasses(item) {
 				const selfLink = this._getSelfLink(item);
 				const self = this;
-				let classes = '';
+				let classes = 'criterion-cell';
 				if(selfLink && self.assessmentCellLookup) {
 					const cellSelection = self.assessmentCellLookup[selfLink];
-					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1) ? 'selected': ''
+					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1)
+						? 'selected ' + classes
+						: classes;
 				}
 				return classes;
 			}

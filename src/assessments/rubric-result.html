@@ -38,7 +38,7 @@
 		<div>
 			<h3>
 				<d2l-rubric-name href="[[rubricHref]]" token="[[token]]" ></d2l-rubric-name> - Score: {{score}}
-				<paper-toggle-button class="right" checked="{{showDetails}}">
+				<paper-toggle-button class="right" checked="{{showDetails}}"></paper-toggle-button>
 			</h3>
 		</div>
 		<div class="flex-parent">
@@ -48,14 +48,14 @@
 				</div>
 			</template>
 		</div>
-		<template is="dom-if" if="[[showDetails]]" >
+		<iron-collapse opened="[[showDetails]]" >
 			<div>
 				<template is="dom-repeat" items="[[groups]]">
 					<d2l-rubric-criteria-group href="[[_getHrefByRel(item, 'self')]]" token="[[token]]" assessment-href="[[href]]" >
 					</d2l-rubric-criteria-group>
 				</template>
 			</div>
-		</template>
+		</iron-collapse>
 	</template>
 
 	<script>
@@ -68,10 +68,12 @@
 				return {
 					score: {
 						type: String,
-						value: () => '',
 						computed: '_changed(entity)'
 					},
-					showDetails: false,
+					showDetails: {
+						type: Boolean,
+						value: false
+					},
 					rubricHref: {
 						type: String,
 						computed: '_getHrefByRel(entity, "https://api.brightspace.com/rels/rubric")'
@@ -84,12 +86,10 @@
 					groupsEntity: Object,
 					groups: {
 						type: Array,
-						value: () => [],
 						computed: '_getSubEntities(groupsEntity)'
 					},
 					cells: {
 						type: Array,
-						value: () => [],
 						computed: '_getSubEntities(entity)'
 					}
 				};
@@ -100,7 +100,7 @@
 				return link && link.href || '';
 			}
 			_getSubEntities(entity) {
-				return entity && entity.entities || []
+				return entity && entity.entities || [];
 			}
 			_getCriteriaCellLink(item){
 				const link = this._getLinkByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell');

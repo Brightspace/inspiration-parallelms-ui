@@ -33,7 +33,9 @@
 			</div>
 			<iron-pages selected="{{selected}}">
 				<template is="dom-repeat" items="[[items]]">
-					<d2l-rubric-card href="[[_getHref(item)]]" token="{{token}}"></d2l-rubric-card>
+					<d2l-rubric-card href="[[_getHref(item)]]" token="{{token}}">
+							<d2l-rubric-name href="[[_getHref(item)]]" token="{{token}}"></d2l-rubric-name>
+					</d2l-rubric-card>
 				</template>
 			</iron-pages>
 		</paper-card>

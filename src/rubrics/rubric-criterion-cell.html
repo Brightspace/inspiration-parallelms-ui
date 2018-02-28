@@ -8,12 +8,11 @@
 	<template>
 		<style>
 			.cell {
-				position: relative;
 				padding: .5em;
 				min-height: 3em;
+				position: relative;
 			}
 			.cell > .points {
-				position: absolute;
 				background: #aaa;
 				border-radius: .75rem;
 				text-align: center;
@@ -22,16 +21,17 @@
 				height: 1.5rem;
 				top: .5rem;
 				right: .5rem;
+				position: absolute;
 			}
 	</style>
 		<d2l-siren-entity href="{{criteriaHref}}" token="{{token}}" entity="{{criteriaEntity}}"></d2l-siren-entity>
 		<div class="cell">
 			<template is="dom-if" if=[[isNumeric]]>
 				<div class="points">
-					<template is="dom-if" if="[[_isPointOverride(criteriaEntity)]]">
+					<template is="dom-if" if="[[_isPointOverride(entity)]]">
 						{{_getPoints(entity)}}
 					</template>
-					<template is="dom-if" if="[[_isNotPointOverride(criteriaEntity)]]">
+					<template is="dom-if" if="[[_isNotPointOverride(entity)]]">
 						<d2l-rubric-level-points href=[[_getLevelLink(entity)]] token={{token}} ></d2l-rubric-level-points>
 					</template>
 				</div>
@@ -63,13 +63,11 @@
 						type: String,
 						computed: '_getCriteriaLink(entity)'
 					},
-					criteriaEntity: {
-						type: Object
-					},
+					criteriaEntity: Object,
 					isNumeric: {
 						type: Boolean,
 						computed: '_isNumeric(criteriaEntity)',
-						value: false
+						value: () => false
 					},
 					showFeedback: {
 						type: Boolean,
@@ -91,7 +89,7 @@
 				return !this._isPointOverride(entity);
 			}
 			_getPoints(entity){
-					return entity && entity.properties && entity.properties.points || '';
+					return entity && entity.properties && entity.properties.points || 'cats';
 			}
 			_isNumeric(entity){
 				return entity.class.indexOf('numeric') !== -1;
