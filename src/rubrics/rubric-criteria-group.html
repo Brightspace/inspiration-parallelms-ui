@@ -83,7 +83,7 @@
 						</th>
 					</template>
 					<template is="dom-if" if="{{isNumeric}}" >
-						<th>Out Of: [[entity.properties.outOf]]</th>
+						<th>Out Of:[[entity.properties.outOf]]</th>
 					</template>
 				</tr>
 			</thead>
@@ -100,6 +100,9 @@
 						</template>
 						<template is="dom-if" if="{{isNumeric}}" >
 							<td>
+								<template is="dom-if" if="[[assessmentEntity]]">
+									{{_getCellScore(item)}}
+								</template>
 								/{{item.properties.outOf}}
 							</td>
 					</template>
@@ -168,9 +171,17 @@
 				if (entity && entity.entities) {
 					for (const subEntity of entity.entities) {
 						for ( const cell of subEntity.entities) {
-							const link = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion-cell');
-							if( link.href ) {
-								result[link.href] = cell;
+							const levelLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
+							if( levelLink &&  levelLink.href ) {
+								result[levelLink.href] = subEntity;
+							}
+							const criterionLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion');
+							if( criterionLink && criterionLink.href ) {
+								result[criterionLink.href] = subEntity;
+							}
+							const criterionCellLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion-cell');
+							if( criterionCellLink && criterionCellLink.href ) {
+								result[criterionCellLink.href] = cell;
 							}
 						}
 					}
@@ -188,6 +199,17 @@
 						: classes;
 				}
 				return classes;
+			}
+
+			_getCellScore(item) {
+				const selfLink = this._getSelfLink(item);
+				const self = this;
+				let score = 0;
+				if(selfLink && self.assessmentCellLookup) {
+					const cellSelection = self.assessmentCellLookup[selfLink];
+					score = cellSelection && cellSelection.properties && cellSelection.properties.score || 0
+				}
+				return score;
 			}
 			_assessmentHrefChanged(newHref, oldHref){
 				console.log(`new: ${newHref} old: ${oldHref}`);
