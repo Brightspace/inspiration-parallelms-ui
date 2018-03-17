@@ -1,0 +1,226 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/d3-colony/d3-colony.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="entity-store.html">
+
+<dom-module id="my-view5">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+				padding: 10px;
+			}
+			.left {
+				max-width: 40%;
+				float: left;
+			}
+			li {
+				list-style-type: none;
+			}
+			pre {
+				border-radius: 4px;
+				padding: 1em;
+				border: 1px solid #dedede;
+				background: #fafafa;
+				word-break: break-word;
+				white-space: pre-wrap;
+			}
+		</style>
+		<div class="flex-parent">
+			<div class="flex-1 left">
+				<d3-colony style="height: 750px;" nodes="{{nodes}}" links="{{mappings}}" loaded="{{mappings}}" selected={{selected}}></d3-colony>
+			</div>
+			<div class="flex-2">
+				<template is="dom-if" if="{{selected}}" >
+					<pre>{{_getSelectedNode(selected)}}</pre>
+				</template>
+			</div>
+		<!--
+		<div class="flex-parent">
+			<div class="flex-1 left">
+				Nodes
+				<ul>
+					<template is="dom-repeat" items="{{nodes}}">
+						<li>
+							<pre>
+								{{_stringify(item)}}
+							</pre>
+						</li>
+					</template>
+				</ul>
+			</div>
+			<div class="flex-2">
+				Mappings
+				<ul>
+					<template is="dom-repeat" items="{{mappings}}">
+						<li>
+							<pre>
+								{{_stringify(item)}}
+							</pre>
+						</li>
+					</template>
+				</ul>
+			</div>
+		</div>
+	-->
+  </template>
+
+	<script>
+		class MyView5 extends Polymer.Element {
+			static get is() { return 'my-view5'; }
+			static get properties() {
+				return {
+					nameExtractor: {
+						type: Object,
+						value: () => new RegExp(/https:\/\/.*?\.(.*)\.api.*/g)
+					},
+					data: {
+						type: Object,
+						computed: '_getEntities()'
+					},
+					nodes: {
+						type: Array,
+						computed: '_nodes(data)'
+					},
+					mappings: {
+						type: Array,
+						computed: '_mappings(data)'
+					}
+				}
+			}
+			_nodes(data){
+				return data.nodes;
+			}
+			_mappings(data){
+				return data.mappings;
+			}
+			_stringify(entity){
+				return JSON.stringify(entity, null, 2);
+			}
+			_getEntities(){
+				const data = this.recalculateRelationships();
+				return data;
+			}
+			_getSelectedNode(index){
+				const selected = this.data.nodes[index];
+				return this._stringify( selected && selected.id && this.data.entities[selected.id] || '' );
+			}
+		 	recalculateRelationships () {
+				const entities = window.D2L.EntityStore._getAllEntities();
+				const _entities = {};
+				const _aliases = {};
+				const _failures = {};
+				const _groups = {
+					root: 0
+				};
+				let groupIndex = 0;
+				const nodes = [];
+				const context = this;
+				let index = 0;
+				for (const maps of entities) {
+					for(const item of maps){
+						const link = item[0];
+						const entity = window.D2L.Hypermedia.Siren.Parse(item[1].entity);
+						const self = link.replace(/\/$/, '');
+						const match = this.nameExtractor.exec(self);
+						let value = _groups[match || 'root'];
+						if(value !== 0){
+							groupIndex += 1;
+							_groups[match[1]] = groupIndex;
+							value =  _groups[match];
+						}
+						const data =  { id: self, index: index, group: value, size: 2, code: 200 };
+						_entities[self] = { entity: entity, data: data };
+						_aliases[self] = self;
+						nodes[index] = data;
+						index++;
+					}
+				};
+				const getMappingsForEntity = this.getMappingsForEntity;
+				const mappings = [].concat.apply([],
+					nodes.map(function (entity) {
+						var entity = _entities[entity.id].entity;
+						const valid = [];
+						var self = entity.getLinkByRel('self');
+						return getMappingsForEntity(context, _aliases, _entities, (self) ? self.href : '', entity);
+					})
+				);
+				/*
+				for (const href of Object.keys(_failures)) {
+					nodes.push({
+						id: href,
+						group: url.parse(href).hostname,
+						code: _failures[href]
+					});
+				}
+				*/
+				return {
+					nodes: nodes,
+					mappings: mappings,
+					entities: _entities
+				}
+			}
+			getMappingsForEntity(context, _aliases, _entities, href, entity) {
+				href = href && href.replace && href.replace(/\/$/, '') || href;
+				const mappings = [];
+				function addMapping(mappedHref) {
+					mappedHref = mappedHref.replace(/\/$/, '');
+
+					if (mappedHref === href) {
+						return;
+					}
+					if (!_entities[href] || !_entities[mappedHref]) {
+						return;
+					}
+					const candidate = { source: _entities[href].data.index, target: _entities[mappedHref].data.index };
+					if( candidate.source && candidate.target ){
+							mappings.push(candidate);
+					}
+				}
+				if(!entity){
+					return;
+				}
+				// embedded link, somehow?
+				if ('string' === typeof entity.href) {
+					return mappings;
+				}
+
+				if (entity.entities) {
+					for (const _subEntity of entity.entities) {
+						// embedded link
+						if (_subEntity.href) {
+							addMapping(_subEntity.href);
+							continue;
+						}
+
+						const subEntity = _subEntity;
+						const subEntitySelf = subEntity.getLinkByRel('self');
+						if (subEntitySelf) {
+							addMapping(subEntitySelf.href);
+						}
+						if (subEntity.entities){
+							for(const __subEntity of subEntity.entities){
+									context.getMappingsForEntity(context, _aliases, _entities, subEntitySelf || href, __subEntity);
+							}
+						}
+
+						// no self link, so treat it as though any relations
+						// are local to the parent entity
+						Array.prototype.push.apply(mappings, context.getMappingsForEntity(context, _aliases, _entities, href, subEntity));
+					}
+				}
+
+				if (entity.links) {
+					for (const link of entity.links) {
+						addMapping(link.href);
+					}
+				}
+
+				return mappings;
+			}
+
+		}
+
+		window.customElements.define(MyView5.is, MyView5);
+	</script>
+</dom-module>

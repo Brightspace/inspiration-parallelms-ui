@@ -81,12 +81,18 @@
 					</d2l-rubric-criteria-group>
 				</template>
 			</div>
+			<template is="dom-if" if="[[hasSaveAction]]">
+				<paper-button class="selected save" primary on-click='_save'>Save</paper-button>
+			</template>
 		</iron-collapse>
 	</template>
 
 	<script>
-		/* @mixes SirenEntityMixin */
-		class RubricResult extends SirenEntityMixin(Polymer.Element) {
+		/*
+		@mixes SirenActionMixin
+		@mixes SirenEntityMixin
+		*/
+		class RubricResult extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
 
 			static get is() { return 'd2l-rubric-result'; }
 
@@ -117,6 +123,10 @@
 					cells: {
 						type: Array,
 						computed: '_getCells(entity)'
+					},
+					hasSaveAction: {
+						type: Boolean,
+						computed: '_hasSaveAction(entity)'
 					}
 				};
 			}
@@ -127,6 +137,19 @@
 			}
 			_getSubEntities(entity) {
 				return entity && entity.entities || [];
+			}
+			_hasSaveAction(entity) {
+				return entity.hasAction('save');
+			}
+			_save(){
+				const actionName = 'save';
+				if (this.entity && this.entity.hasAction(actionName)) {
+					const action = this.entity.getActionByName(actionName);
+					if(action){
+						var fields = this.getSirenFields(action);
+						this.performSirenAction(action, fields);
+					}
+				}
 			}
 			_getCells(entity){
 				const cells = [];

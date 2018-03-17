@@ -28,6 +28,8 @@
 <link rel="lazy-import" href="my-view1.html">
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-view4.html">
+<link rel="lazy-import" href="my-view5.html">
 <link rel="lazy-import" href="my-view404.html">
 <link rel="lazy-import" href="my-course-page.html">
 
@@ -96,6 +98,8 @@
 					<a href="./app-main-page" class="title">ParalleLMS</a>
 					<a href="view1" class="title">Organization Home</a>
 					<a href="view2" class="title">EntityListPage</a>
+					<a href="view4" class="title">Assessinator</a>
+					<a href="view5" class="title">Graphify</a>
 					<d2l-courses-drawer href="{{rootHref}}" token="{{token}}" scroller="[[$.drawercontents]]"></d2l-courses-drawer>
 				</div>
 			</app-drawer>
@@ -128,7 +132,8 @@
 							<my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
 							<my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
 							<my-view2 name="view2"></my-view2>
-							<my-view3 name="view3"></my-view3>
+							<my-view4 name="view4" token="{{token}}" href="{{rootHref}}"></my-view4>
+							<my-view5 name="view5"></my-view5>
 							<my-view404 name="view404"></my-view404>
 							<my-course-page name="course-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-course-page>
 						</iron-pages>

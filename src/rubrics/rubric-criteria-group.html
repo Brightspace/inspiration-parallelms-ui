@@ -3,6 +3,7 @@
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-action-mixin.html">
 
 <link rel="import" href="./rubric-criteria-list.html">
 <link rel="import" href="./rubric-level-name.html">
@@ -72,6 +73,14 @@
 				color: #333;
 				background: #e6ffe6;
 			}
+			.selectable {
+				cursor: pointer;
+			}
+			.selectable:hover {
+				border: 1px solid #80ff80;
+				color: #333;
+				background: #e6ffe6;
+			}
 		</style>
 		<table cell-spacing="0" cell-padding="0">
 			<thead>
@@ -79,10 +88,10 @@
 					<th>{{entity.properties.name}}</th>
 					<template is="dom-repeat" items="[[levels]]">
 						<th>
-							<d2l-level-name href="{{_getSelfLink(item)}}" token="[[token]]"></d2l-level-name>
+							<d2l-level-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-level-name>
 						</th>
 					</template>
-					<template is="dom-if" if="{{isNumeric}}" >
+					<template is="dom-if" if="[[isNumeric]]" >
 						<th>Out Of:[[entity.properties.outOf]]</th>
 					</template>
 				</tr>
@@ -91,21 +100,21 @@
 				<template is="dom-repeat" items="[[criteriaEntities]]">
 					<tr>
 						<td>
-							<d2l-criterion-name href="{{_getSelfLink(item)}}" token="{{token}}"></d2l-criterion-name>
+							<d2l-criterion-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-criterion-name>
 						</td>
-						<template is="dom-repeat" items=[[_getCriterionCells(item)]]>
-							<td class$="[[_getCellClasses(item)]]">
-								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-criterion-cell>
+						<template is="dom-repeat" items="[[_getCriterionCells(item)]]">
+							<td class$="[[_getCellClasses(item, assessmentCellLookup)]]" on-click="_doAssessmentMaybe">
+								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-criterion-cell>
 							</td>
 						</template>
-						<template is="dom-if" if="{{isNumeric}}" >
+						<template is="dom-if" if="[[isNumeric]]" >
 							<td>
 								<template is="dom-if" if="[[assessmentEntity]]">
 									{{_getCellScore(item)}}
 								</template>
 								/{{item.properties.outOf}}
 							</td>
-					</template>
+						</template>
 					</tr>
 				</template>
 			</tbody>
@@ -114,8 +123,9 @@
 
 	<script>
 		/* @mixes PrefetchMixin
+			 @mixes SirenActionMixin
 		   @mixes SirenEntityMixin */
-		class RubricCriteriaGroup extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+		class RubricCriteriaGroup extends PrefetchMixin(SirenActionMixin(SirenEntityMixin(Polymer.Element))) {
 
 			static get is() { return 'd2l-rubric-criteria-group'; }
 
@@ -129,7 +139,6 @@
 					assessmentEntity: Object,
 					assessmentCellLookup: {
 						type: Object,
-						value: () => {},
 						computed: '_mapAssessmentCells(assessmentEntity)'
 					},
 					entity: Object,
@@ -144,7 +153,7 @@
 					},
 					criteriaCollectionHref: {
 						type: Object,
-						computed: '_getCriteriaLink(entity)	'
+						computed: '_getCriteriaLink(entity)'
 					},
 					criteriaCollectionEntity: Object,
 					criteriaEntities: {
@@ -194,9 +203,12 @@
 				let classes = 'criterion-cell';
 				if(selfLink && self.assessmentCellLookup) {
 					const cellSelection = self.assessmentCellLookup[selfLink];
+					const actionName = 'select-criterion-cell';
+					const action = cellSelection && cellSelection.getActionByName(actionName) || null;
 					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1)
 						? 'selected ' + classes
-						: classes;
+						: classes ;
+					classes += (action !== null) ? ' selectable': '';
 				}
 				return classes;
 			}
@@ -210,6 +222,23 @@
 					score = cellSelection && cellSelection.properties && cellSelection.properties.score || 0
 				}
 				return score;
+			}
+
+			_doAssessmentMaybe(e){
+				if (e && e.model && e.model.item) {
+					const item = e.model.item;
+					const selfLink = this._getSelfLink(item);
+					const self = this;
+					if(selfLink && self.assessmentCellLookup) {
+						const cellSelection = self.assessmentCellLookup[selfLink];
+						const actionName = 'select-criterion-cell';
+						const action = cellSelection && cellSelection.getActionByName(actionName) || null;
+						if(action){
+							var fields = this.getSirenFields(action);
+							this.performSirenAction(action, fields);
+						}
+					}
+				}
 			}
 			_assessmentHrefChanged(newHref, oldHref){
 				console.log(`new: ${newHref} old: ${oldHref}`);

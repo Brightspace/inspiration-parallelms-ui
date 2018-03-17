@@ -2,6 +2,7 @@
 <link rel="import" href="../prefetch-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 <link rel="import" href="../course-name.html">
+<link rel="import" href="../user/user-card.html">
 <link rel="import" href="activity-card.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href='../assessments/rubric-result.html'>
@@ -55,7 +56,10 @@
 
 
 		<paper-item>
-			<div class="info-box">
+			<div class="info-box flex-parent">
+				<template is="dom-if" if="[[showUserInfo]]">
+					<d2l-user-card  href="[[userHref.href]]" token="[[token]]"></d2l-user-card>
+				</template>
 				<div class="completion-info">
 					<div class="right-space">
 						<template is="dom-if" if="{{complete}}">
@@ -102,7 +106,10 @@
 					}, {
 						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/assessment'),
 						elements: [window.customElements.get('d2l-activity-card')]
-					},
+					}, {
+						getLinks: entity => entity.getLinkByRel('https://api.brightspace.com/rels/user'),
+						elements: [window.customElements.get('d2l-user-card')]
+					}
 				];
 			}
 
@@ -110,6 +117,10 @@
 
 			static get properties() {
 				return {
+					showUserInfo: {
+						type: Boolean,
+						reflectToAttribute: true
+					},
 					activityHref: String,
 					complete: Boolean,
 					dueDate: String,
@@ -151,6 +162,9 @@
 				}
 				if (entity.hasLinkByRel('https://api.brightspace.com/rels/assessment')) {
 					this.assessmentHrefs = entity.getLinksByRel('https://api.brightspace.com/rels/assessment');
+				}
+				if (entity.hasLinkByRel('https://api.brightspace.com/rels/user')) {
+					this.userHref = entity.getLinkByRel('https://api.brightspace.com/rels/user');
 				}
 				this.complete = entity.hasSubEntityByClass('complete');
 			}
