@@ -51,12 +51,7 @@
 				if (body && action.type.indexOf('json') !== -1) {
 					var json = {};
 					for (var key of body.keys()) {
-						var values = body.getAll(key);
-						if (values.length > 1) {
-							json[key] = values;
-						} else {
-							json[key] = values[0];
-						}
+						json[key] = action.getFieldByName(key).value;
 					}
 					headers.set('Content-Type', action.type);
 					body = JSON.stringify(json);
@@ -69,9 +64,12 @@
 					body: body,
 					headers: headers
 				})
-					.then(function(response) {
-						return window.D2L.EntityStore.update(url.href, token, response);
-					});
+				.then(function(response){
+					return response.json();
+				})
+				.then(function(json) {
+					return window.D2L.EntityStore.update(url.href, token, json);
+				});
 			}
 		};
 	};

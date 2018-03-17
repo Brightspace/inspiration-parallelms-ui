@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-action-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-activity-usage-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+
+			input {
+				margin-left: 20px;
+			}
+		</style>
+
+		([[type]])
+
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin
+		   @mixes SirenActionMixin */
+		class ActivityUsageCard extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get is() { return 'd2l-activity-usage-card'; }
+
+			static get properties() {
+				return {
+					addFileAction: Object,
+					hasAddFileAction: Boolean,
+					type: String
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_changed(entity) {
+				if (entity.hasClass('assignment-activity')) {
+					this.type = 'Assignment';
+				} else if (entity.hasClass('quiz-activity')) {
+					this.type = 'Quiz';
+				} else {
+					this.type = 'Unknown Activity Type';
+				}
+			}
+
+		}
+
+		window.customElements.define(ActivityUsageCard.is, ActivityUsageCard);
+	</script>
+</dom-module>

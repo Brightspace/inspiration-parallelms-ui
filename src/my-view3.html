@@ -1,6 +1,22 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="./calendar/calendar.html">
+<link rel="import" href="./courses/enrollment-item.html">
+<link rel="import" href="activities/user-activity-usage-list.html">
+<link rel="import" href="content/content-module-list.html">
+<link rel="import" href="course-name.html">
+<link rel="import" href="courses/courses-card.html">
+<link rel="import" href="user/user-card.html">
+<link rel="import" href="discussions/discussions-forum-list.html">
+<link rel="import" href="content/content-module-list.html">
+<link rel="import" href="rubrics/rubrics-list.html">
+<link rel="import" href="awards/awards-card.html">
+<link rel="import" href="link/auth-link.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="updates/updates-card.html">
+<link rel="import" href="search/search-input.html">
+<link rel="import" href="prefetch-mixin.html">
+<link rel="import" href="siren-entity.html">
+<link rel="import" href="siren-entity-mixin.html">
 
 <dom-module id="my-view3">
 	<template>
@@ -10,22 +26,114 @@
 				padding: 10px;
 			}
 		</style>
+		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<ul>
+			<li>whoami: [[whoami]]</li>
+			<li>myEnrollments: [[myEnrollments]]</li>
 
-		<div class="card">
-			<d2l-calendar data={{_data()}}></d2l-calendar>
-		<div>
+			<template is="dom-repeat" items="{{enrollmentHrefs}}" >
+				<li>
+					<d2l-enrollment-item href="[[item]]" token="[[token]]"></d2l-enrollment-item>
+				</li>
+			</template>
+		</ul>
 	</template>
 
 	<script>
-		class MyView3 extends Polymer.Element {
+		/*
+			@mixes PrefetchMixin
+			@mixes SirenEntityMixin */
+		class MyView3 extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
+						elements: [this] // need whoami (class user)
+					}, {
+						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('https://api.brightspace.com/rels/organization'),
+						elements: [this] // need organization (class organization)
+					}, {
+						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://activities.api.brightspace.com/rels/my-activities'),
+						elements: [window.customElements.get('d2l-user-activity-usage-list')]
+					}, {
+						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/updates'),
+						elements: [window.customElements.get('d2l-updates-card')]
+					}, {
+						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/my-enrollments'),
+						elements: [window.customElements.get('d2l-courses-card')]
+					}, {
+						getLinks: entity => entity.hasClass('organization') && entity.getLinkByRel('https://api.brightspace.com/rels/discussions'),
+						elements: [window.customElements.get('d2l-discussions-forum-list')]
+					}, {
+						getLinks: entity => entity.hasClass('organization') && entity.getLinkByRel('https://api.brightspace.com/rels/my-organization-awards'),
+						elements: [window.customElements.get('d2l-awards-card')]
+					}, {
+						getLinks: entity => entity.hasClass('organization') && entity.getLinkByRel('https://api.brightspace.com/rels/sequence'),
+						elements: [window.customElements.get('d2l-awards-card')]
+					}
+				];
+			}
+
 			static get is() { return 'my-view3'; }
 			static properties() {
 				return {
-					data: Array
+					organization: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/organization")'
+					},
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")'
+					},
+					orgEntity: Object,
+					myActivities: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://activities.api.brightspace.com/rels/my-activities")'
+					},
+					myUpdates: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/updates")'
+					},
+					discussions: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/discussions")'
+					},
+					myEnrollments: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
+					},
+					content: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/sequence")'
+					},
+					myAwards: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/my-organization-awards")'
+					},
+					rubrics: {
+						type: Object,
+						computed: '_getLinkByRel(orgEntity, "https://api.brightspace.com/rels/rubrics")'
+					},
+					userEntity: Object,
+					enrollmentHrefs: {
+						type: Array,
+						computed: '_getEnrollments(enrollmentsEntity)',
+						value: () => []
+					}
 				};
 			}
-			_data() {
-				return [];
+			_getLinkByRel(entity, rel) {
+				return entity && entity.getLinkByRel(rel);
+			}
+			_getHrefByRel(entity, rel){
+				const link = entity && entity.getLinkByRel(rel);
+				return link && link.href || '';
+			}
+			_getEnrollments(enrollmentsEntity){
+				return enrollmentsEntity && enrollmentsEntity.entities && enrollmentsEntity.entities.map( function(link) {
+					return link.href
+				}) || [] ;
 			}
 		}
 

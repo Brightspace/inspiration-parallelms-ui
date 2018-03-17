@@ -1,0 +1,221 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="activities/activity-usage-card.html">
+<link rel="import" href="course-name.html">
+<link rel="import" href="courses/courses-card.html">
+<link rel="import" href="courses/enrollment-item.html">
+<link rel="import" href="user/user-card.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="prefetch-mixin.html">
+<link rel="import" href="siren-entity.html">
+<link rel="import" href="siren-entity-mixin.html">
+
+<dom-module id="my-view4">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+			}
+
+			li {
+				list-style-type: none;
+			}
+			.not {
+				display: flex;
+				flex-wrap: wrap;
+				width: calc(100%);
+			}
+
+			.col {
+				flex: 1;
+				width: 50%;
+				padding: 20px;
+			}
+
+			.card-item {
+				max-width: 1200px;
+				width: calc(100% - 40px);
+				padding: 20px;
+				margin-left: auto; margin-right: auto;
+			}
+			.enrollment-items {
+				max-width: 350px;
+			}
+			.activity-items {
+				max-width: 200px;
+			}
+			@media (max-width:1000px) {
+				.card-item {
+					width: calc(100% - 40px);
+				}
+			}
+		</style>
+
+		<d2l-siren-entity href="{{whoami.href}}" token="{{token}}" entity="{{userEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{myEnrollments.href}}" token="{{token}}" entity="{{enrollmentsEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{selectedEnrollmentHref}}" token="{{token}}" entity="{{enrollmentEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{courseHref.href}}" token="{{token}}" entity="{{courseEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{activityHref.href}}" token="{{token}}" entity="{{coureActivitiesEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{selectedActivityHref}}" token="{{token}}" entity="{{selectedActivityEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="{{usersActivityUsageHref.href}}" token="{{token}}" entity="{{usersActivityUsagesEntity}}"></d2l-siren-entity>
+
+		<div class="flex-parent">
+			<div class="enrollment-items flex-1">
+				<ul>
+					<template is="dom-repeat" items="{{enrollmentHrefs}}" >
+						<li on-click='_selectEnrollment'>
+							<d2l-enrollment-item href="[[item]]" token="[[token]]"></d2l-enrollment-item>
+						</li>
+					</template>
+				</ul>
+			</div>
+			<template is="dom-if" if="[[courseHref]]">
+				<div class="activity-items flex-2">
+					<ul>
+						<template is="dom-repeat" items="{{activityUsageHrefs}}" >
+							<li on-click='_selectActivity'>
+								<d2l-activity-usage-card href="[[item]]" token="[[token]]"></d2l-activity-usage-card>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</template>
+			<template is="dom-if" if="[[showingUsers]]">
+				<div class="user-activity-usage-items flex-2">
+					<ul>
+							<template is="dom-repeat" items="{{showingUsers}}" >
+								<li>
+									<d2l-user-activity-usage id="user-activity-usage" show-user-info="true" href="[[item]]" token="[[token]]"></d2l-user-activity-usage>
+								</li>
+							</template>
+						<iron-scroll-threshold scroll-target="user-activity-usage"  on-lower-threshold="loadMoreData"></iron-scroll-threshold>
+					</ul>
+				</div>
+			</template>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class MyView4 extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('https://api.brightspace.com/rels/whoami'),
+						elements: [this] // need whoami (class user)
+					}, {
+						getLinks: entity => entity.hasClass('user') && entity.getLinkByRel('https://api.brightspace.com/rels/my-enrollments'),
+						elements: [window.customElements.get('d2l-courses-card')]
+					}
+				];
+			}
+
+			static get is() { return 'my-view4'; }
+
+			static get properties() {
+				return {
+					scroller: Object,
+					whoami: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")'
+					},
+					orgEntity: Object,
+					myEnrollments: {
+						type: Object,
+						computed: '_getLinkByRel(userEntity, "https://api.brightspace.com/rels/my-enrollments")'
+					},
+					userEntity: Object,
+					enrollmentsEntity: Object,
+					enrollmentEntity: Object,
+					courseEntity: Object,
+					coureActivitiesEntity: Object,
+					selectedActivityEntity: Object,
+					usersActivityUsagesEntity: Object,
+					offset: {
+						type: Number,
+						value: 0
+					},
+					showingUsers: {
+						type: Array,
+						computed: '_getFirstUsers(userActivityUsagesHrefs)'
+					},
+					courseHref: {
+						type: Object,
+						computed: '_getLinkByRel(enrollmentEntity, "https://api.brightspace.com/rels/organization")'
+					},
+					activityHref: {
+						type: Object,
+						computed: '_getLinkByRel(courseEntity, "https://activities.api.brightspace.com/rels/organization-activities")'
+					},
+					enrollmentHrefs: {
+						type: Array,
+						computed: '_getEnrollmentHrefs(enrollmentsEntity)'
+					},
+					activityUsageHrefs: {
+						type: Array,
+						computed: '_getActivityUsageHrefs(coureActivitiesEntity)'
+					},
+					userActivityUsagesHrefs: {
+						type: Array,
+						computed: '_getUserActivityUsageHrefs(usersActivityUsagesEntity)'
+					},
+					usersActivityUsageHref: {
+						type: Object,
+						computed: '_getLinkByRel(selectedActivityEntity, "https://activities.api.brightspace.com/rels/users-activity-usages")'
+					},
+					selectedEnrollmentHref: String,
+					selectedActivityHref: String
+				};
+			}
+			_getFirstUsers(entities){
+				this.offset = 0;
+				return entities.slice(0,10);
+			}
+			_selectEnrollment(e){
+				e.preventDefault();
+				this.selectedEnrollmentHref = e.model.item;
+			}
+			_selectActivity(e){
+				e.preventDefault();
+				this.selectedActivityHref = e.model.item;
+			}
+			_getActivityUsageHrefs(e){
+				e.preventDefault();
+				this.selectedActivity = e.model.item;
+			}
+			_getActivityUsageHrefs(entity){
+				return entity
+					&& entity.getSubEntitiesByRel('https://activities.api.brightspace.com/rels/activity-usage')
+							.map(function(sub){
+								const link = sub.getLinkByRel('self');
+								return link && link.href || '';
+							})
+					|| [];
+			}
+			_getUserActivityUsageHrefs(entity){
+				return entity && entity.entities && entity.entities.map(function(sub){
+					return sub.href || ''
+				}) || [];
+			}
+			_getEnrollmentHrefs(entity){
+				return entity && entity.entities && entity.entities.map(function(sub){
+					return sub.href || ''
+				}) || [];
+			}
+			_getLinkByRel(entity, rel) {
+				return entity && entity.getLinkByRel(rel);
+			}
+			loadMoreData(e) {
+				this.offset += 10;
+				this.showingUsers = this.userActivityUsagesHrefs && this.userActivityUsagesHrefs.slice( 0, this.offset) || [];
+				e.target.clearTriggers();
+			}
+
+		}
+
+		window.customElements.define(MyView4.is, MyView4);
+	</script>
+</dom-module>
