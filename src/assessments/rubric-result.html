@@ -68,9 +68,9 @@
 			<template is="dom-repeat" items="[[cells]]">
 				<div class="flex result">
 					<div class="header">
-						<d2l-level-name href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/level')]]" token="[[token]]" ></d2l-level-name>
+						<d2l-rubric-level-name href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/level')]]" token="[[token]]" ></d2l-rubric-level-name>
 					</div>
-					<d2l-criterion-cell href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell')]]" token="{{token}}" show-feedback="true"></d2l-criterion-cell>
+					<d2l-rubric-criterion-cell href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell')]]" token="{{token}}" show-feedback="true"></d2l-rubric-criterion-cell>
 				</div>
 			</template>
 		</div>
