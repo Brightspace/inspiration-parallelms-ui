@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/d3-colony/d3-colony.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="entity-store.html">
+<link rel="import" href="global-documentation.html">
+<link rel="import" href="documentors/documentation-details.html">
 
 <dom-module id="my-view5">
 	<template>
@@ -26,43 +28,16 @@
 				white-space: pre-wrap;
 			}
 		</style>
+		<div>Nodes: [[nodes.length]] Links: [[mappings.length]]<paper-button on-click="_refresh">Refresh</paper-button></div>
 		<div class="flex-parent">
 			<div class="flex-1 left">
 				<d3-colony style="height: 750px;" nodes="{{nodes}}" links="{{mappings}}" loaded="{{mappings}}" selected={{selected}}></d3-colony>
 			</div>
 			<div class="flex-2">
 				<template is="dom-if" if="{{selected}}" >
-					<pre>{{_getSelectedNode(selected)}}</pre>
+					<d2l-documentation-details documentation="[[_getSelectedNode(selected)]]" token="{{token}}"></d2l-documentation-details>
 				</template>
 			</div>
-		<!--
-		<div class="flex-parent">
-			<div class="flex-1 left">
-				Nodes
-				<ul>
-					<template is="dom-repeat" items="{{nodes}}">
-						<li>
-							<pre>
-								{{_stringify(item)}}
-							</pre>
-						</li>
-					</template>
-				</ul>
-			</div>
-			<div class="flex-2">
-				Mappings
-				<ul>
-					<template is="dom-repeat" items="{{mappings}}">
-						<li>
-							<pre>
-								{{_stringify(item)}}
-							</pre>
-						</li>
-					</template>
-				</ul>
-			</div>
-		</div>
-	-->
   </template>
 
 	<script>
@@ -85,8 +60,14 @@
 					mappings: {
 						type: Array,
 						computed: '_mappings(data)'
+					},
+					token: {
+						type: String
 					}
 				}
+			}
+			_refresh(){
+				this.data = this._getEntities();
 			}
 			_nodes(data){
 				return data.nodes;
@@ -103,7 +84,10 @@
 			}
 			_getSelectedNode(index){
 				const selected = this.data.nodes[index];
-				return this._stringify( selected && selected.id && this.data.entities[selected.id] || '' );
+				const entity = selected && selected.id && this.data.entities[selected.id] && this.data.entities[selected.id].entity || {};
+				const documentation = D2L.Documentation.get(entity);
+				documentation.entity = entity;
+				return documentation;
 			}
 		 	recalculateRelationships () {
 				const entities = window.D2L.EntityStore._getAllEntities();
@@ -118,24 +102,28 @@
 				const context = this;
 				let index = 0;
 				for (const maps of entities) {
-					for(const item of maps){
+					for (const item of maps) {
 						const link = item[0];
 						const entity = window.D2L.Hypermedia.Siren.Parse(item[1].entity);
-						const self = link.replace(/\/$/, '');
-						const match = this.nameExtractor.exec(self);
-						let value = _groups[match || 'root'];
-						if(value !== 0){
-							groupIndex += 1;
-							_groups[match[1]] = groupIndex;
-							value =  _groups[match];
+						const allEntities = [entity].concat(entity.entities);
+						for (const e of allEntities) {
+								const self = link.replace(/\/$/, '');
+								const match = this.nameExtractor.exec(self);
+								let value = _groups[match || 'root'];
+								if (value !== 0) {
+									groupIndex += 1;
+									_groups[match[1]] = groupIndex;
+									value =  _groups[match];
+								}
+								const data =  { id: self, index: index, group: value, size: 3, code: 200 };
+								_entities[self] = { entity: entity, data: data };
+								_aliases[self] = self;
+								nodes[index] = data;
+								index++;
 						}
-						const data =  { id: self, index: index, group: value, size: 2, code: 200 };
-						_entities[self] = { entity: entity, data: data };
-						_aliases[self] = self;
-						nodes[index] = data;
-						index++;
 					}
-				};
+				}
+
 				const getMappingsForEntity = this.getMappingsForEntity;
 				const mappings = [].concat.apply([],
 					nodes.map(function (entity) {
@@ -169,10 +157,13 @@
 					if (mappedHref === href) {
 						return;
 					}
-					if (!_entities[href] || !_entities[mappedHref]) {
+					if(!_entities[href] || !_entities[mappedHref]){
 						return;
 					}
-					const candidate = { source: _entities[href].data.index, target: _entities[mappedHref].data.index };
+					const candidate = {
+						source: _entities[href] && _entities[href].data && _entities[href].data.index || 0,
+						target: _entities[mappedHref] && _entities[mappedHref].data && _entities[mappedHref].data.index || 0
+					};
 					if( candidate.source && candidate.target ){
 							mappings.push(candidate);
 					}

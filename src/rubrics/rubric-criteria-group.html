@@ -88,7 +88,7 @@
 					<th>{{entity.properties.name}}</th>
 					<template is="dom-repeat" items="[[levels]]">
 						<th>
-							<d2l-level-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-level-name>
+							<d2l-rubric-level-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-level-name>
 						</th>
 					</template>
 					<template is="dom-if" if="[[isNumeric]]" >
@@ -100,11 +100,11 @@
 				<template is="dom-repeat" items="[[criteriaEntities]]">
 					<tr>
 						<td>
-							<d2l-criterion-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-criterion-name>
+							<d2l-rubric-criterion-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-criterion-name>
 						</td>
 						<template is="dom-repeat" items="[[_getCriterionCells(item)]]">
 							<td class$="[[_getCellClasses(item, assessmentCellLookup)]]" on-click="_doAssessmentMaybe">
-								<d2l-criterion-cell href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-criterion-cell>
+								<d2l-rubric-criterion-cell href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-criterion-cell>
 							</td>
 						</template>
 						<template is="dom-if" if="[[isNumeric]]" >
@@ -240,9 +240,7 @@
 					}
 				}
 			}
-			_assessmentHrefChanged(newHref, oldHref){
-				console.log(`new: ${newHref} old: ${oldHref}`);
-			}
+
 			_isNumeric(entity){
 				return entity.class.indexOf('numeric') !== -1;
 			}

@@ -36,7 +36,7 @@
     "paper-checkbox": "^2.0.1",
     "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^2.0.0",
     "paper-toggle-button": "^2.0.0",
-    "d3-colony": "renfeng/d3-colony#^0.1.4",
+    "d3-colony": "renfeng/d3-colony#^0.1.7",
     "iron-resizable-behavior": "^2.1.0"
   },
   "resolutions": {
