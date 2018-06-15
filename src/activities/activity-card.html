@@ -1,7 +1,10 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../siren-action-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-entity.html">
 
+
+<link rel="import" href="../alignments/alignment-list.html">
 <dom-module id="d2l-activity-card">
 	<template>
 		<style>
@@ -15,6 +18,10 @@
 		</style>
 
 		[[entity.properties.name]] ([[type]])
+
+		<d2l-siren-entity href="[[activityUsage.href]]" token="[[token]]" entity="{{activityUsageEntity}}"></d2l-siren-entity>
+		<h1>Alignments</h1>
+		<d2l-alignment-list href="[[alignments.href]]" token="[[token]]" ></d2l-alignment-list>
 
 		<input id="fileUpload" type="file" hidden="[[!hasAddFileAction]]">
 	</template>
@@ -30,7 +37,16 @@
 				return {
 					addFileAction: Object,
 					hasAddFileAction: Boolean,
-					type: String
+					type: String,
+					activityUsage: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://activities.api.brightspace.com/rels/activity-usage")'
+					},
+					alignments: {
+						type: Object,
+						computed: '_getLinkByRel(activityUsageEntity, "https://api.brightspace.com/rels/__alignments")'
+					},
+					activityUsageEntity: Object
 				};
 			}
 

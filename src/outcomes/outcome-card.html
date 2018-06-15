@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<link rel="import" href="./outcome-description.html">
+<link rel="import" href="./outcome-notation.html">
+<link rel="import" href="./outcome-jurisdiction.html">
+
+<dom-module id="d2l-outcome-card">
+	<template>
+		HREF: [[href]]
+		<span>
+			<label>Notation</label>
+			<d2l-outcome-notation href="[[href]]" token="[[token]]"></d2l-outcome-notation>
+		</span>
+		<span>
+			<label>Description</label>
+			<d2l-outcome-description href="[[href]]" token="[[token]]"></d2l-outcome-description>
+		</span>
+		<span>
+			<label>Jurisdiction</label>
+			<d2l-outcome-jurisdiction href="[[href]]" token="[[token]]"></d2l-outcome-jurisdiction>
+		</span>
+	</template>
+	<script>
+		/* @mixes SirenEntityMixin */
+		class OutcomeCard extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-outcome-card'; }
+		}
+
+		window.customElements.define(OutcomeCard.is, OutcomeCard);
+	</script>
+</dom-module>

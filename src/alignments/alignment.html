@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../outcomes/outcome-card.html">
+
+<dom-module id="d2l-alignment">
+	<template>
+			HREF: [[href]]
+			<d2l-outcome-card href="[[outcome.href]]" token="[[token]]"><d2l-outcome-card>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class Alignment extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-alignment'; }
+
+			static get properties() {
+				return {
+					outcome: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/__objective")'
+					}
+				};
+			}
+		_getHrefByRel(entity, rel) {
+			const link = entity.getLinkByRel(rel);
+			return link && link.href || '';
+		}
+	}
+		window.customElements.define(Alignment.is, Alignment);
+	</script>
+</dom-module>

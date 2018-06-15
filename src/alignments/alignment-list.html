@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="./alignment.html">
+<dom-module id="d2l-alignment-list">
+	<template>
+		<ul>
+			<template is="dom-repeat" items="[[alignments]]">
+				<li>
+					<d2l-alignment href="[[item.href]]" token="[[token]]"></d2l-alignment>
+				</li>
+			</template>
+		</ul>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class AlignmentList extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-alignment-list'; }
+
+			static get properties() {
+				return {
+					alignments: {
+						type: Array,
+						computed: '_getAlignments(entity)'
+					}
+				};
+			}
+			_getAlignments(entity){
+				return entity && entity.getSubEntitiesByClass("__alignment") || [];
+			}
+		}
+
+		window.customElements.define(AlignmentList.is, AlignmentList);
+	</script>
+</dom-module>

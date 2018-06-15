@@ -2,6 +2,8 @@
 <link rel="import" href="../siren-action-mixin.html">
 <link rel="import" href="../siren-entity-mixin.html">
 
+<link rel="import" href="../alignments/alignment-list.html">
+
 <dom-module id="d2l-activity-usage-card">
 	<template>
 		<style>
@@ -16,6 +18,8 @@
 
 		([[type]])
 
+		<h1>Alignments</h1>
+		<d2l-alignment-list href="[[alignments.href]]" token="[[token]]" ></d2l-alignment-list>
 	</template>
 
 	<script>
@@ -29,7 +33,11 @@
 				return {
 					addFileAction: Object,
 					hasAddFileAction: Boolean,
-					type: String
+					type: String,
+					alignmentsHref: {
+						type: Object,
+						computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/__alignments")'
+					}
 				};
 			}
 

@@ -65,7 +65,8 @@
 			}
 
 			_getSelfLink(entity) {
-				return entity.getLinkByRel('self').href;
+				const link = entity && entity.getLinkByRel && entity.getLinkByRel('self') || '';
+				return link.href || '';
 			}
 
 		}
