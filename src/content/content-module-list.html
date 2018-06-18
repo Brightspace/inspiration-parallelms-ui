@@ -9,78 +9,78 @@
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="d2l-content-module-list">
-	<template>
-		<style include="shared-styles">
-			:host {
-				display: block;
-				font-family: 'Source Sans Pro', sans-serif;
-			}
-			paper-tabs{
-				--paper-tabs-selection-bar-color: white;
-			}
-		</style>
-		<paper-card class="medium-card-size">
-			<div class="card-header">
-				<h2 class="card-header-text">Content</h2>
-				<paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
-					<template is="dom-repeat" items="[[items]]">
-						<paper-tab>[[item.properties.title]]</paper-tab>
-					</template>
-				</paper-tabs>
-			</div>
-			<iron-pages selected="{{selected}}">
-				<template is="dom-repeat" items="[[items]]">
-					<d2l-content-module-card href="[[_getHref(item)]]" token="{{token}}"></d2l-content-module-card>
-				</template>
-			</iron-pages>
-		</paper-card>
-	</template>
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                font-family: 'Source Sans Pro', sans-serif;
+            }
+            paper-tabs{
+                --paper-tabs-selection-bar-color: white;
+            }
+        </style>
+        <paper-card class="medium-card-size">
+            <div class="card-header">
+                <h2 class="card-header-text">Content</h2>
+                <paper-tabs selected="{{selected}}" scrollable --paper-tabs-selection-bar-color="white">
+                    <template is="dom-repeat" items="[[items]]">
+                        <paper-tab>[[item.properties.title]]</paper-tab>
+                    </template>
+                </paper-tabs>
+            </div>
+            <iron-pages selected="{{selected}}">
+                <template is="dom-repeat" items="[[items]]">
+                    <d2l-content-module-card href="[[_getHref(item)]]" token="{{token}}"></d2l-content-module-card>
+                </template>
+            </iron-pages>
+        </paper-card>
+    </template>
 
-	<script>
-		/* @mixes PrefetchMixin
-		   @mixes SirenEntityMixin */
-		class ContentModuleList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+    <script>
+        /* @mixes PrefetchMixin
+           @mixes SirenEntityMixin */
+        class ContentModuleList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
 
-			static get interesting() {
-				return [
-					{
-						getLinks: entity => entity.entities && entity.entities.map(entity => entity.getLinkByRel('self')),
-						elements: [window.customElements.get('d2l-content-module-card')]
-					}
-				];
-			}
+            static get interesting() {
+                return [
+                    {
+                        getLinks: entity => entity.entities && entity.entities.map(entity => entity.getLinkByRel('self')),
+                        elements: [window.customElements.get('d2l-content-module-card')]
+                    }
+                ];
+            }
 
-			static get is() { return 'd2l-content-module-list'; }
+            static get is() { return 'd2l-content-module-list'; }
 
-			static get properties() {
-				return {
-					items: {
-						type: Array,
-						value: []
-					},
-					selected: {
-						type: Number,
-						value: 0
-					}
-				};
-			}
+            static get properties() {
+                return {
+                    items: {
+                        type: Array,
+                        value: []
+                    },
+                    selected: {
+                        type: Number,
+                        value: 0
+                    }
+                };
+            }
 
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
+            static get observers() {
+                return [
+                    '_changed(entity)'
+                ];
+            }
 
-			_changed(entity) {
-				this.items = entity.entities;
-			}
+            _changed(entity) {
+                this.items = entity.entities;
+            }
 
-			_getHref(item) {
-				return item.getLinkByRel('self').href;
-			}
+            _getHref(item) {
+                return item.getLinkByRel('self').href;
+            }
 
-		}
+        }
 
-		window.customElements.define(ContentModuleList.is, ContentModuleList);
-	</script>
+        window.customElements.define(ContentModuleList.is, ContentModuleList);
+    </script>
 </dom-module>

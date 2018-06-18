@@ -5,71 +5,71 @@
 <link rel="import" href="content-activity-item.html">
 
 <dom-module id="d2l-content-activity-list">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-			.info-box {
-				display: flex;
-			}
+            .info-box {
+                display: flex;
+            }
 
-			.info-box > * {
-				margin-right: 20px;
-			}
-		</style>
-		<paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
-			<template is="dom-repeat" items="[[items]]">
-				<d2l-content-activity-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-content-activity-item>
-			</template>
-		</paper-card>
+            .info-box > * {
+                margin-right: 20px;
+            }
+        </style>
+        <paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
+            <template is="dom-repeat" items="[[items]]">
+                <d2l-content-activity-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-content-activity-item>
+            </template>
+        </paper-card>
 
-	</template>
+    </template>
 
-	<script>
-		/* @mixes PrefetchMixin
-		   @mixes SirenEntityMixin */
-		class ContentActivityList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+    <script>
+        /* @mixes PrefetchMixin
+           @mixes SirenEntityMixin */
+        class ContentActivityList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
 
-			static get interesting() {
-				return [
-					{
-						getLinks: entity => entity.entities && entity.entities.map(entity => entity.getLinkByRel('self')),
-						elements: [window.customElements.get('d2l-content-activity-item')]
-					}
-				];
-			}
+            static get interesting() {
+                return [
+                    {
+                        getLinks: entity => entity.entities && entity.entities.map(entity => entity.getLinkByRel('self')),
+                        elements: [window.customElements.get('d2l-content-activity-item')]
+                    }
+                ];
+            }
 
-			static get is() { return 'd2l-content-activity-list'; }
+            static get is() { return 'd2l-content-activity-list'; }
 
-			static get properties() {
-				return {
-					title: String,
-					items: {
-						type: Array,
-						value: []
-					}
-				};
-			}
+            static get properties() {
+                return {
+                    title: String,
+                    items: {
+                        type: Array,
+                        value: []
+                    }
+                };
+            }
 
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
+            static get observers() {
+                return [
+                    '_changed(entity)'
+                ];
+            }
 
-			_changed(entity) {
-				this.title = entity.properties.title;
-				this.items = entity.entities;
-			}
+            _changed(entity) {
+                this.title = entity.properties.title;
+                this.items = entity.entities;
+            }
 
-			_getSelfLink(entity) {
-				return entity.getLinkByRel('self').href;
-			}
+            _getSelfLink(entity) {
+                return entity.getLinkByRel('self').href;
+            }
 
-		}
+        }
 
-		window.customElements.define(ContentActivityList.is, ContentActivityList);
-	</script>
+        window.customElements.define(ContentActivityList.is, ContentActivityList);
+    </script>
 </dom-module>

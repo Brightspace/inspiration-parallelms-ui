@@ -4,63 +4,63 @@
 <link rel="import" href="discussions-topic-post-item.html">
 
 <dom-module id="d2l-discussions-topic-post-list">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
-		</style>
-		<div role="listbox">
-			<template is="dom-repeat" items="[[posts]]">
-				<d2l-discussions-topic-post-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic-post-item>
-			</template>
-		</div>
-		<slot></slot>
-	</template>
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <div role="listbox">
+            <template is="dom-repeat" items="[[posts]]">
+                <d2l-discussions-topic-post-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic-post-item>
+            </template>
+        </div>
+        <slot></slot>
+    </template>
 
-	<script>
-		/* @mixes PrefetchMixin
-		   @mixes SirenEntityMixin */
-		class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+    <script>
+        /* @mixes PrefetchMixin
+           @mixes SirenEntityMixin */
+        class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
 
-			static get interesting() {
-				return [
-					{
-						getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
-						elements: [window.customElements.get('d2l-discussions-topic-post-item')]
-					}
-				];
-			}
+            static get interesting() {
+                return [
+                    {
+                        getLinks: entity => entity.entities && entity.entities.map(item => item.getLinkByRel('self')),
+                        elements: [window.customElements.get('d2l-discussions-topic-post-item')]
+                    }
+                ];
+            }
 
-			static get is() { return 'd2l-discussions-topic-post-list'; }
+            static get is() { return 'd2l-discussions-topic-post-list'; }
 
-			static get properties() {
-				return {
-					posts: {
-						type: Array,
-						value: []
-					},
-					token: String,
-					href: String
-				};
-			}
+            static get properties() {
+                return {
+                    posts: {
+                        type: Array,
+                        value: []
+                    },
+                    token: String,
+                    href: String
+                };
+            }
 
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
+            static get observers() {
+                return [
+                    '_changed(entity)'
+                ];
+            }
 
-			_changed(entity) {
-				this.posts = entity.entities;
-			}
+            _changed(entity) {
+                this.posts = entity.entities;
+            }
 
-			getHref(item) {
-				return item.getLinkByRel('self') && item.getLinkByRel('self').href;
-			}
+            getHref(item) {
+                return item.getLinkByRel('self') && item.getLinkByRel('self').href;
+            }
 
-		}
+        }
 
-		window.customElements.define(DiscussionsTopicPostList.is, DiscussionsTopicPostList);
-	</script>
+        window.customElements.define(DiscussionsTopicPostList.is, DiscussionsTopicPostList);
+    </script>
 </dom-module>

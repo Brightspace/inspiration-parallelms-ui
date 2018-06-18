@@ -8,113 +8,113 @@
 <link rel="import" href="../siren-action-mixin.html">
 
 <dom-module id="d2l-content-activity-item">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-			.info-box {
-				display: flex;
-			}
+            .info-box {
+                display: flex;
+            }
 
-			.info-box > * {
-				margin-right: 20px;
-			}
-		</style>
+            .info-box > * {
+                margin-right: 20px;
+            }
+        </style>
 
-		<div style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
-			<div on-tap="_toggleShowChild" style="font-weight:bold; padding: 10px 0px 0px 10px; background-color:lightgray;">[[title]]</div>
-			<template is="dom-if" if="{{showChild}}" >
-				<template is="dom-if" if="{{_isList(entity)}}">
-					<d2l-content-activity-list href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-activity-list>
-				</template>
-				<template is="dom-if" if="{{!_isList(entity)}}">
-					<d2l-content-file-viewer href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-file-viewer>
-				</template>
-			</template>
-		</div>
-	</template>
+        <div style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
+            <div on-tap="_toggleShowChild" style="font-weight:bold; padding: 10px 0px 0px 10px; background-color:lightgray;">[[title]]</div>
+            <template is="dom-if" if="{{showChild}}" >
+                <template is="dom-if" if="{{_isList(entity)}}">
+                    <d2l-content-activity-list href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-activity-list>
+                </template>
+                <template is="dom-if" if="{{!_isList(entity)}}">
+                    <d2l-content-file-viewer href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-file-viewer>
+                </template>
+            </template>
+        </div>
+    </template>
 
-	<script>
-		/* @mixes SirenEntityMixin
-		   @mixes PrefetchMixin
-		   @mixes SirenActionMixin */
-		class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
+    <script>
+        /* @mixes SirenEntityMixin
+           @mixes PrefetchMixin
+           @mixes SirenActionMixin */
+        class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(Polymer.Element))) {
 
-			static get interesting() {
-				return [
-					{
-						getLinks: entity => entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
-						elements: [window.customElements.get('d2l-content-activity-list')]
-					}, {
-						getLinks: entity => !entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
-						elements: [window.customElements.get('d2l-content-file-viewer')]
-					}
-				];
-			}
+            static get interesting() {
+                return [
+                    {
+                        getLinks: entity => entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
+                        elements: [window.customElements.get('d2l-content-activity-list')]
+                    }, {
+                        getLinks: entity => !entity.hasClass('sequence-description') && entity.getLinkByRel('self'),
+                        elements: [window.customElements.get('d2l-content-file-viewer')]
+                    }
+                ];
+            }
 
-			static get is() { return 'd2l-content-activity-item'; }
+            static get is() { return 'd2l-content-activity-item'; }
 
-			static get properties() {
-				return {
-					title: String,
-					showChild: {
-						type: Boolean,
-						value: false
-					}
-				};
-			}
+            static get properties() {
+                return {
+                    title: String,
+                    showChild: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
+            }
 
-			static get observers() {
-				return [
-					'_changed(entity)'
-				];
-			}
+            static get observers() {
+                return [
+                    '_changed(entity)'
+                ];
+            }
 
-			_toggleShowChild() {
-				this.showChild = !this.showChild;
-			}
-			_changed(entity) {
-				this.title = entity.properties.title;
-			}
+            _toggleShowChild() {
+                this.showChild = !this.showChild;
+            }
+            _changed(entity) {
+                this.title = entity.properties.title;
+            }
 
-			_isList(entity) {
-				return entity.hasClass('sequence-description');
-			}
+            _isList(entity) {
+                return entity.hasClass('sequence-description');
+            }
 
-			_getSelfLink(entity) {
-				return entity.getLinkByRel('self').href;
-			}
+            _getSelfLink(entity) {
+                return entity.getLinkByRel('self').href;
+            }
 
-			_onClickAction(e) {
-				this.performSirenAction(e.model.item);
-			}
+            _onClickAction(e) {
+                this.performSirenAction(e.model.item);
+            }
 
-			_getActions(entity) {
-				if (entity.entities[0] !== undefined) {
-					return entity.entities[0].actions;
-				} else {
-					return [];
-				}
-			}
+            _getActions(entity) {
+                if (entity.entities[0] !== undefined) {
+                    return entity.entities[0].actions;
+                } else {
+                    return [];
+                }
+            }
 
-			_mapFriendlyName(name) {
-				var friendlyName;
-				switch (name.toLowerCase()) {
-					case 'view-activity':
-						friendlyName = 'View';
-						break;
-					case 'view-activity-duration':
-						friendlyName = 'Duration';
-						break;
-					default:
-						friendlyName = '';
-				}
-				return friendlyName;
-			}
-		}
+            _mapFriendlyName(name) {
+                var friendlyName;
+                switch (name.toLowerCase()) {
+                    case 'view-activity':
+                        friendlyName = 'View';
+                        break;
+                    case 'view-activity-duration':
+                        friendlyName = 'Duration';
+                        break;
+                    default:
+                        friendlyName = '';
+                }
+                return friendlyName;
+            }
+        }
 
-		window.customElements.define(ContentActivityItem.is, ContentActivityItem);
-	</script>
+        window.customElements.define(ContentActivityItem.is, ContentActivityItem);
+    </script>
 </dom-module>

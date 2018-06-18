@@ -4,32 +4,32 @@
 <link rel="import" href="calendar-item.html" async>
 
 <dom-module id="calendar-week">
-	<template>
-		<style include="shared-styles">
-			:host {
-				display: block;
-			}
-		</style>
-		<paper-item >
-			<tr>
-				<template is="dom-repeat" items="{{days}}" >
-					<calendar-item day="{{item.day}}" data="{{item.data}}" ></calendar-item>
-				</template>
-			</tr>
-		</paper-item>
-	</template>
-	<script>
-		class CalendarWeek extends Polymer.Element {
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+        <paper-item >
+            <tr>
+                <template is="dom-repeat" items="{{days}}" >
+                    <calendar-item day="{{item.day}}" data="{{item.data}}" ></calendar-item>
+                </template>
+            </tr>
+        </paper-item>
+    </template>
+    <script>
+        class CalendarWeek extends Polymer.Element {
 
-			static get is() { return 'calendar-week'; }
+            static get is() { return 'calendar-week'; }
 
-			static get properties() {
-				return {
-					days: Array
-				};
-			}
-		}
+            static get properties() {
+                return {
+                    days: Array
+                };
+            }
+        }
 
-		window.customElements.define(CalendarWeek.is, CalendarWeek);
-	</script>
+        window.customElements.define(CalendarWeek.is, CalendarWeek);
+    </script>
 </dom-module>

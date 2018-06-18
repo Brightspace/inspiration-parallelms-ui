@@ -3,18 +3,18 @@
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="d2l-course-name">
-	<template>
-		{{entity.properties.name}}
-	</template>
+    <template>
+        {{entity.properties.name}}
+    </template>
 
-	<script>
-		/* @mixes SirenEntityMixin */
-		class CourseName extends SirenEntityMixin(Polymer.Element) {
+    <script>
+        /* @mixes SirenEntityMixin */
+        class CourseName extends SirenEntityMixin(Polymer.Element) {
 
-			static get is() { return 'd2l-course-name'; }
+            static get is() { return 'd2l-course-name'; }
 
-		}
+        }
 
-		window.customElements.define(CourseName.is, CourseName);
-	</script>
+        window.customElements.define(CourseName.is, CourseName);
+    </script>
 </dom-module>

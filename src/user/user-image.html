@@ -5,53 +5,53 @@
 <link rel="import" href="../siren-entity-mixin.html">
 
 <dom-module id="d2l-user-image">
-	<template>
-		<style>
-			:host {
-				display: block;
-			}
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
 
-			d2l-image {
-				max-height: 400px;
-				max-width: 400px;
-			}
-		</style>
-		<template is="dom-if" if="{{!isDefault}}">
-			<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
-		</template>
-		<template  is="dom-if" if="{{isDefault}}">
-			<iron-icon style="width:100%; height: 100%" icon="d2l-tier3:profile-pic"></iron-icon>
-		</template>
-	</template>
+            d2l-image {
+                max-height: 400px;
+                max-width: 400px;
+            }
+        </style>
+        <template is="dom-if" if="{{!isDefault}}">
+            <d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+        </template>
+        <template  is="dom-if" if="{{isDefault}}">
+            <iron-icon style="width:100%; height: 100%" icon="d2l-tier3:profile-pic"></iron-icon>
+        </template>
+    </template>
 
-	<script>
-		/* @mixes SirenEntityMixin */
-		class UserImage extends SirenEntityMixin(Polymer.Element) {
+    <script>
+        /* @mixes SirenEntityMixin */
+        class UserImage extends SirenEntityMixin(Polymer.Element) {
 
-			static get is() { return 'd2l-user-image'; }
+            static get is() { return 'd2l-user-image'; }
 
-			static get properties() {
-				return {
-					userProfile: {
-						type: Object,
-						computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/user-profile")'
-					},
-					profileImage: {
-						type: Object,
-						computed: '_getSubEntityByRel(userProfile, "https://api.brightspace.com/rels/profile-image")'
-					},
-					image: {
-						type: Object,
-						computed: '_getLinkByRel(profileImage, "alternate")'
-					},
-					isDefault: {
-						type: Boolean,
-						computed: '_hasClass(profileImage, "default-image")'
-					}
-				};
-			}
-		}
+            static get properties() {
+                return {
+                    userProfile: {
+                        type: Object,
+                        computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/user-profile")'
+                    },
+                    profileImage: {
+                        type: Object,
+                        computed: '_getSubEntityByRel(userProfile, "https://api.brightspace.com/rels/profile-image")'
+                    },
+                    image: {
+                        type: Object,
+                        computed: '_getLinkByRel(profileImage, "alternate")'
+                    },
+                    isDefault: {
+                        type: Boolean,
+                        computed: '_hasClass(profileImage, "default-image")'
+                    }
+                };
+            }
+        }
 
-		window.customElements.define(UserImage.is, UserImage);
-	</script>
+        window.customElements.define(UserImage.is, UserImage);
+    </script>
 </dom-module>
