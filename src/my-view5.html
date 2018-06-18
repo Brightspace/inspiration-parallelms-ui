@@ -64,36 +64,35 @@
 					token: {
 						type: String
 					}
-				}
+				};
 			}
-			_refresh(){
+			_refresh() {
 				this.data = this._getEntities();
 			}
-			_nodes(data){
+			_nodes(data) {
 				return data.nodes;
 			}
-			_mappings(data){
+			_mappings(data) {
 				return data.mappings;
 			}
-			_stringify(entity){
+			_stringify(entity) {
 				return JSON.stringify(entity, null, 2);
 			}
-			_getEntities(){
+			_getEntities() {
 				const data = this.recalculateRelationships();
 				return data;
 			}
-			_getSelectedNode(index){
+			_getSelectedNode(index) {
 				const selected = this.data.nodes[index];
 				const entity = selected && selected.id && this.data.entities[selected.id] && this.data.entities[selected.id].entity || {};
 				const documentation = D2L.Documentation.get(entity);
 				documentation.entity = entity;
 				return documentation;
 			}
-		 	recalculateRelationships () {
+			recalculateRelationships() {
 				const entities = window.D2L.EntityStore._getAllEntities();
 				const _entities = {};
 				const _aliases = {};
-				const _failures = {};
 				const _groups = {
 					root: 0
 				};
@@ -106,29 +105,28 @@
 						const link = item[0];
 						const entity = window.D2L.Hypermedia.Siren.Parse(item[1].entity);
 						const allEntities = [entity].concat(entity.entities);
-						for (const e of allEntities) {
-								const self = link.replace(/\/$/, '');
-								const match = this.nameExtractor.exec(self);
-								let value = _groups[match || 'root'];
-								if (value !== 0) {
-									groupIndex += 1;
-									_groups[match[1]] = groupIndex;
-									value =  _groups[match];
-								}
-								const data =  { id: self, index: index, group: value, size: 3, code: 200 };
-								_entities[self] = { entity: entity, data: data };
-								_aliases[self] = self;
-								nodes[index] = data;
-								index++;
+						for (var i = 0; i < allEntities.length; i++) {
+							const self = link.replace(/\/$/, '');
+							const match = this.nameExtractor.exec(self);
+							let value = _groups[match || 'root'];
+							if (value !== 0) {
+								groupIndex += 1;
+								_groups[match[1]] = groupIndex;
+								value =  _groups[match];
+							}
+							const data =  { id: self, index: index, group: value, size: 3, code: 200 };
+							_entities[self] = { entity: entity, data: data };
+							_aliases[self] = self;
+							nodes[index] = data;
+							index++;
 						}
 					}
 				}
 
 				const getMappingsForEntity = this.getMappingsForEntity;
 				const mappings = [].concat.apply([],
-					nodes.map(function (entity) {
-						var entity = _entities[entity.id].entity;
-						const valid = [];
+					nodes.map(function(entity) {
+						entity = _entities[entity.id].entity;
 						var self = entity.getLinkByRel('self');
 						return getMappingsForEntity(context, _aliases, _entities, (self) ? self.href : '', entity);
 					})
@@ -146,7 +144,7 @@
 					nodes: nodes,
 					mappings: mappings,
 					entities: _entities
-				}
+				};
 			}
 			getMappingsForEntity(context, _aliases, _entities, href, entity) {
 				href = href && href.replace && href.replace(/\/$/, '') || href;
@@ -157,18 +155,18 @@
 					if (mappedHref === href) {
 						return;
 					}
-					if(!_entities[href] || !_entities[mappedHref]){
+					if (!_entities[href] || !_entities[mappedHref]) {
 						return;
 					}
 					const candidate = {
 						source: _entities[href] && _entities[href].data && _entities[href].data.index || 0,
 						target: _entities[mappedHref] && _entities[mappedHref].data && _entities[mappedHref].data.index || 0
 					};
-					if( candidate.source && candidate.target ){
-							mappings.push(candidate);
+					if ( candidate.source && candidate.target ) {
+						mappings.push(candidate);
 					}
 				}
-				if(!entity){
+				if (!entity) {
 					return;
 				}
 				// embedded link, somehow?
@@ -189,9 +187,9 @@
 						if (subEntitySelf) {
 							addMapping(subEntitySelf.href);
 						}
-						if (subEntity.entities){
-							for(const __subEntity of subEntity.entities){
-									context.getMappingsForEntity(context, _aliases, _entities, subEntitySelf || href, __subEntity);
+						if (subEntity.entities) {
+							for (const __subEntity of subEntity.entities) {
+								context.getMappingsForEntity(context, _aliases, _entities, subEntitySelf || href, __subEntity);
 							}
 						}
 

@@ -165,7 +165,7 @@
 						computed: '_isNumeric(entity)',
 						value: false
 					}
-				}
+				};
 			}
 
 			static get observers() {
@@ -181,15 +181,15 @@
 					for (const subEntity of entity.entities) {
 						for ( const cell of subEntity.entities) {
 							const levelLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
-							if( levelLink &&  levelLink.href ) {
+							if ( levelLink &&  levelLink.href ) {
 								result[levelLink.href] = subEntity;
 							}
 							const criterionLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion');
-							if( criterionLink && criterionLink.href ) {
+							if ( criterionLink && criterionLink.href ) {
 								result[criterionLink.href] = subEntity;
 							}
 							const criterionCellLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion-cell');
-							if( criterionCellLink && criterionCellLink.href ) {
+							if ( criterionCellLink && criterionCellLink.href ) {
 								result[criterionCellLink.href] = cell;
 							}
 						}
@@ -201,14 +201,14 @@
 				const selfLink = this._getSelfLink(item);
 				const self = this;
 				let classes = 'criterion-cell';
-				if(selfLink && self.assessmentCellLookup) {
+				if (selfLink && self.assessmentCellLookup) {
 					const cellSelection = self.assessmentCellLookup[selfLink];
 					const actionName = 'select-criterion-cell';
 					const action = cellSelection && cellSelection.getActionByName(actionName) || null;
 					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1)
 						? 'selected ' + classes
 						: classes ;
-					classes += (action !== null) ? ' selectable': '';
+					classes += (action !== null) ? ' selectable' : '';
 				}
 				return classes;
 			}
@@ -217,23 +217,23 @@
 				const selfLink = this._getSelfLink(item);
 				const self = this;
 				let score = 0;
-				if(selfLink && self.assessmentCellLookup) {
+				if (selfLink && self.assessmentCellLookup) {
 					const cellSelection = self.assessmentCellLookup[selfLink];
-					score = cellSelection && cellSelection.properties && cellSelection.properties.score || 0
+					score = cellSelection && cellSelection.properties && cellSelection.properties.score || 0;
 				}
 				return score;
 			}
 
-			_doAssessmentMaybe(e){
+			_doAssessmentMaybe(e) {
 				if (e && e.model && e.model.item) {
 					const item = e.model.item;
 					const selfLink = this._getSelfLink(item);
 					const self = this;
-					if(selfLink && self.assessmentCellLookup) {
+					if (selfLink && self.assessmentCellLookup) {
 						const cellSelection = self.assessmentCellLookup[selfLink];
 						const actionName = 'select-criterion-cell';
 						const action = cellSelection && cellSelection.getActionByName(actionName) || null;
-						if(action){
+						if (action) {
 							var fields = this.getSirenFields(action);
 							this.performSirenAction(action, fields);
 						}
@@ -241,13 +241,13 @@
 				}
 			}
 
-			_isNumeric(entity){
+			_isNumeric(entity) {
 				return entity.class.indexOf('numeric') !== -1;
 			}
 			_changed(entity) {
 				this.entity = entity;
 			}
-			_getSelfLink(entity){
+			_getSelfLink(entity) {
 				const link = entity && entity.getLinkByRel('self');
 				return link && link.href || entity.href || '';
 			}
@@ -256,11 +256,11 @@
 				return link && link.href || '';
 			}
 			_getLevelsLink(entity) {
-				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/levels");
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/levels');
 				return link && link.href || '';
 			}
 			_getCriterionCells(entity) {
-				const entities = entity && entity.getSubEntitiesByClass("criterion-cell");
+				const entities = entity && entity.getSubEntitiesByClass('criterion-cell');
 				return entities || [];
 			}
 

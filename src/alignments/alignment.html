@@ -22,11 +22,11 @@
 					}
 				};
 			}
-		_getHrefByRel(entity, rel) {
-			const link = entity.getLinkByRel(rel);
-			return link && link.href || '';
+			_getHrefByRel(entity, rel) {
+				const link = entity.getLinkByRel(rel);
+				return link && link.href || '';
+			}
 		}
-	}
 		window.customElements.define(Alignment.is, Alignment);
 	</script>
 </dom-module>

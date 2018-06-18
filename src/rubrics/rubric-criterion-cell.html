@@ -82,28 +82,28 @@
 					'_changed(entity)'
 				];
 			}
-			_isPointOverride(entity){
+			_isPointOverride(entity) {
 				return entity.class && entity.class.indexOf('overridden') !== -1;
 			}
-			_isNotPointOverride(entity){
+			_isNotPointOverride(entity) {
 				return !this._isPointOverride(entity);
 			}
-			_getPoints(entity){
-					return entity && entity.properties && entity.properties.points || 'cats';
+			_getPoints(entity) {
+				return entity && entity.properties && entity.properties.points || 'cats';
 			}
-			_isNumeric(entity){
+			_isNumeric(entity) {
 				return entity.class.indexOf('numeric') !== -1;
 			}
 			_getDescription(entity) {
-				const description = entity && entity.getSubEntityByClass("description");
-				return !this.showFeedback && description && description.properties && description.properties.text || ''
+				const description = entity && entity.getSubEntityByClass('description');
+				return !this.showFeedback && description && description.properties && description.properties.text || '';
 			}
 			_getFeedback(entity) {
-				const feedback = entity && entity.getSubEntityByClass("feedback");
-				return this.showFeedback && feedback && feedback.properties && feedback.properties.text || ''
+				const feedback = entity && entity.getSubEntityByClass('feedback');
+				return this.showFeedback && feedback && feedback.properties && feedback.properties.text || '';
 			}
-			_getLevelLink(entity){
-				const link = entity && entity.getLinkByRel("https://rubrics.api.brightspace.com/rels/level");
+			_getLevelLink(entity) {
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
 				return link && link.href || '';
 			}
 			_changed(entity) {

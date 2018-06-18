@@ -35,31 +35,31 @@
 						type: Boolean,
 						computed: '_amIOpened(item)'
 					}
-				}
+				};
 			}
-			_open(event){
+			_open(event) {
 				this.opened = event.model.item;
 			}
-			_amIOpened(key){
-				return this.opened == key;
+			_amIOpened(key) {
+				return this.opened === key;
 			}
 			_keys() {
 				const entities = this._getEntities();
 				return Object.keys(entities);
 			}
-			_getValues(key){
+			_getValues(key) {
 				return this._getEntities()[key];
 			}
-			_getEntities(){
+			_getEntities() {
 				const entities = window.D2L.EntityStore._getAllEntities();
 				const result = {};
 				for (const entity of entities) {
-					for(const item of entity.entries()) {
+					for (const item of entity.entries()) {
 						const match = this.nameExtractor.exec(item[0]);
-						if (match != null && match[1]) {
-								const name = match[1];
-								result[name] = result[name] || [];
-								result[name].push(item[0])
+						if (match !== null && match[1]) {
+							const name = match[1];
+							result[name] = result[name] || [];
+							result[name].push(item[0]);
 						}
 					}
 				}

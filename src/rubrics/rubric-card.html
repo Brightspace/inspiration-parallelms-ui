@@ -43,16 +43,16 @@
 
 			static get properties() {
 				return {
-          rubric: Object,
-          description: {
-            type: Object,
-            value: {
-              properties: {
-                text: '',
-                html: ''
-              }
-            }
-          },
+					rubric: Object,
+					description: {
+						type: Object,
+						value: {
+							properties: {
+								text: '',
+								html: ''
+							}
+						}
+					},
 					criteriaGroup: {
 						type: Object,
 						value: {
@@ -73,15 +73,15 @@
 				];
 			}
 
-			_isNumeric(entity){
+			_isNumeric(entity) {
 				return entity.class.indexOf('numeric') !== -1;
 			}
 			_changed(entity) {
 				this.rubric = entity;
-        this.description = entity.getSubEntityByClass("description");
+				this.description = entity.getSubEntityByClass('description');
 				this.criteriaGroup = entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criteria-groups');
 			}
-			_getHref(link){
+			_getHref(link) {
 				return link.href;
 			}
 			_getSelfLink(entity) {

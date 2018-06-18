@@ -10,7 +10,7 @@
 				display: block;
 			}
 		</style>
-        "[[text]]"
+		"[[text]]"
 		- [[date]]
 	</template>
 
@@ -25,7 +25,7 @@
 			static get properties() {
 				return {
 					text: String,
-                    date: String
+					date: String
 				};
 			}
 
@@ -37,15 +37,15 @@
 
 			_changed(entity) {
 				this.text = entity.properties.text;
-                this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
+				this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
 			}
 
 			_getHrefByRel(entity, rel) {
 				const link = entity && entity.getLinkByRel && entity.getLinkByRel(rel);
-				return link && link.href || ''
+				return link && link.href || '';
 			}
 
-            // Leaving this guy in case we need it in the future
+			// Leaving this guy in case we need it in the future
 			_getActions(entity) {
 				if (entity.entities[0] !== undefined) {
 					return entity.entities[0].actions;

@@ -131,7 +131,7 @@
 				};
 			}
 
-			_getHrefByRel(entity, rel){
+			_getHrefByRel(entity, rel) {
 				const link = entity.getLinkByRel(rel);
 				return link && link.href || '';
 			}
@@ -141,33 +141,33 @@
 			_hasSaveAction(entity) {
 				return entity.hasAction('save');
 			}
-			_save(){
+			_save() {
 				const actionName = 'save';
 				if (this.entity && this.entity.hasAction(actionName)) {
 					const action = this.entity.getActionByName(actionName);
-					if(action){
+					if (action) {
 						var fields = this.getSirenFields(action);
 						this.performSirenAction(action, fields);
 					}
 				}
 			}
-			_getCells(entity){
+			_getCells(entity) {
 				const cells = [];
 				entity && entity.entities && entity.entities.forEach(function(sub) {
 					sub.entities.forEach(function(e) {
-						if( e.class.indexOf('selected') !== -1 ) {
+						if ( e.class.indexOf('selected') !== -1 ) {
 							cells.push(e);
 						}
 					});
 				});
 				return cells;
 			}
-			_getCriteriaCellLink(item){
+			_getCriteriaCellLink(item) {
 				const link = this._getLinkByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell');
 				return link && link.href || item.href || '';
 			}
 			_changed(entity) {
-				return entity && entity.properties && entity.properties.score || ''
+				return entity && entity.properties && entity.properties.score || '';
 			}
 		}
 

@@ -170,39 +170,35 @@
 					selectedActivityHref: String
 				};
 			}
-			_getFirstUsers(entities){
+			_getFirstUsers(entities) {
 				this.offset = 0;
-				return entities.slice(0,10);
+				return entities.slice(0, 10);
 			}
-			_selectEnrollment(e){
+			_selectEnrollment(e) {
 				e.preventDefault();
 				this.selectedEnrollmentHref = e.model.item;
 			}
-			_selectActivity(e){
+			_selectActivity(e) {
 				e.preventDefault();
 				this.selectedActivityHref = e.model.item;
 			}
-			_getActivityUsageHrefs(e){
-				e.preventDefault();
-				this.selectedActivity = e.model.item;
-			}
-			_getActivityUsageHrefs(entity){
+			_getActivityUsageHrefs(entity) {
 				return entity
 					&& entity.getSubEntitiesByRel('https://activities.api.brightspace.com/rels/activity-usage')
-							.map(function(sub){
+							.map(function(sub) {
 								const link = sub.getLinkByRel('self');
 								return link && link.href || '';
 							})
 					|| [];
 			}
-			_getUserActivityUsageHrefs(entity){
-				return entity && entity.entities && entity.entities.map(function(sub){
-					return sub.href || ''
+			_getUserActivityUsageHrefs(entity) {
+				return entity && entity.entities && entity.entities.map(function(sub) {
+					return sub.href || '';
 				}) || [];
 			}
-			_getEnrollmentHrefs(entity){
-				return entity && entity.entities && entity.entities.map(function(sub){
-					return sub.href || ''
+			_getEnrollmentHrefs(entity) {
+				return entity && entity.entities && entity.entities.map(function(sub) {
+					return sub.href || '';
 				}) || [];
 			}
 			_getLinkByRel(entity, rel) {

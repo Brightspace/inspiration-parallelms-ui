@@ -20,7 +20,7 @@
 				category: type,
 				description: 'Course objects are grouped into a set of more granular activity types',
 				viewers: [
-					'd2l-content-activity-list',
+					'd2l-content-activity-list'
 				]
 			};
 		}
@@ -34,7 +34,7 @@
 				category: type,
 				description: 'User Activity Usage, represents a users usage of an activity. Here is where you might find grades, assessment information etc.',
 				viewers: [
-					'd2l-user-activity-usage',
+					'd2l-user-activity-usage'
 				]
 			};
 		}
@@ -101,7 +101,7 @@
 					category: 'topic',
 					description: '.',
 					viewers: [
-						'd2l-discussions-topic',
+						'd2l-discussions-topic'
 					]
 				};
 			}
@@ -110,27 +110,27 @@
 					category: 'forum',
 					description: '.',
 					viewers: [
-						'd2l-discussions-forum-item',
+						'd2l-discussions-forum-item'
 					]
 				};
 			}
 			if (entity.class.indexOf('thread') !== -1) {
 				const type = 'thread';
 				return {
-					category: 'thread',
+					category: type,
 					description: 'a thread of posts, with replies',
 					viewers: [
-						'd2l-discussions-topic-post-list',
+						'd2l-discussions-topic-post-list'
 					]
 				};
 			}
 			if (entity.class.indexOf('post') !== -1) {
 				const type = 'post';
 				return {
-					category: 'post',
+					category: type,
 					description: 'a post to a thread',
 					viewers: [
-						'd2l-discussions-topic-post-item',
+						'd2l-discussions-topic-post-item'
 					]
 				};
 			}
@@ -145,7 +145,7 @@
 					category: 'rubric',
 					description: 'A rubric',
 					viewers: [
-						'd2l-rubric-card',
+						'd2l-rubric-card'
 					]
 				};
 			}
@@ -158,7 +158,7 @@
 					category: 'rubric',
 					description: 'A collection of rubrics',
 					viewers: [
-						'd2l-rubrics-list',
+						'd2l-rubrics-list'
 					]
 				};
 			}
@@ -172,7 +172,7 @@
 					category: type,
 					description: 'rubric criteria group',
 					viewers: [
-						'd2l-rubric-criteria-groups',
+						'd2l-rubric-criteria-groups'
 					]
 				};
 			}
@@ -182,7 +182,7 @@
 					category: 'criteria-group',
 					description: '.',
 					viewers: [
-						'd2l-rubric-criteria-group',
+						'd2l-rubric-criteria-group'
 					]
 				};
 			}
@@ -205,7 +205,7 @@
 			if (entity.class.indexOf('level') !== -1) {
 				const type = 'level';
 				return {
-					category: 'level',
+					category: type,
 					description: 'A rubric level',
 					viewers: [
 						'd2l-rubric-level-name',
@@ -219,7 +219,7 @@
 					category: type,
 					description: 'rubric criterion',
 					viewers: [
-						'd2l-rubric-criterion-name',
+						'd2l-rubric-criterion-name'
 					]
 				};
 			}
@@ -233,7 +233,7 @@
 					category: type,
 					description: 'rubric criteria',
 					viewers: [
-						'd2l-rubric-criteria-list',
+						'd2l-rubric-criteria-list'
 					]
 				};
 			}
@@ -244,7 +244,7 @@
 					category: type,
 					description: 'rubric criterion cell, the intersection of a criterion and level',
 					viewers: [
-						'd2l-rubric-criterion-cell',
+						'd2l-rubric-criterion-cell'
 					]
 				};
 			}
@@ -257,6 +257,7 @@
 		_activityHandler,
 		_rubricHandler,
 		_userHandler,
+		_enrollmentHandler,
 		_courseOfferingHandler,
 		_discussionsHandler
 	];

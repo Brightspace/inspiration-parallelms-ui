@@ -41,7 +41,7 @@
 					documentation: {
 						type: Object,
 						value: () => {
-							viewers: []
+							[];
 						},
 						reflectToAttribute: true
 					},
@@ -58,17 +58,17 @@
 					}
 				};
 			}
-			static get observers(){
+			static get observers() {
 				return [
 					'_getViewer(selected)'
 				];
 			}
-			_getHref(documentation){
+			_getHref(documentation) {
 				const entity = documentation.entity;
 				const link = entity.getLinkByRel('self');
 				return link && link.href || '';
 			}
-			_getViewer(){
+			_getViewer() {
 
 				const index = this.selected;
 				const hook = this.shadowRoot.querySelector('#dynamic-component');

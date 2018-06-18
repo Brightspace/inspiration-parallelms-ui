@@ -133,15 +133,15 @@
 						type: Boolean,
 						value: false
 					}
+				};
 			}
-		}
 
 			static get observers() {
 				return [
 					'_changed(entity)'
 				];
 			}
-			_toggleShowAssessment(){
+			_toggleShowAssessment() {
 				this.showAssessment = !this.showAssessment;
 			}
 			_changed(entity) {

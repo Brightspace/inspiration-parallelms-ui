@@ -126,13 +126,13 @@
 			_getLinkByRel(entity, rel) {
 				return entity && entity.getLinkByRel(rel);
 			}
-			_getHrefByRel(entity, rel){
+			_getHrefByRel(entity, rel) {
 				const link = entity && entity.getLinkByRel(rel);
 				return link && link.href || '';
 			}
-			_getEnrollments(enrollmentsEntity){
+			_getEnrollments(enrollmentsEntity) {
 				return enrollmentsEntity && enrollmentsEntity.entities && enrollmentsEntity.entities.map( function(link) {
-					return link.href
+					return link.href;
 				}) || [] ;
 			}
 		}
