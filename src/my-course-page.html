@@ -8,6 +8,7 @@
 <link rel="import" href="siren-entity-mixin.html">
 <link rel="import" href="courses/course-banner.html">
 <link rel="import" href="content/content-module-list.html">
+<link rel="import" href="rubrics/rubrics-list.html">
 
 <dom-module id="my-course-page">
 	<template>
@@ -38,6 +39,7 @@
 		<d2l-awards-card href="[[awardsLink.href]]" token="[[token]]" class="card-item"></d2l-awards-card>
 		<d2l-user-activity-usage-list href="[[activitiesLink.href]]" token="[[token]]" class="card-item"></d2l-user-activity-usage-list>
 		<d2l-discussions-forum-list href="[[discussionsLink.href]]" token="[[token]]" class="card-item"></d2l-discussions-forum-list>
+		<d2l-rubrics-list href="[[rubricsLink.href]]" token="[[token]]" class="card-item"></d2l-rubrics-list>
 	</template>
 
 	<script>
@@ -60,6 +62,10 @@
 					discussionsLink: {
 						type: Object,
 						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/discussions")'
+					},
+					rubricsLink: {
+						type: Object,
+						computed: '_getLinkByRel(organizationEntity, "https://api.brightspace.com/rels/rubrics")'
 					},
 					organizationLink: {
 						type: Object,

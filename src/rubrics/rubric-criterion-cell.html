@@ -1,0 +1,120 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="./rubric-level-points.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="d2l-rubric-criterion-cell">
+	<template>
+		<style>
+			.cell {
+				padding: .5em;
+				min-height: 3em;
+				position: relative;
+			}
+			.cell > .points {
+				background: #aaa;
+				border-radius: .75rem;
+				text-align: center;
+				color: #fff;
+				width: 1.5rem;
+				height: 1.5rem;
+				top: .5rem;
+				right: .5rem;
+				position: absolute;
+			}
+	</style>
+		<d2l-siren-entity href="{{criteriaHref}}" token="{{token}}" entity="{{criteriaEntity}}"></d2l-siren-entity>
+		<div class="cell">
+			<template is="dom-if" if=[[isNumeric]]>
+				<div class="points">
+					<template is="dom-if" if="[[_isPointOverride(entity)]]">
+						{{_getPoints(entity)}}
+					</template>
+					<template is="dom-if" if="[[_isNotPointOverride(entity)]]">
+						<d2l-rubric-level-points href=[[_getLevelLink(entity)]] token={{token}} ></d2l-rubric-level-points>
+					</template>
+				</div>
+			</template>
+		</div>
+		<div class="cell">
+			<template is="dom-if" if="[[_getDescription(entity)]]">
+				<div class="description">
+					[[_getDescription(entity)]]
+				</div>
+			</template>
+			<template is="dom-if" if="[[_getFeedback(entity)]]">
+				<div class="feedback">
+					[[_getFeedback(entity)]]
+				</div>
+			</template>
+		</div>
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class CriterionCell extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-rubric-criterion-cell'; }
+
+			static get properties() {
+				return {
+					criteriaHref: {
+						type: String,
+						computed: '_getCriteriaLink(entity)'
+					},
+					criteriaEntity: Object,
+					isNumeric: {
+						type: Boolean,
+						computed: '_isNumeric(criteriaEntity)',
+						value: () => false
+					},
+					showFeedback: {
+						type: Boolean,
+						reflectToAttribute: true,
+						value: () => false
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+			_isPointOverride(entity) {
+				return entity.class && entity.class.indexOf('overridden') !== -1;
+			}
+			_isNotPointOverride(entity) {
+				return !this._isPointOverride(entity);
+			}
+			_getPoints(entity) {
+				return entity && entity.properties && entity.properties.points || 'cats';
+			}
+			_isNumeric(entity) {
+				return entity.class.indexOf('numeric') !== -1;
+			}
+			_getDescription(entity) {
+				const description = entity && entity.getSubEntityByClass('description');
+				return !this.showFeedback && description && description.properties && description.properties.text || '';
+			}
+			_getFeedback(entity) {
+				const feedback = entity && entity.getSubEntityByClass('feedback');
+				return this.showFeedback && feedback && feedback.properties && feedback.properties.text || '';
+			}
+			_getLevelLink(entity) {
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
+				return link && link.href || '';
+			}
+			_changed(entity) {
+				this.entity = entity;
+			}
+			_getCriteriaLink(entity) {
+				var link = entity && entity.getLinkByRel('up');
+				return link && link.href || '';
+			}
+		}
+
+		window.customElements.define(CriterionCell.is, CriterionCell);
+	</script>
+</dom-module>

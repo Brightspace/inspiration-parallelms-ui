@@ -1,0 +1,176 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="../rubrics/rubric-level-name.html">
+<link rel="import" href="../rubrics/rubric-criterion-name.html">
+<link rel="import" href="../rubrics/rubric-criterion-cell.html">
+<link rel="import" href="../rubrics/rubric-criteria-group.html">
+
+<dom-module id="d2l-rubric-result">
+	<template>
+		<style include="shared-styles">
+			.flex {
+				flex-grow: 1;
+			}
+
+			.result {
+				width: 100%;
+				min-height: 5em;
+				border-radius: 4px;
+				border: 1px solid #ccc;
+				color: #333;
+				background: #f5f5f5;
+				margin-right: .5em;
+				margin-bottom: .5em;
+			}
+			.result:first-child {
+				margin-left: .5em;
+			}
+			.selected {
+				border: 1px solid #80ff80;
+				color: #333;
+				background: #e6ffe6;
+			}
+			h3 {
+				width: 100%;
+			}
+			h4: {
+				width: 100%;
+				text-decoration: underline;
+				text-decoration-color: #ccc;
+				text-decoration-style: wavy;
+			}
+			.right {
+				float: right;
+			}
+			.header {
+				text-align: center;
+				align-items:center;
+				width: 100%;
+				background-color: #dedede;
+				border-bottom: 1px solid #ccc;
+			}
+		</style>
+
+		<d2l-siren-entity href="[[rubricHref]]" token="[[token]]" entity="{{rubricEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[groupsHref]]" token="[[token]]" entity="{{groupsEntity}}"></d2l-siren-entity>
+
+		<div >
+			<h3>
+				<d2l-rubric-name href="[[rubricHref]]" token="[[token]]" ></d2l-rubric-name> - Score: {{score}}
+				<paper-toggle-button class="right" checked="{{showDetails}}"></paper-toggle-button>
+			</h3>
+		</div>
+		<h4>Feedback</h4>
+		<div class="flex-parent">
+			<template is="dom-repeat" items="[[cells]]">
+				<div class="flex result">
+					<div class="header">
+						<d2l-rubric-level-name href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/level')]]" token="[[token]]" ></d2l-rubric-level-name>
+					</div>
+					<d2l-rubric-criterion-cell href="[[_getHrefByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell')]]" token="{{token}}" show-feedback="true"></d2l-rubric-criterion-cell>
+				</div>
+			</template>
+		</div>
+		<iron-collapse opened="[[showDetails]]" >
+			<div>
+				<template is="dom-repeat" items="[[groups]]">
+					<d2l-rubric-criteria-group href="[[_getHrefByRel(item, 'self')]]" token="[[token]]" assessment-href="[[href]]" >
+					</d2l-rubric-criteria-group>
+				</template>
+			</div>
+			<template is="dom-if" if="[[hasSaveAction]]">
+				<paper-button class="selected save" primary on-click='_save'>Save</paper-button>
+			</template>
+		</iron-collapse>
+	</template>
+
+	<script>
+		/*
+		@mixes SirenActionMixin
+		@mixes SirenEntityMixin
+		*/
+		class RubricResult extends SirenActionMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get is() { return 'd2l-rubric-result'; }
+
+			static get properties() {
+				return {
+					score: {
+						type: String,
+						computed: '_changed(entity)'
+					},
+					showDetails: {
+						type: Boolean,
+						value: false
+					},
+					rubricHref: {
+						type: String,
+						computed: '_getHrefByRel(entity, "https://api.brightspace.com/rels/rubric")'
+					},
+					rubricEntity: Object,
+					groupsHref: {
+						type: String,
+						computed: '_getHrefByRel(rubricEntity, "https://rubrics.api.brightspace.com/rels/criteria-groups")'
+					},
+					groupsEntity: Object,
+					groups: {
+						type: Array,
+						computed: '_getSubEntities(groupsEntity)'
+					},
+					cells: {
+						type: Array,
+						computed: '_getCells(entity)'
+					},
+					hasSaveAction: {
+						type: Boolean,
+						computed: '_hasSaveAction(entity)'
+					}
+				};
+			}
+
+			_getHrefByRel(entity, rel) {
+				const link = entity.getLinkByRel(rel);
+				return link && link.href || '';
+			}
+			_getSubEntities(entity) {
+				return entity && entity.entities || [];
+			}
+			_hasSaveAction(entity) {
+				return entity.hasAction('save');
+			}
+			_save() {
+				const actionName = 'save';
+				if (this.entity && this.entity.hasAction(actionName)) {
+					const action = this.entity.getActionByName(actionName);
+					if (action) {
+						var fields = this.getSirenFields(action);
+						this.performSirenAction(action, fields);
+					}
+				}
+			}
+			_getCells(entity) {
+				const cells = [];
+				entity && entity.entities && entity.entities.forEach(function(sub) {
+					sub.entities.forEach(function(e) {
+						if ( e.class.indexOf('selected') !== -1 ) {
+							cells.push(e);
+						}
+					});
+				});
+				return cells;
+			}
+			_getCriteriaCellLink(item) {
+				const link = this._getLinkByRel(item, 'https://rubrics.api.brightspace.com/rels/criterion-cell');
+				return link && link.href || item.href || '';
+			}
+			_changed(entity) {
+				return entity && entity.properties && entity.properties.score || '';
+			}
+		}
+
+		window.customElements.define(RubricResult.is, RubricResult);
+	</script>
+</dom-module>

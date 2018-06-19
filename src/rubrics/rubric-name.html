@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-rubric-name">
+	<template>
+		{{displayName}}
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class RubricName extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-rubric-name'; }
+
+			static get properties() {
+				return {
+					displayName: {
+						type: String,
+						value: () => '',
+						computed: '_changed(entity)'
+					}
+				};
+			}
+
+			_changed(entity) {
+				return entity && entity.properties && entity.properties.name || '';
+			}
+		}
+
+		window.customElements.define(RubricName.is, RubricName);
+	</script>
+</dom-module>

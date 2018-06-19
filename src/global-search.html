@@ -73,7 +73,7 @@
 
 	const _activitySearchHandler = function(href, token, entity) {
 		const type = 'activity';
-		if (entity.class && entity.class.indexOf(type) !== -1) {
+		if (entity.class && entity.class.indexOf(type) !== -1 && entity.class.indexOf('user') !== -1) {
 			var date = _getDateForEntity(href, token, entity, type);
 			_addDate(date);
 			return 	_formatResult(

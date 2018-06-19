@@ -1,0 +1,18 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-outcome-jurisdiction">
+	<template>
+		{{entity.properties.jurisdiction}}
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class OutcomeJurisdiction extends SirenEntityMixin(Polymer.Element) {
+
+			static get is() { return 'd2l-outcome-jurisdiction'; }
+		}
+
+		window.customElements.define(OutcomeJurisdiction.is, OutcomeJurisdiction);
+	</script>
+</dom-module>

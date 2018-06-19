@@ -1,0 +1,17 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../siren-entity-mixin.html">
+
+<dom-module id="d2l-outcome-notation">
+	<template>
+		{{entity.properties.notation}}
+	</template>
+
+	<script>
+		/* @mixes SirenEntityMixin */
+		class OutcomeNotation extends SirenEntityMixin(Polymer.Element) {
+			static get is() { return 'd2l-outcome-notation'; }
+		}
+
+		window.customElements.define(OutcomeNotation.is, OutcomeNotation);
+	</script>
+</dom-module>

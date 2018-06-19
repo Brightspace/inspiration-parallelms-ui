@@ -1,0 +1,285 @@
+<script>
+(function() {
+	'use strict';
+	/*eslint no-undef: "error"*/
+	/*eslint no-invalid-this: "error"*/
+
+	const _contentHandler = function(entity) {
+		const type = 'content';
+		if (entity.class && entity.class.indexOf('sequenced-activity') !== -1) {
+			return 	{
+				category: type,
+				description: 'Course objects are grouped into a set of more granular activity types',
+				viewers: [
+					'd2l-content-file-viewer'
+				]
+			};
+		}
+		if (entity.class && entity.class.indexOf('sequence-description') !== -1) {
+			return {
+				category: type,
+				description: 'Course objects are grouped into a set of more granular activity types',
+				viewers: [
+					'd2l-content-activity-list'
+				]
+			};
+		}
+		return null;
+	};
+
+	const _activityHandler = function(entity) {
+		const type = 'activity';
+		if (entity.class && entity.class.indexOf(type) !== -1 && entity.class.indexOf('user') !== -1) {
+			return {
+				category: type,
+				description: 'User Activity Usage, represents a users usage of an activity. Here is where you might find grades, assessment information etc.',
+				viewers: [
+					'd2l-user-activity-usage'
+				]
+			};
+		}
+		return null;
+	};
+
+	const _courseOfferingHandler = function(entity) {
+		if (entity.class) {
+			if (
+				entity.class.indexOf('organization') !== -1
+				|| entity.class.indexOf('course-offering') !== -1
+			) {
+				return {
+					category: 'course-offering',
+					description: 'An instance of a course, department, section etc.',
+					viewers: [
+						'd2l-course-item',
+						'd2l-course-banner'
+					]
+				};
+			}
+		}
+		return null;
+	};
+
+	const _enrollmentHandler = function(entity) {
+		if (entity.class) {
+			if ( entity.class.indexOf('enrollment') !== -1 ) {
+				return {
+					category: 'enrollment',
+					description: 'An instance of a course enrollment. This is the union of a User, a Course offering and a Role',
+					viewers: [
+						'd2l-enrollment-item'
+					]
+				};
+			}
+		}
+		return null;
+	};
+
+	const _userHandler = function(entity) {
+		const type = 'user';
+		if (entity.class && entity.class.indexOf(type) !== -1 && entity.class.indexOf('user') !== -1) {
+			return {
+				category: type,
+				description: 'Use, represents a user...',
+				viewers: [
+					'd2l-user-card',
+					'd2l-user-card-top',
+					'd2l-user-name',
+					'd2l-user-first-name',
+					'd2l-user-image',
+					'd2l-user-image-top'
+				]
+			};
+		}
+		return null;
+	};
+
+	const _discussionsHandler = function(entity) {
+		if (entity.class) {
+			if (entity.class.indexOf('topic') !== -1) {
+				return {
+					category: 'topic',
+					description: '.',
+					viewers: [
+						'd2l-discussions-topic'
+					]
+				};
+			}
+			if (entity.class.indexOf('forum') !== -1) {
+				return {
+					category: 'forum',
+					description: '.',
+					viewers: [
+						'd2l-discussions-forum-item'
+					]
+				};
+			}
+			if (entity.class.indexOf('thread') !== -1) {
+				const type = 'thread';
+				return {
+					category: type,
+					description: 'a thread of posts, with replies',
+					viewers: [
+						'd2l-discussions-topic-post-list'
+					]
+				};
+			}
+			if (entity.class.indexOf('post') !== -1) {
+				const type = 'post';
+				return {
+					category: type,
+					description: 'a post to a thread',
+					viewers: [
+						'd2l-discussions-topic-post-item'
+					]
+				};
+			}
+		}
+		return null;
+	};
+
+	const _rubricHandler = function(entity) {
+		if (entity.class) {
+			if (entity.class.indexOf('rubric') !== -1) {
+				return {
+					category: 'rubric',
+					description: 'A rubric',
+					viewers: [
+						'd2l-rubric-card'
+					]
+				};
+			}
+
+			if (
+				entity.class.indexOf('rubrics') !== -1
+				&& entity.class.indexOf('collection') !== -1
+			) {
+				return {
+					category: 'rubric',
+					description: 'A collection of rubrics',
+					viewers: [
+						'd2l-rubrics-list'
+					]
+				};
+			}
+
+			if (
+				entity.class.indexOf('collection') !== -1
+				&& entity.class.indexOf('criteria-groups') !== -1
+			) {
+				const type = 'criteria-groups';
+				return {
+					category: type,
+					description: 'rubric criteria group',
+					viewers: [
+						'd2l-rubric-criteria-groups'
+					]
+				};
+			}
+
+			if (entity.class.indexOf('criteria-group') !== -1) {
+				return {
+					category: 'criteria-group',
+					description: '.',
+					viewers: [
+						'd2l-rubric-criteria-group'
+					]
+				};
+			}
+
+			if (
+				entity.class.indexOf('levels') !== -1
+				&& entity.class.indexOf('collection') !== -1
+			) {
+				const type = 'levels';
+				return {
+					category: type,
+					description: 'A rubric level',
+					viewers: [
+						'd2l-rubric-level-name',
+						'd2l-rubric-level-points'
+					]
+				};
+			}
+
+			if (entity.class.indexOf('level') !== -1) {
+				const type = 'level';
+				return {
+					category: type,
+					description: 'A rubric level',
+					viewers: [
+						'd2l-rubric-level-name',
+						'd2l-rubric-level-points'
+					]
+				};
+			}
+			if (entity.class.indexOf('criterion') !== -1) {
+				const type = 'criterion';
+				return {
+					category: type,
+					description: 'rubric criterion',
+					viewers: [
+						'd2l-rubric-criterion-name'
+					]
+				};
+			}
+
+			if (
+				entity.class.indexOf('collection') !== -1
+				&& entity.class.indexOf('criteria') !== -1
+			) {
+				const type = 'criteria';
+				return {
+					category: type,
+					description: 'rubric criteria',
+					viewers: [
+						'd2l-rubric-criteria-list'
+					]
+				};
+			}
+
+			if (entity.class.indexOf('criterion-cell') !== -1) {
+				const type = 'criterion-cell';
+				return {
+					category: type,
+					description: 'rubric criterion cell, the intersection of a criterion and level',
+					viewers: [
+						'd2l-rubric-criterion-cell'
+					]
+				};
+			}
+		}
+		return null;
+	};
+
+	const _handlers = [
+		_contentHandler,
+		_activityHandler,
+		_rubricHandler,
+		_userHandler,
+		_enrollmentHandler,
+		_courseOfferingHandler,
+		_discussionsHandler
+	];
+
+	const Documentation = {
+		get: (entity) => {
+			for (const handler of _handlers) {
+				const result = handler(entity);
+				if (result) {
+					return result;
+				}
+			}
+			return  {
+				category: 'Undocumented entity type',
+				description: `Could not find documentation for ${ JSON.stringify(entity.class || []) }`,
+				viewers: []
+			};
+		}
+	};
+
+	window.D2L = window.D2L || {};
+	window.D2L.Documentation = Documentation;
+
+})();
+</script>

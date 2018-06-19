@@ -4,7 +4,7 @@
 <script>
 (function() {
 	'use strict';
-
+/*
 	var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
 	var clientId = guid();
 	var listeners = {};
@@ -51,7 +51,7 @@
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
 			s4() + '-' + s4() + s4() + s4();
 	}
-
+*/
 	/*
 		This store is hacked together to develop entity-mixin.
 	*/
@@ -130,7 +130,7 @@
 
 		update: function(entityId, token, entity) {
 			this._initContainer(this._store, entityId, token);
-			listenForChanges(entityId, token);
+			//listenForChanges(entityId, token);
 			return new Promise((resolve) => {
 				this._store.get(token).set(entityId, { 'status': '', 'entity': entity });
 
@@ -175,6 +175,10 @@
 			for (const listener of listenerSet) {
 				listener(null, error);
 			}
+		},
+
+		_getAllEntities: function() {
+			return this._store.values();
 		}
 
 	};

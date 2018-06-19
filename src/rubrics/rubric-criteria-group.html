@@ -1,0 +1,271 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../prefetch-mixin.html">
+<link rel="import" href="../siren-entity.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="../siren-action-mixin.html">
+
+<link rel="import" href="./rubric-criteria-list.html">
+<link rel="import" href="./rubric-level-name.html">
+<link rel="import" href="./rubric-criterion-name.html">
+<link rel="import" href="./rubric-name.html">
+<link rel="import" href="./rubric-criterion-cell.html">
+
+<dom-module id="d2l-rubric-criteria-group">
+	<template>
+
+		<d2l-siren-entity href="[[levelsHref]]" token="[[token]]" entity="{{levelsEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[criteriaCollectionHref]]" token="[[token]]" entity="{{criteriaCollectionEntity}}"></d2l-siren-entity>
+		<d2l-siren-entity href="[[assessmentHref]]" token="[[token]]" entity="{{assessmentEntity}}"></d2l-siren-entity>
+
+		<style>
+			:host {
+				display: block;
+			}
+			table {
+				table-layout: fixed;
+				border-collapse: collapse;
+				border: none;
+				padding: 0;
+				margin-left: .5em;
+				margin-right: .5em;
+				border-radius: 5px;
+				width: calc(100% - 1em);
+			}
+
+			th {
+				border-top: 1px solid #dedede;
+				background-color: #ddd;
+				padding: 0;
+				margin: 0;
+			}
+			th:first-child {
+				border-left: 1px solid #dedede;
+				border-top-left-radius: 3px;
+			}
+
+			th:last-child {
+					border-right: 1px solid #dedede;
+					border-top-right-radius: 3px;
+			}
+
+			tr {
+				width: 100%;
+				border-bottom: 1px solid #dedede;
+				border-left: 1px solid #dedede;
+			}
+
+			td {
+				height: 100%;
+				width: 100%;
+				word-wrap: break-word;
+				border-right: 1px solid #dedede;
+				border-bottom: 1px solid #dedede;
+				text-align: left;
+				position: relative;
+				vertical-align:top;
+			}
+			.criterion-cell {
+				flex-grow: 1
+			}
+			.selected {
+				border: 1px solid #80ff80;
+				color: #333;
+				background: #e6ffe6;
+			}
+			.selectable {
+				cursor: pointer;
+			}
+			.selectable:hover {
+				border: 1px solid #80ff80;
+				color: #333;
+				background: #e6ffe6;
+			}
+		</style>
+		<table cell-spacing="0" cell-padding="0">
+			<thead>
+				<tr>
+					<th>{{entity.properties.name}}</th>
+					<template is="dom-repeat" items="[[levels]]">
+						<th>
+							<d2l-rubric-level-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-level-name>
+						</th>
+					</template>
+					<template is="dom-if" if="[[isNumeric]]" >
+						<th>Out Of:[[entity.properties.outOf]]</th>
+					</template>
+				</tr>
+			</thead>
+			<tbody>
+				<template is="dom-repeat" items="[[criteriaEntities]]">
+					<tr>
+						<td>
+							<d2l-rubric-criterion-name href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-criterion-name>
+						</td>
+						<template is="dom-repeat" items="[[_getCriterionCells(item)]]">
+							<td class$="[[_getCellClasses(item, assessmentCellLookup)]]" on-click="_doAssessmentMaybe">
+								<d2l-rubric-criterion-cell href="[[_getSelfLink(item)]]" token="[[token]]"></d2l-rubric-criterion-cell>
+							</td>
+						</template>
+						<template is="dom-if" if="[[isNumeric]]" >
+							<td>
+								<template is="dom-if" if="[[assessmentEntity]]">
+									{{_getCellScore(item)}}
+								</template>
+								/{{item.properties.outOf}}
+							</td>
+						</template>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+	</template>
+
+	<script>
+		/* @mixes PrefetchMixin
+			 @mixes SirenActionMixin
+		   @mixes SirenEntityMixin */
+		class RubricCriteriaGroup extends PrefetchMixin(SirenActionMixin(SirenEntityMixin(Polymer.Element))) {
+
+			static get is() { return 'd2l-rubric-criteria-group'; }
+
+			static get properties() {
+				return {
+					assessmentHref: {
+						type: String,
+						value: () => '',
+						reflectToAttribute: true
+					},
+					assessmentEntity: Object,
+					assessmentCellLookup: {
+						type: Object,
+						computed: '_mapAssessmentCells(assessmentEntity)'
+					},
+					entity: Object,
+					levelsHref: {
+						type: String,
+						computed: '_getLevelsLink(entity)'
+					},
+					levelsEntity: Object,
+					levels: {
+						type: Array,
+						computed: '_getSubEntitiesByClass(levelsEntity, "level")'
+					},
+					criteriaCollectionHref: {
+						type: Object,
+						computed: '_getCriteriaLink(entity)'
+					},
+					criteriaCollectionEntity: Object,
+					criteriaEntities: {
+						type: Array,
+						computed:'_getSubEntitiesByClass(criteriaCollectionEntity, "criterion")'
+					},
+					isNumeric: {
+						type: Boolean,
+						computed: '_isNumeric(entity)',
+						value: false
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)',
+					'_mapAssessmentCells(assessmentEntity)'
+				];
+			}
+
+			_mapAssessmentCells(entity) {
+				const result = {};
+				if (entity && entity.entities) {
+					for (const subEntity of entity.entities) {
+						for ( const cell of subEntity.entities) {
+							const levelLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/level');
+							if ( levelLink &&  levelLink.href ) {
+								result[levelLink.href] = subEntity;
+							}
+							const criterionLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion');
+							if ( criterionLink && criterionLink.href ) {
+								result[criterionLink.href] = subEntity;
+							}
+							const criterionCellLink = cell.getLinkByRel('https://rubrics.api.brightspace.com/rels/criterion-cell');
+							if ( criterionCellLink && criterionCellLink.href ) {
+								result[criterionCellLink.href] = cell;
+							}
+						}
+					}
+				}
+				return result;
+			}
+			_getCellClasses(item) {
+				const selfLink = this._getSelfLink(item);
+				const self = this;
+				let classes = 'criterion-cell';
+				if (selfLink && self.assessmentCellLookup) {
+					const cellSelection = self.assessmentCellLookup[selfLink];
+					const actionName = 'select-criterion-cell';
+					const action = cellSelection && cellSelection.getActionByName(actionName) || null;
+					classes = (cellSelection && cellSelection.class && cellSelection.class.indexOf('selected') !== -1)
+						? 'selected ' + classes
+						: classes ;
+					classes += (action !== null) ? ' selectable' : '';
+				}
+				return classes;
+			}
+
+			_getCellScore(item) {
+				const selfLink = this._getSelfLink(item);
+				const self = this;
+				let score = 0;
+				if (selfLink && self.assessmentCellLookup) {
+					const cellSelection = self.assessmentCellLookup[selfLink];
+					score = cellSelection && cellSelection.properties && cellSelection.properties.score || 0;
+				}
+				return score;
+			}
+
+			_doAssessmentMaybe(e) {
+				if (e && e.model && e.model.item) {
+					const item = e.model.item;
+					const selfLink = this._getSelfLink(item);
+					const self = this;
+					if (selfLink && self.assessmentCellLookup) {
+						const cellSelection = self.assessmentCellLookup[selfLink];
+						const actionName = 'select-criterion-cell';
+						const action = cellSelection && cellSelection.getActionByName(actionName) || null;
+						if (action) {
+							var fields = this.getSirenFields(action);
+							this.performSirenAction(action, fields);
+						}
+					}
+				}
+			}
+
+			_isNumeric(entity) {
+				return entity.class.indexOf('numeric') !== -1;
+			}
+			_changed(entity) {
+				this.entity = entity;
+			}
+			_getSelfLink(entity) {
+				const link = entity && entity.getLinkByRel('self');
+				return link && link.href || entity.href || '';
+			}
+			_getCriteriaLink(entity) {
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criteria');
+				return link && link.href || '';
+			}
+			_getLevelsLink(entity) {
+				const link = entity && entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/levels');
+				return link && link.href || '';
+			}
+			_getCriterionCells(entity) {
+				const entities = entity && entity.getSubEntitiesByClass('criterion-cell');
+				return entities || [];
+			}
+
+		}
+
+		window.customElements.define(RubricCriteriaGroup.is, RubricCriteriaGroup);
+	</script>
+</dom-module>

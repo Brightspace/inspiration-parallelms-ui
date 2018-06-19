@@ -1,0 +1,94 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../prefetch-mixin.html">
+<link rel="import" href="../siren-entity-mixin.html">
+<link rel="import" href="./rubric-criteria-groups.html">
+<link rel="import" href="./rubric-name.html">
+<link rel="import" href="./rubric-criterion-name.html">
+<link rel="import" href="./rubric-criterion-cell.html">
+
+<dom-module id="d2l-rubric-card">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+    <paper-card>
+			<slot></slot>
+			<paper-item>[[description.properties.text]]</paper-item>
+			<d2l-rubric-criteria-groups href="{{_getHref(criteriaGroup)}}" token="[[token]]"></d2l-rubric-criteria-groups>
+			<template is="dom-if" if="{{isNumeric}}" >
+				<paper-item>Out Of: [[rubric.properties.outOf]]</paper-item>
+			</template>
+		</paper-card>
+	</template>
+
+	<script>
+		/* @mixes PrefetchMixin
+		   @mixes SirenEntityMixin */
+		class RubricCard extends PrefetchMixin(SirenEntityMixin(Polymer.Element)) {
+
+			static get interesting() {
+				return [
+					{
+						getLinks: entity => entity.getLinkByRel('self'),
+						elements: [window.customElements.get('d2l-rubric-card')]
+					}
+				];
+			}
+
+			static get is() { return 'd2l-rubric-card'; }
+
+			static get properties() {
+				return {
+					rubric: Object,
+					description: {
+						type: Object,
+						value: {
+							properties: {
+								text: '',
+								html: ''
+							}
+						}
+					},
+					criteriaGroup: {
+						type: Object,
+						value: {
+							href: ''
+						}
+					},
+					isNumeric: {
+						type: Boolean,
+						computed: '_isNumeric(entity)',
+						value: false
+					}
+				};
+			}
+
+			static get observers() {
+				return [
+					'_changed(entity)'
+				];
+			}
+
+			_isNumeric(entity) {
+				return entity.class.indexOf('numeric') !== -1;
+			}
+			_changed(entity) {
+				this.rubric = entity;
+				this.description = entity.getSubEntityByClass('description');
+				this.criteriaGroup = entity.getLinkByRel('https://rubrics.api.brightspace.com/rels/criteria-groups');
+			}
+			_getHref(link) {
+				return link.href;
+			}
+			_getSelfLink(entity) {
+				return entity.getLinkByRel('self').href;
+			}
+		}
+
+		window.customElements.define(RubricCard.is, RubricCard);
+	</script>
+</dom-module>

@@ -1,0 +1,89 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="d2l-documentation-details">
+	<template>
+		<style include="shared-styles">
+		.card {
+			background-color: #006FBF;
+		}
+		.card .upper {
+				color: white;
+		}
+		.examples {
+			background-color: #dedede;
+			border: 1px solid #cecece;
+			border-radius: 4px;
+		}
+		</style>
+		<div class="card">
+			<div class="upper">
+				Description: [[documentation.description]]
+				<paper-tabs selected="{{selected}}" on-click="_getViewer" scrollable --paper-tabs-selection-bar-color="white">
+					<template is="dom-repeat" items="[[documentation.viewers]]">
+						<paper-tab>[[item]]</paper-tab>
+					</template>
+				</paper-tabs>
+			</div>
+			<div class="examples">
+				<div id="dynamic-component"></div>
+			</div>
+		</div>
+	</template>
+
+	<script>
+	//
+		class DocumentationDetails extends Polymer.Element {
+
+			static get is() { return 'd2l-documentation-details'; }
+
+			static get properties() {
+				return {
+					documentation: {
+						type: Object,
+						value: () => {
+							[];
+						},
+						reflectToAttribute: true
+					},
+					href: {
+						type: String,
+						computed: '_getHref(documentation)'
+					},
+					selected: {
+						type: Number
+					},
+					clicked: {
+						type: Number,
+						value: 0
+					}
+				};
+			}
+			static get observers() {
+				return [
+					'_getViewer(selected)'
+				];
+			}
+			_getHref(documentation) {
+				const entity = documentation.entity;
+				const link = entity.getLinkByRel('self');
+				return link && link.href || '';
+			}
+			_getViewer() {
+
+				const index = this.selected;
+				const hook = this.shadowRoot.querySelector('#dynamic-component');
+				hook.innerHTML = '';
+				if ( !this.documentation && this.documentation.viewers && this.documentation.viewers.length > 0) {
+					return;
+				}
+				const tagName = this.documentation.viewers[index];
+				const tag = document.createElement(tagName);
+				tag.setAttribute('href', this.href);
+				tag.setAttribute('token', this.token);
+				hook.appendChild(tag);
+			}
+		}
+
+		window.customElements.define(DocumentationDetails.is, DocumentationDetails);
+	</script>
+</dom-module>
