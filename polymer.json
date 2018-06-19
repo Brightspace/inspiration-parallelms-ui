@@ -1,15 +1,15 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/my-app.js",
   "fragments": [
-    "src/my-app-main-page.html",
-    "src/my-login-page.html",
-    "src/my-welcome-page.html",
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html",
-    "src/my-course-page.html"
+    "src/my-app-main-page.js",
+    "src/my-login-page.js",
+    "src/my-welcome-page.js",
+    "src/my-view1.js",
+    "src/my-view2.js",
+    "src/my-view3.js",
+    "src/my-view404.js",
+    "src/my-course-page.js"
   ],
   "sources": [
     "src/**/*",
@@ -18,12 +18,13 @@
   ],
   "extraDependencies": [
     "manifest.json",
-    "bower_components/webcomponentsjs/*.js",
+    "node_modules/@webcomponents/webcomponentsjs/*.js",
     "bower_components/file-saver/*.js",
     "bower_components/tti-polyfill/tti-polyfill.js"
   ],
   "lint": {
-    "rules": ["polymer-2"]
+    "rules": ["polymer-3"],
+    "ignoreWarnings": ["non-literal-import", "not-loadable"]
   },
   "builds": [
     {

@@ -1,44 +1,44 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<link rel="preload" href="src/my-view1.html" as="document">
 		<link rel="preload" href="https://s.brightspace.com/lib/siren-parser/6.2.0/siren-parser.js" as="script">
 		<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,300,300italic,400italic,500,500italic,700,700italic" as="style">
 
 		<link rel="preload" href="https://www.google-analytics.com/analytics.js" as="script">
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67145611-6"></script>
-		<script async src="bower_components/tti-polyfill/tti-polyfill.js" id="tti"></script>
+		<script async src="./bower_components/tti-polyfill/tti-polyfill.js" id="tti"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
 		<script>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() { window.dataLayer.push(arguments); }
-			gtag('js', new Date());
-			gtag('config', 'UA-67145611-6');
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'UA-67145611-6');
 
-			if ('PerformanceLongTaskTiming' in window) {
-				var g = window.__tti = {e:[]};
-				const observer = new PerformanceObserver((list) => {
-					for (const entry of list.getEntries()) {
-						if (entry.entryType === 'paint') {
-							gtag('event', 'paint', {
-								event_action: entry.name,
-								event_category: 'Performance Metrics',
-								value: Math.round(entry.startTime + entry.duration),
-								non_interaction: true
-							});
-						} else if (entry.entryType === 'longtask') {
-							g.e = g.e.concat(entry);
-							gtag('event', 'longtask', {
-								event_action: 'longtask',
-								event_category: 'Performance Metrics',
-								value: Math.round(entry.startTime + entry.duration),
-								event_label: JSON.stringify(entry.attribution),
-								non_interaction: true
-							});
-						}
-					}
+if ('PerformanceLongTaskTiming' in window) {
+	var g = window.__tti = {e:[]};
+	const observer = new PerformanceObserver((list) => {
+		for (const entry of list.getEntries()) {
+			if (entry.entryType === 'paint') {
+				gtag('event', 'paint', {
+					event_action: entry.name,
+					event_category: 'Performance Metrics',
+					value: Math.round(entry.startTime + entry.duration),
+					non_interaction: true
 				});
-				observer.observe({entryTypes: ['paint', 'longtask']});
+			} else if (entry.entryType === 'longtask') {
+				g.e = g.e.concat(entry);
+				gtag('event', 'longtask', {
+					event_action: 'longtask',
+					event_category: 'Performance Metrics',
+					value: Math.round(entry.startTime + entry.duration),
+					event_label: JSON.stringify(entry.attribution),
+					non_interaction: true
+				});
 			}
+		}
+	});
+	observer.observe({entryTypes: ['paint', 'longtask']});
+}
 		</script>
 		<meta charset="utf-8">
 		<meta name="generator" content="Polymer Starter Kit">
@@ -114,10 +114,11 @@
 		</script>
 
 		<!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-		<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+		<script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+		<script src="./node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 
 		<!-- Load your application shell -->
-		<link rel="import" href="src/my-app.html">
+		<script type="module" src="./src/my-app.js"></script>
 
 		<!-- Add any global styles for body, document, etc. -->
 		<style>
@@ -136,20 +137,20 @@
 			Please enable JavaScript to view this website.
 		</noscript>
 		<script>
-			window.performance &&
-				performance.mark &&
-				performance.mark('index.html');
+window.performance &&
+    performance.mark &&
+    performance.mark('index.html');
 
-			document.getElementById('tti').addEventListener('load', function() {
-				ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
-					gtag('event', 'TTI', {
-						event_action: 'TTI',
-						event_category: 'Performance Metrics',
-						value: tti,
-						non_interaction: true
-					});
-				});
-			});
+document.getElementById('tti').addEventListener('load', function() {
+	ttiPolyfill.getFirstConsistentlyInteractive().then((tti) => {
+		gtag('event', 'TTI', {
+			event_action: 'TTI',
+			event_category: 'Performance Metrics',
+			value: tti,
+			non_interaction: true
+		});
+	});
+});
 		</script>
 	</body>
 </html>
