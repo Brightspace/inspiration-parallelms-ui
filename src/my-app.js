@@ -84,9 +84,9 @@ class MyApp extends PolymerElement {
             }
         </style>
 
-        <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
+        <app-location route="{{route}}"></app-location>
 
-        <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
         <app-drawer-layout force-narrow="">
             <app-drawer opened="{{drawerOpened}}" slot="drawer" id="drawer">

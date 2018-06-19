@@ -1,7 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/iron-scroll-threshold/iron-scroll-threshold.js';
-import '../my-course-page-prefetcher.js';
+import { MyCoursePagePrefetcher } from '../my-course-page-prefetcher.js';
 import { NextEntityPaginateMixin } from '../next-entity-paginate-mixin.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import '../shared-styles.js';
@@ -52,7 +52,7 @@ class CoursesDrawer extends PrefetchMixin(NextEntityPaginateMixin('myEnrollments
 				elements: [window.customElements.get('d2l-enrollment-item')]
 			}, {
 				getLinks: entity => entity.hasClass('root') && entity.getLinkByRel('self'),
-				elements: [window.D2L.MyCoursePagePrefetcher] // special case. The my-course-page uses both the root and the organization
+				elements: [MyCoursePagePrefetcher] // special case. The my-course-page uses both the root and the organization
 			}
 		];
 	}

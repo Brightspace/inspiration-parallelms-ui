@@ -1,4 +1,4 @@
-import './entity-store.js';
+import { EntityStore } from './entity-store.js';
 /*
     @polymerMixin
     A component mixin for HM entity with support for callback for updates
@@ -49,7 +49,7 @@ export const EntityMixin = function(superClass) {
 				super.disconnectedCallback();
 			}
 			if (this.href && typeof this.token === 'string') {
-				window.D2L.EntityStore.removeListener(this.href, this.token, this._entityChanged);
+				EntityStore.removeListener(this.href, this.token, this._entityChanged);
 			}
 		}
 
@@ -58,12 +58,12 @@ export const EntityMixin = function(superClass) {
 				return;
 			}
 			if (oldhref) {
-				window.D2L.EntityStore.removeListener(oldhref, this.token, this._entityChanged);
+				EntityStore.removeListener(oldhref, this.token, this._entityChanged);
 			}
 			if (!href) {
 				return;
 			}
-			window.D2L.EntityStore.addListener(href, this.token, this._entityChanged);
+			EntityStore.addListener(href, this.token, this._entityChanged);
 		}
 
 		_tokenChanged(token, oldToken) {
@@ -71,19 +71,19 @@ export const EntityMixin = function(superClass) {
 				return;
 			}
 			if (oldToken) {
-				window.D2L.EntityStore.removeListener(this.href, oldToken, this._entityChanged);
+				EntityStore.removeListener(this.href, oldToken, this._entityChanged);
 			}
 			if (typeof token !== 'string') {
 				return;
 			}
-			window.D2L.EntityStore.addListener(this.href, token, this._entityChanged);
+			EntityStore.addListener(this.href, token, this._entityChanged);
 		}
 
 		_fetch(href, token) {
 			if (!href || typeof token !== 'string') {
 				return;
 			}
-			var entity = window.D2L.EntityStore.fetch(this.href, token);
+			var entity = EntityStore.fetch(this.href, token);
 			if (entity.status !== 'fetching') {
 				// Allows class/mixin to override _entityChanged
 				this._entityChanged(entity.entity);

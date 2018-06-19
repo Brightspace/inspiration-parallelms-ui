@@ -11,12 +11,22 @@ class UserImage extends SirenEntityMixin(PolymerElement) {
                 display: block;
             }
 
-            d2l-image {
+            d2l-image, img {
                 max-height: 400px;
                 max-width: 400px;
             }
+
+			img {
+				width: 100%;
+				height: 100%;
+			}
         </style>
-        <d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+		<template is="dom-if" if="{{!isDefault}}">
+			<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
+		</template>
+		<template is="dom-if" if="{{isDefault}}">
+			<img src="{{image.href}}"></img>
+		</template>
 `;
 	}
 

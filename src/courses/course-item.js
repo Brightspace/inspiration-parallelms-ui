@@ -2,6 +2,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 import '@polymer/paper-card/paper-card.js';
+import { MyCoursePagePrefetcher } from '../my-course-page-prefetcher.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '../siren-entity.js';
@@ -61,7 +62,7 @@ class CourseItem extends LocalizationMixin(PrefetchMixin(SirenEntityMixin(Polyme
 				elements: [] // Just prefetch the org image and we use it directly
 			}, {
 				getLinks: entity => entity.getLinkByRel('self'),
-				elements: [window.D2L.MyCoursePagePrefetcher] // We link to course-page
+				elements: [MyCoursePagePrefetcher] // We link to course-page
 			}
 		];
 	}

@@ -5,6 +5,7 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-checkbox/paper-checkbox.js';
+import { EntityStore } from './entity-store.js';
 import './siren-entity.js';
 import './shared-styles.js';
 import './courses/courses-drawer.js';
@@ -242,7 +243,7 @@ class LoginPage extends PolymerElement {
 			// We link to the welcome-page
 			import('./my-welcome-page.js').then(() => window.customElements.get('my-welcome-page').beginPrefetch(entrypoint, token));
 
-			window.D2L.EntityStore.addInvalidationListener(() => {
+			EntityStore.addInvalidationListener(() => {
 				window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token);
 				window.customElements.get('my-welcome-page').beginPrefetch(entrypoint, token);
 			});
