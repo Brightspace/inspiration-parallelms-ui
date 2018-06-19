@@ -40,20 +40,9 @@
                 this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
 			}
 
-            _getSelfLink(entity) {
-				return entity.getLinkByRel('self').href;
-			}
-
-            _getNextLink(entity) {
-				return entity.getLinkByRel('next').href;
-			}
-
-            _getPrevLink(entity) {
-				return entity.getLinkByRel('prev').href;
-			}
-
-            _getUpLink(entity) {
-				return entity.getLinkByRel('up').href;
+			_getHrefByRel(entity, rel) {
+				const link = entity && entity.getLinkByRel && entity.getLinkByRel(rel);
+				return link && link.href || ''
 			}
 
             // Leaving this guy in case we need it in the future
