@@ -1,5 +1,4 @@
 import { EntityMixin } from './entity-mixin.js';
-import 'siren-parser/dist/siren-parser.js';
 /*
     @polymerMixin
     @mixes EntityMixin

@@ -1,4 +1,3 @@
-import 'siren-parser/dist/siren-parser';
 import { GlobalSearch } from './global-search.js';
 
 var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
