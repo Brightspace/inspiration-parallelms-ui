@@ -1,10 +1,10 @@
 import { GlobalSearch } from './global-search.js';
 
-//var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
-//var clientId = guid();
+var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
+var clientId = guid();
 var listeners = {};
 
-/*connection.onopen = function() {
+connection.onopen = function() {
 	connection.send(JSON.stringify({'action': 'register', 'deviceId': clientId})); // Send the message 'Ping' to the server
 };
 
@@ -22,7 +22,7 @@ connection.onmessage = function(e) {
 		}
 	}
 
-};*/
+};
 
 function listenForChanges(resource, token)  {
 	if (listeners[resource]) {
@@ -33,11 +33,11 @@ function listenForChanges(resource, token)  {
 		listeners[resource] = [token];
 	}
 
-	//connection.send(JSON.stringify({'action': 'subscribe', 'resource': resource}));
+	connection.send(JSON.stringify({'action': 'subscribe', 'resource': resource}));
 }
 
 // from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-/*function guid() {
+function guid() {
 	function s4() {
 		return Math.floor((1 + Math.random()) * 0x10000)
 			.toString(16)
@@ -45,7 +45,7 @@ function listenForChanges(resource, token)  {
 	}
 	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
-}*/
+}
 
 /*
     This store is hacked together to develop entity-mixin.
