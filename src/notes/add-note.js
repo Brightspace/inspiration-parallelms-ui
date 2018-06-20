@@ -5,7 +5,6 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 
-
 /* @mixes LocalizationMixin
    @mixes SirenEntityMixin
    @mixes SirenActionMixin */
@@ -49,11 +48,11 @@ class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 
 	static get properties() {
 		return {
-            resourceLink: String,
-            showTextArea: {
-                type: Boolean,
-                value: false
-            }
+			resourceLink: String,
+			showTextArea: {
+				type: Boolean,
+				value: false
+			}
 		};
 	}
 
@@ -63,16 +62,16 @@ class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 		];
 	}
 
-    _toggleInput() {
-        this.showTextArea = !this.showTextArea;
-    }
+	_toggleInput() {
+		this.showTextArea = !this.showTextArea;
+	}
 
-    _saveNote() {
-        // Save new note, link with this.resourceLink
-    }
+	_saveNote() {
+		// Save new note, link with this.resourceLink
+	}
 
 	_changed(entity) {
-        this.resourceLink = entity.getLinkByRel('self');
+		this.resourceLink = entity.getLinkByRel('self');
 	}
 
 	// Leaving this guy in case we need it in the future
