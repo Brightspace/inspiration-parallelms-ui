@@ -7,11 +7,9 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-class MyView404 extends PolymerElement {
-	static get template() {
+import { LitElement, html } from '@polymer/lit-element';
+class MyView404 extends LitElement {
+	_render({ rootPath }) {
 		return html`
         <style>
             :host {
@@ -20,7 +18,7 @@ class MyView404 extends PolymerElement {
             }
         </style>
 
-        Oops you hit a 404. <a href="[[rootPath]]">Head back to home.</a>
+        Oops you hit a 404. <a href="${rootPath}">Head back to home.</a>
 `;
 	}
 

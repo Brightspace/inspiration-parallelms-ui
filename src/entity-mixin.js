@@ -19,23 +19,28 @@ export const EntityMixin = function(superClass) {
 			return {
 				href: {
 					type: String,
-					observer: '_hrefChanged',
 					reflectToAttribute: true
 				},
-				token: {
-					type: String,
-					observer: '_tokenChanged'
-				},
-				entity: {
-					type: Object
-				}
+				token: String,
+				entity: Object
 			};
 		}
 
-		static get observers() {
-			return [
-				'_fetch(href, token)'
-			];
+		_propertiesChanged(props, changedProps, prevProps) {
+			if (changedProps.href !== undefined) {
+				this._hrefChanged(this.href);
+			}
+			if (changedProps.token !== undefined) {
+				this._tokenChanged(this.token);
+			}
+			if (
+				(changedProps.href !== undefined || changedProps.token !== undefined) &&
+				this.href !== undefined &&
+				this.token !== undefined
+			) {
+				this._fetch(this.href, this.token);
+			}
+			super._propertiesChanged(props, changedProps, prevProps);
 		}
 
 		connectedCallback() {

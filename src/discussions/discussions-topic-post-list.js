@@ -1,12 +1,12 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import './discussions-topic-post-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+	_render({ entity, token }) {
+		const posts = entity && entity.entities || [];
 		return html`
         <style>
             :host {
@@ -14,9 +14,7 @@ class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(PolymerEle
             }
         </style>
         <div role="listbox">
-            <template is="dom-repeat" items="[[posts]]">
-                <d2l-discussions-topic-post-item href="[[getHref(item)]]" token="{{token}}"></d2l-discussions-topic-post-item>
-            </template>
+			${posts.map(item => html`<d2l-discussions-topic-post-item href="${this.getHref(item)}" token="${token}"></d2l-discussions-topic-post-item>`)}
         </div>
         <slot></slot>
 `;
@@ -35,23 +33,9 @@ class DiscussionsTopicPostList extends PrefetchMixin(SirenEntityMixin(PolymerEle
 
 	static get properties() {
 		return {
-			posts: {
-				type: Array,
-				value: []
-			},
 			token: String,
 			href: String
 		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.posts = entity.entities;
 	}
 
 	getHref(item) {

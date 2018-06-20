@@ -1,66 +1,63 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
-class ActivityCard extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class ActivityCard extends SirenActionMixin(SirenEntityMixin(LitElement)) {
+	_render({ entity }) {
+		let name;
+		let type;
+		let hasAddFileAction = false;
+		if (entity) {
+			name = entity.properties.name;
+			if (entity.hasClass('assignment')) {
+				type = 'Assignment';
+			} else if (entity.hasClass('quiz')) {
+				type = 'Quiz';
+			} else {
+				type = 'Unknown Activity Type';
+			}
+
+			hasAddFileAction = entity.hasActionByName('submit');
+			if (hasAddFileAction) {
+				this._addFileAction = entity.getActionByName('submit');
+			}
+		}
 		return html`
-        <style>
-            :host {
-                display: block;
-            }
+		<style>
+			:host {
+				display: block;
+			}
 
-            input {
-                margin-left: 20px;
-            }
-        </style>
+			input {
+				margin-left: 20px;
+			}
+		</style>
 
-        [[entity.properties.name]] ([[type]])
+		${name} (${type})
 
-        <input id="fileUpload" type="file" hidden="[[!hasAddFileAction]]">
+		<input id="fileUpload" type="file" hidden="${!hasAddFileAction}">
 `;
 	}
 
 	static get is() { return 'd2l-activity-card'; }
 
-	static get properties() {
-		return {
-			addFileAction: Object,
-			hasAddFileAction: Boolean,
-			type: String
-		};
+	constructor() {
+		super();
+		this._boundOnFileUploadChange = this._onFileUploadChange.bind(this);
 	}
 
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
+	_firstRendered() {
+		const fileUpload = this.shadowRoot.querySelector('#fileUpload');
+		fileUpload.addEventListener('change', this._boundOnFileUploadChange);
 	}
 
-	_changed(entity) {
-		if (entity.hasClass('assignment')) {
-			this.type = 'Assignment';
-		} else if (entity.hasClass('quiz')) {
-			this.type = 'Quiz';
-		} else {
-			this.type = 'Unknown Activity Type';
-		}
+	_onFileUploadChange() {
+		const file = this.shadowRoot.querySelector('#fileUpload').files[0];
 
-		this.hasAddFileAction = entity.hasActionByName('submit-file');
-		if (this.hasAddFileAction) {
-			this.addFileAction = entity.getActionByName('submit-file');
-
-			const self = this;
-			this.$.fileUpload.addEventListener('change', /* @this */ function() {
-				const file = this.files[0];
-
-				const formData = new FormData();
-				formData.append('submission', file);
-				self.performSirenAction(self.addFileAction, formData);
-			});
-		}
+		const formData = new FormData();
+		formData.append('submission', file);
+		this.performSirenAction(this._addFileAction, formData);
 	}
 }
 

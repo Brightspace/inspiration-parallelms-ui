@@ -1,23 +1,19 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-item/paper-item.js';
 import '../shared-styles.js';
 import './calendar-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 
-class CalendarWeek extends PolymerElement {
-
-	static get template() {
+class CalendarWeek extends LitElement {
+	_render({ days }) {
 		return html`
 		<style include="shared-styles">
             :host {
                 display: block;
             }
         </style>
-        <paper-item >
+        <paper-item>
             <tr>
-                <template is="dom-repeat" items="{{days}}" >
-                    <calendar-item day="{{item.day}}" data="{{item.data}}" ></calendar-item>
-                </template>
+                ${days.map(item => html`<calendar-item day="${item.day}" data="${item.data}" ></calendar-item>`)}
             </tr>
         </paper-item>
 `;
