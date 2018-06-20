@@ -33,14 +33,10 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 		return 'my-virtual-notebook';
 	}
 
-	_changed() {
-		this._getUrlForNotes(this.href);
-	}
-
-	async _getUrlForNotes(href) {
-		const response = await fetch(href)
-			.then(res => res.json());
-		this.notes = response.entities.map(e => e.href);
+	_changed(entity) {
+		if( entity && entity.entities ) {
+			this.notes = entity.entities.map(subEntity => subEntity.href);
+		}
 	}
 }
 
