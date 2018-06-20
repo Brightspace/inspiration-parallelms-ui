@@ -1,12 +1,23 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import 'd2l-image/d2l-image.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
-class AwardItem extends SirenEntityMixin(PolymerElement) {
-	static get template() {
+class AwardItem extends SirenEntityMixin(LitElement) {
+	_render({ token, item }) {
+		let isAwarded = false;
+		let image;
+		let imageHref;
+		let description;
+		let name;
+		if (item) {
+			isAwarded = this._hasClass(item, 'awarded');
+			image = this._getSubEntityByRel(item, 'https://api.brightspace.com/rels/award-image');
+			imageHref = image && image.href;
+			description = item.properties.description;
+			name = item.properties.name;
+		}
 		return html`
         <style>
             :host {
@@ -42,18 +53,16 @@ class AwardItem extends SirenEntityMixin(PolymerElement) {
             }
         </style>
         <paper-card is-active="">
-            <template is="dom-if" if="[[isAwarded]]">
-                <paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>
-            </template>
+            ${ isAwarded ? html`<paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>` : null }
             <div>
-                <d2l-image class="award-image" image-url="[[image.href]]" token="[[token]]"></d2l-image>
-                <paper-tooltip>[[item.properties.description]]</paper-tooltip>
+                <d2l-image class="award-image" image-url="${imageHref}" token="${token}"></d2l-image>
+                <paper-tooltip>${description}</paper-tooltip>
             </div>
             <div>
                 <div class="award-title">
-                    [[item.properties.name]]
+                    ${name}
                 </div>
-                <paper-tooltip>[[item.properties.name]]</paper-tooltip>
+                <paper-tooltip>${name}</paper-tooltip>
             </div>
         </paper-card>
 `;
@@ -67,13 +76,8 @@ class AwardItem extends SirenEntityMixin(PolymerElement) {
 				type: Object,
 				reflectToAttribute: true
 			},
-			image: {
-				type: Object,
-				computed: '_getSubEntityByRel(item, "https://api.brightspace.com/rels/award-image")'
-			},
 			isAwarded: {
-				type: Boolean,
-				computed: '_hasClass(item, "awarded")'
+				type: Boolean
 			}
 		};
 	}

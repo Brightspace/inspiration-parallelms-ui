@@ -1,8 +1,7 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import './shared-styles.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-class MyView2 extends PolymerElement {
-	static get template() {
+import { LitElement, html } from '@polymer/lit-element';
+class MyView2 extends LitElement {
+	_render() {
 		return html`
         <style include="shared-styles">
             :host {
