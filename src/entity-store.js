@@ -1,28 +1,6 @@
 import { GlobalSearch } from './global-search.js';
 
-var connection = new WebSocket('ws://resource-invalidator.api.dev.brightspace.com:8080', 'protocolOne');
-var clientId = guid();
 var listeners = {};
-
-connection.onopen = function() {
-	connection.send(JSON.stringify({'action': 'register', 'deviceId': clientId})); // Send the message 'Ping' to the server
-};
-
-// Log messages from the server
-connection.onmessage = function(e) {
-	var data = JSON.parse(e.data);
-	if (data.action && data.action === 'invalidate') {
-		var resource = data.resource;
-		if (listeners[resource]) {
-			for (var i = 0; i < listeners[resource].length; i++) {
-				var token = listeners[resource][i];
-
-				EntityStore.fetch(resource, token, true);
-			}
-		}
-	}
-
-};
 
 function listenForChanges(resource, token)  {
 	if (listeners[resource]) {
@@ -32,8 +10,6 @@ function listenForChanges(resource, token)  {
 	} else {
 		listeners[resource] = [token];
 	}
-
-	connection.send(JSON.stringify({'action': 'subscribe', 'resource': resource}));
 }
 
 // from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
