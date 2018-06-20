@@ -19,10 +19,10 @@ class NotesCount extends SirenEntityMixin(PolymerElement) {
 
 	static get properties() {
 		return {
-            notesCount: {
-                type: Number,
-                value: 0
-            }
+			notesCount: {
+				type: Number,
+				value: 0
+			}
 		};
 	}
 
@@ -33,8 +33,8 @@ class NotesCount extends SirenEntityMixin(PolymerElement) {
 	}
 
 	_changed(entity) {
-        if (!entity.properties) return
-        this.notesCount = entity.properties.count;
+		if (!entity.properties) return;
+		this.notesCount = entity.properties.count;
 	}
 }
 

@@ -3,7 +3,6 @@ import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import '@polymer/paper-input/paper-textarea.js';
-import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 
 /* @mixes SirenEntityMixin
