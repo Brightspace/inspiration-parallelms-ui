@@ -5,11 +5,9 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
 
-/* @mixes LocalizationMixin
-   @mixes SirenEntityMixin
+/* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
 class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
-
 	static get template() {
 		return html`
 		<style>
