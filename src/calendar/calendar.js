@@ -1,12 +1,11 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-button/paper-button.js';
 import '../shared-styles.js';
 import '../search-results-page.js';
 import './calendar-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-class D2LCalendar extends PolymerElement {
-	static get template() {
+import { LitElement, html } from '@polymer/lit-element';
+class D2LCalendar extends LitElement {
+	_render({ data }) {
 		return html`
         <style include="shared-styles">
             :host {
@@ -39,18 +38,15 @@ class D2LCalendar extends PolymerElement {
         </style>
 
         <div class="calendar">
-            <template is="dom-repeat" items="{{_getWeeks(data)}}">
-                <div class="row">
-                    <template is="dom-repeat" items="{{item}}">
-                        <calendar-item on-tap="itemTapped" class="date" day="{{item.day}}" data="{{item.data}}"></calendar-item>
-                    </template>
-                </div>
-            </template>
+			${this._getWeeks(data).map(item => html`
+				<div class="row">${item.map(item => html`
+					<calendar-item on-tap="${() => this.itemTapped(item)}" class="date" day="${item.day}" data="${item.data}"></calendar-item>`)}
+				</div>`)}
         </div>
-        <template is="dom-if" if="{{selectedItem}}">
-            <span style="display: block; align-self: center; background: #E6EAF0; padding: 10px; width: calc(100% - 20px); text-align: center;">Items for [[selectedDay]]</span>
-            <d2l-search-results-page style="padding-bottom: 20px; background: #E6EAF0" results="{{selectedResults}}"></d2l-search-results-page>
-        </template>
+		${ this.selectedItem ? html`
+			<span style="display: block; align-self: center; background: #E6EAF0; padding: 10px; width: calc(100% - 20px); text-align: center;">Items for ${this.selectedDay}</span>
+			<d2l-search-results-page style="padding-bottom: 20px; background: #E6EAF0" results="${this.selectedResults}"></d2l-search-results-page>
+			` : null }
 `;
 	}
 
@@ -78,10 +74,10 @@ class D2LCalendar extends PolymerElement {
 		};
 	}
 
-	itemTapped(e) {
-		this.selectedResults = e.model.item.data;
+	itemTapped(item) {
+		this.selectedResults = item.data;
 		this.selectedItem = true;
-		this.selectedDay = e.model.item.day;
+		this.selectedDay = item.day;
 	}
 
 	// strait up lifted form https://codepen.io/odran037/pen/RrjjOr

@@ -1,40 +1,40 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/iron-pages/iron-pages.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import './content-module-card.js';
 import '../shared-styles.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class ContentModuleList extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class ContentModuleList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+	_render({ selected, entity, token }) {
+		const items = entity && entity.entities || [];
 		return html`
-        <style include="shared-styles">
+        <style>
+			${ cssFromModules('shared-styles') }
             :host {
                 display: block;
                 font-family: 'Source Sans Pro', sans-serif;
             }
-            paper-tabs{
+            paper-tabs {
                 --paper-tabs-selection-bar-color: white;
             }
         </style>
         <paper-card class="medium-card-size">
             <div class="card-header">
                 <h2 class="card-header-text">Content</h2>
-                <paper-tabs selected="{{selected}}" scrollable="" --paper-tabs-selection-bar-color="white">
-                    <template is="dom-repeat" items="[[items]]">
-                        <paper-tab>[[item.properties.title]]</paper-tab>
-                    </template>
+                <paper-tabs on-iron-activate=${e => this.selected = e.detail.selected} scrollable="" --paper-tabs-selection-bar-color="white">
+                    ${items.map(item => html`
+						<paper-tab>${item.properties.title}</paper-tab>`)}
                 </paper-tabs>
             </div>
-            <iron-pages selected="{{selected}}">
-                <template is="dom-repeat" items="[[items]]">
-                    <d2l-content-module-card href="[[_getHref(item)]]" token="{{token}}"></d2l-content-module-card>
-                </template>
+            <iron-pages selected="${selected}">
+				${items.map(item => html`
+					<d2l-content-module-card href="${this._getHref(item)}" token="${token}"></d2l-content-module-card>`)}
             </iron-pages>
         </paper-card>
 `;
@@ -53,25 +53,8 @@ class ContentModuleList extends PrefetchMixin(SirenEntityMixin(PolymerElement)) 
 
 	static get properties() {
 		return {
-			items: {
-				type: Array,
-				value: []
-			},
-			selected: {
-				type: Number,
-				value: 0
-			}
+			selected: Number
 		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.items = entity.entities;
 	}
 
 	_getHref(item) {

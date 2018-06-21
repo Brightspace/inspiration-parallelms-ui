@@ -1,9 +1,10 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '../shared-styles.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-class CalendarItem extends PolymerElement {
-	static get template() {
+import { LitElement, html } from '@polymer/lit-element';
+class CalendarItem extends LitElement {
+	_render({ data, day }) {
+		const count = this._getCount(data);
+		const showCount = this._showCount(count);
 		return html`
         <style include="shared-styles">
             :host {
@@ -23,12 +24,10 @@ class CalendarItem extends PolymerElement {
         </style>
         <div class="day">
             <div class="header">
-                <span class="number">{{day}}</span>
+                <span class="number">${day}</span>
             </div>
             <div>
-                <template is="dom-if" if="{{showCount}}">
-                    <span class="card">{{count}}</span>
-                </template>
+				${ showCount ? html`<span class="card">${count}</span>` : null }
             </div>
         </div>
 `;
@@ -39,20 +38,11 @@ class CalendarItem extends PolymerElement {
 	static get properties() {
 		return {
 			data: Array,
-			day: String,
-			count: {
-				value: 0,
-				computed: '_getCount(data)',
-				notify: true
-			},
-			showCount: {
-				type: Boolean,
-				computed: '_showCount(count)'
-			}
+			day: String
 		};
 	}
 	_getCount(data) {
-		return data.length;
+		return data && data.length;
 	}
 	_showCount(count) {
 		return count > 0;

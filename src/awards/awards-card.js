@@ -1,30 +1,28 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import './award-item.js';
 import '../shared-styles.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
-class AwardsCard extends SirenEntityMixin(PolymerElement) {
-	static get template() {
+class AwardsCard extends SirenEntityMixin(LitElement) {
+	_render({ entity }) {
+		const hasAwards = !!entity && (entity.entities && entity.entities.length > 0);
+		const entities = entity && entity.entities || [];
 		return html`
-        <style include="shared-styles">
-            :host {
-                display: block;
-            }
-        </style>
+		<style>
+			${ cssFromModules('shared-styles') }
+			:host {
+				display: block;
+			}
+		</style>
         <paper-card class="medium-card-size">
             <div class="card-header">
                 <h2 class="card-header-text">My Available Awards</h2>
             </div>
-            <template is="dom-if" if="{{hasAwards}}">
-                <template is="dom-repeat" items="{{entity.entities}}">
-                    <d2l-award-item item="[[item]]"></d2l-award-item>
-                </template>
-            </template>
-            <template is="dom-if" if="{{!hasAwards}}">
-                <span>You have no awards</span>
-            </template>
+			${ hasAwards ? entities.map(item => html`
+				<d2l-award-item item="${item}"></d2l-award-item>`) : html`
+				<span>You have no awards</span>` }
         </paper-card>
 `;
 	}
@@ -39,16 +37,6 @@ class AwardsCard extends SirenEntityMixin(PolymerElement) {
 				value: true
 			}
 		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.hasAwards = (entity.entities && entity.entities.length > 0);
 	}
 }
 

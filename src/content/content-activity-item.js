@@ -1,4 +1,3 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-button/paper-button.js';
 import './content-file-viewer.js';
@@ -6,12 +5,13 @@ import './content-activity-list.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin
    @mixes PrefetchMixin
    @mixes SirenActionMixin */
-class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
-	static get template() {
+class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(LitElement))) {
+	_render({ entity, token, showChild }) {
+		const title = entity ? entity.properties.title : null;
 		return html`
         <style>
             :host {
@@ -28,15 +28,10 @@ class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixi
         </style>
 
         <div style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
-            <div on-tap="_toggleShowChild" style="font-weight:bold; padding: 10px 0px 0px 10px; background-color:lightgray;">[[title]]</div>
-            <template is="dom-if" if="{{showChild}}">
-                <template is="dom-if" if="{{_isList(entity)}}">
-                    <d2l-content-activity-list href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-activity-list>
-                </template>
-                <template is="dom-if" if="{{!_isList(entity)}}">
-                    <d2l-content-file-viewer href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-file-viewer>
-                </template>
-            </template>
+            <div on-tap="${e => this._toggleShowChild(e)}" style="font-weight:bold; padding: 10px 0px 0px 10px; background-color:lightgray;">${title}</div>
+			${ showChild ? this._isList(entity) ? html`
+				<d2l-content-activity-list href="${this._getSelfLink(entity)}" token="${token}"></d2l-content-activity-list>` : html`
+				<d2l-content-file-viewer href="${this._getSelfLink(entity)}" token="${token}"></d2l-content-file-viewer>` : null }
         </div>
 `;
 	}
@@ -65,17 +60,8 @@ class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixi
 		};
 	}
 
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
 	_toggleShowChild() {
 		this.showChild = !this.showChild;
-	}
-	_changed(entity) {
-		this.title = entity.properties.title;
 	}
 
 	_isList(entity) {
@@ -84,33 +70,6 @@ class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixi
 
 	_getSelfLink(entity) {
 		return entity.getLinkByRel('self').href;
-	}
-
-	_onClickAction(e) {
-		this.performSirenAction(e.model.item);
-	}
-
-	_getActions(entity) {
-		if (entity.entities[0] !== undefined) {
-			return entity.entities[0].actions;
-		} else {
-			return [];
-		}
-	}
-
-	_mapFriendlyName(name) {
-		var friendlyName;
-		switch (name.toLowerCase()) {
-			case 'view-activity':
-				friendlyName = 'View';
-				break;
-			case 'view-activity-duration':
-				friendlyName = 'Duration';
-				break;
-			default:
-				friendlyName = '';
-		}
-		return friendlyName;
 	}
 }
 
