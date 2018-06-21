@@ -8,8 +8,13 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 	static get template() {
 		return html`
 <h1>My Virtual Notebook</h1>
-<template is="dom-repeat" items="[[notes]]">
-	<d2l-note href="{{item}}" token="{{token}}"></d2l-note>
+Sort By:
+<select id="orderBy" on-change="_updateOrder">
+  <option value={{const.DATE_DESC}}>Recent</option>
+  <option value={{const.DATE_ASC}}>Oldest</option>
+</select>
+<template id="tt" is="dom-repeat" items="[[notes]]" as="note" >
+	<d2l-note id="note{{index}}" href="{{note}}" token="{{token}}"></d2l-note>
 </template>
 `;
 	}
@@ -19,6 +24,13 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 			notes: {
 				type: Array,
 				value: []
+			},
+			const: {
+				type: Object,
+				value: {
+					DATE_DESC: 'date-desc',
+					DATE_ASC: 'date-asc'
+				}
 			}
 		};
 	}
@@ -37,6 +49,18 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 		if (entity && entity.entities) {
 			this.notes = entity.entities.map(subEntity => subEntity.href);
 		}
+	}
+
+	_updateOrder() {
+		const sortOrder = this.$.orderBy.value;
+		const noteElements = Array.from(this.shadowRoot.querySelectorAll('d2l-note'));
+
+		this.notes = noteElements.sort((a, b) => {
+			if (sortOrder === this.const.DATE_ASC) {
+				return new Date(a.date) - new Date(b.date);
+			}
+			return new Date(b.date) - new Date(a.date);
+		}).map(noteElem => noteElem.href);
 	}
 }
 

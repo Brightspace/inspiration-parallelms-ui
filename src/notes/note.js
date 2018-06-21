@@ -17,7 +17,7 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
             }
         </style>
         "[[text]]"
-        - [[date]]
+        - [[_dateToText(date)]]
 `;
 	}
 
@@ -39,7 +39,7 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	_changed(entity) {
 		if (!entity.properties) return;
 		this.text = entity.properties.text;
-		this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
+		this.date = entity.getSubEntityByClass('create-date').properties.date;
 	}
 
 	_getHrefByRel(entity, rel) {
@@ -54,6 +54,10 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		} else {
 			return [];
 		}
+	}
+
+	_dateToText(date) {
+		return this._formatDate(date, this.locale);
 	}
 }
 
