@@ -1,3 +1,4 @@
+import { microTask } from '@polymer/polymer/lib/utils/async.js';
 import { EntityStore } from './entity-store.js';
 /*
     @polymerMixin
@@ -27,13 +28,14 @@ export const EntityMixin = function(superClass) {
 		}
 
 		_propertiesChanged(props, changedProps, prevProps) {
-			if (changedProps.href !== undefined) {
+			if (changedProps && changedProps.href !== undefined) {
 				this._hrefChanged(this.href);
 			}
-			if (changedProps.token !== undefined) {
+			if (changedProps && changedProps.token !== undefined) {
 				this._tokenChanged(this.token);
 			}
 			if (
+				changedProps &&
 				(changedProps.href !== undefined || changedProps.token !== undefined) &&
 				this.href !== undefined &&
 				this.token !== undefined
@@ -91,7 +93,7 @@ export const EntityMixin = function(superClass) {
 			var entity = EntityStore.fetch(this.href, token);
 			if (entity.status !== 'fetching') {
 				// Allows class/mixin to override _entityChanged
-				this._entityChanged(entity.entity);
+				microTask.run(() => this._entityChanged(entity.entity));
 			}
 		}
 

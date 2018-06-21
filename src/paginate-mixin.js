@@ -31,8 +31,11 @@ export const PaginateMixin = function(propName, superClass) {
 		}
 
 		_pageChanged() {
-			this.paginated = this.get(propName).slice(0, this.size * this.page);
-			this.hasMore = this.get(propName).length > this.paginated.length;
+			const prop = this.get(propName);
+			if (prop) {
+				this.paginated = prop.slice(0, this.size * this.page);
+				this.hasMore = prop.length > this.paginated.length;
+			}
 		}
 
 		loadMoreData(e) {

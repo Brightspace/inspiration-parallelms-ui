@@ -1,12 +1,15 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import './content-activity-list.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+	_render({ entity, token }) {
+		let selfLink;
+		if (entity) {
+			selfLink = entity.getLinkByRel('self').href;
+		}
 		return html`
         <style>
             :host {
@@ -14,7 +17,7 @@ class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(PolymerElement)) 
             }
         </style>
 
-        <d2l-content-activity-list href="[[_getSelfLink(entity)]]" token="{{token}}"></d2l-content-activity-list>
+        <d2l-content-activity-list href="${selfLink}" token="${token}"></d2l-content-activity-list>
 `;
 	}
 
@@ -28,31 +31,6 @@ class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(PolymerElement)) 
 	}
 
 	static get is() { return 'd2l-content-module-card'; }
-
-	static get properties() {
-		return {
-			module: String,
-			topics: {
-				type: Array,
-				value: []
-			}
-		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.module = entity;
-		this.topics = entity.getSubEntitiesByRel('item');
-	}
-
-	_getSelfLink(entity) {
-		return entity.getLinkByRel('self').href;
-	}
 }
 
 window.customElements.define(ContentModuleCard.is, ContentModuleCard);

@@ -1,13 +1,13 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '../course-name.js';
 import './content-activity-item.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class ContentActivityList extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class ContentActivityList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+	_render({ entity, token }) {
+		const items = (entity && entity.entities || []).filter(item => item.hasLinkByRel('self'));
 		return html`
         <style>
             :host {
@@ -23,9 +23,8 @@ class ContentActivityList extends PrefetchMixin(SirenEntityMixin(PolymerElement)
             }
         </style>
         <paper-card style="width: calc(100% - 20px); margin: 10px; padding: 0px;">
-            <template is="dom-repeat" items="[[items]]">
-                <d2l-content-activity-item href="[[_getSelfLink(item)]]" token="{{token}}"></d2l-content-activity-item>
-            </template>
+            ${items.map(item => html`
+				<d2l-content-activity-item href="${this._getSelfLink(item)}" token="${token}"></d2l-content-activity-item>`)}
         </paper-card>
 `;
 	}
@@ -41,29 +40,8 @@ class ContentActivityList extends PrefetchMixin(SirenEntityMixin(PolymerElement)
 
 	static get is() { return 'd2l-content-activity-list'; }
 
-	static get properties() {
-		return {
-			title: String,
-			items: {
-				type: Array,
-				value: []
-			}
-		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.title = entity.properties.title;
-		this.items = entity.entities;
-	}
-
 	_getSelfLink(entity) {
-		return entity.getLinkByRel('self').href;
+		return entity && entity.getLinkByRel('self').href;
 	}
 }
 
