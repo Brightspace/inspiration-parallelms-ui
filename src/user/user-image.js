@@ -1,10 +1,17 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import 'd2l-image/d2l-image.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
-class UserImage extends SirenEntityMixin(PolymerElement) {
-	static get template() {
+class UserImage extends SirenEntityMixin(LitElement) {
+	_render({ entity, token }) {
+		let imageHref, isDefault;
+		if (entity) {
+			const userProfile = entity.getSubEntityByRel('https://api.brightspace.com/rels/user-profile');
+			const profileImage = userProfile && userProfile.getSubEntityByRel('https://api.brightspace.com/rels/profile-image');
+			const image = profileImage && profileImage.getLinkByRel('alternate');
+			imageHref = image && image.href;
+			isDefault = !!profileImage && profileImage.hasClass('default-image');
+		}
 		return html`
         <style>
             :host {
@@ -21,37 +28,11 @@ class UserImage extends SirenEntityMixin(PolymerElement) {
 				height: 100%;
 			}
         </style>
-		<template is="dom-if" if="{{!isDefault}}">
-			<d2l-image image-url="{{image.href}}" token="{{token}}"></d2l-image>
-		</template>
-		<template is="dom-if" if="{{isDefault}}">
-			<img src="{{image.href}}"></img>
-		</template>
+		${isDefault ? html`<img src="${imageHref}"></img>` : html`<d2l-image imageUrl="${imageHref}" token="${token}"></d2l-image>`}
 `;
 	}
 
 	static get is() { return 'd2l-user-image'; }
-
-	static get properties() {
-		return {
-			userProfile: {
-				type: Object,
-				computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/user-profile")'
-			},
-			profileImage: {
-				type: Object,
-				computed: '_getSubEntityByRel(userProfile, "https://api.brightspace.com/rels/profile-image")'
-			},
-			image: {
-				type: Object,
-				computed: '_getLinkByRel(profileImage, "alternate")'
-			},
-			isDefault: {
-				type: Boolean,
-				computed: '_hasClass(profileImage, "default-image")'
-			}
-		};
-	}
 }
 
 window.customElements.define(UserImage.is, UserImage);

@@ -1,15 +1,21 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-menu-button/paper-menu-button.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import './user-name.js';
 import './user-image-top.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
-class UserCardTop extends SirenEntityMixin(PolymerElement) {
-	static get template() {
+class UserCardTop extends SirenEntityMixin(LitElement) {
+	_render({ entity, token }) {
+		const whoamiRel = 'https://api.brightspace.com/rels/whoami';
+		const whoami = entity &&
+			entity.hasLinkByRel(whoamiRel) &&
+			entity.getLinkByRel(whoamiRel);
+		const whoamiHref = whoami && whoami.href;
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }
@@ -41,9 +47,9 @@ class UserCardTop extends SirenEntityMixin(PolymerElement) {
         </style>
 
         <paper-menu-button horizontal-align="right" vertical-offset="58">
-            <d2l-user-image-top class="image" href="{{whoami.href}}" token="{{token}}" slot="dropdown-trigger"></d2l-user-image-top>
+            <d2l-user-image-top class="image" href="${whoamiHref}" token="${token}" slot="dropdown-trigger"></d2l-user-image-top>
 
-            <paper-item slot="dropdown-content"><d2l-user-name href="{{whoami.href}}" token="{{token}}" class="user-name"></d2l-user-name></paper-item>
+            <paper-item slot="dropdown-content"><d2l-user-name href="${whoamiHref}" token="${token}" class="user-name"></d2l-user-name></paper-item>
             <paper-item slot="dropdown-content" class="logout-link"><a href="./">Logout</a></paper-item>
         </paper-menu-button>
       <slot></slot>
@@ -51,21 +57,6 @@ class UserCardTop extends SirenEntityMixin(PolymerElement) {
 	}
 
 	static get is() { return 'd2l-user-card-top'; }
-
-	static get properties() {
-		return {
-			token: {
-				type: String,
-				notify: true
-			},
-			href: String,
-			whoami: {
-				type: Object,
-				computed: '_getLinkByRel(entity, "https://api.brightspace.com/rels/whoami")',
-				notify: true
-			}
-		};
-	}
 }
 
 window.customElements.define(UserCardTop.is, UserCardTop);

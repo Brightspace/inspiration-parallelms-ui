@@ -155,7 +155,7 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 		this.repliesHref = this.post.getActionByName('get-all-posts') && this.post.getActionByName('get-all-posts').href;
 		this.authorHref = entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
 		this.canReply = this.post.hasActionByName('reply');
-		if (this.post.properties.unread > 0) this.readClass = 'unread';
+		if (this.post.properties && this.post.properties.unread > 0) this.readClass = 'unread';
 		else this.readClass = 'read';
 		this.$.topicitem.classList.add(this.readClass);
 		// THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
