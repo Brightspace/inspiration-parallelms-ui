@@ -1,12 +1,14 @@
 import '@polymer/paper-card/paper-card.js';
 import '../shared-styles.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
 class CalendarItem extends LitElement {
 	_render({ data, day }) {
 		const count = this._getCount(data);
 		const showCount = this._showCount(count);
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }

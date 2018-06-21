@@ -1,9 +1,11 @@
 import './shared-styles.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
 class MyView2 extends LitElement {
 	_render() {
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
                 padding: 10px;

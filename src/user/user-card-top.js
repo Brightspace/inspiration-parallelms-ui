@@ -4,6 +4,7 @@ import '@polymer/paper-menu-button/paper-menu-button.js';
 import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import './user-name.js';
 import './user-image-top.js';
+import '../shared-styles.js';
 import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
 class UserCardTop extends SirenEntityMixin(LitElement) {
