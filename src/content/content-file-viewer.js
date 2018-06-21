@@ -57,7 +57,7 @@ class ContentFileViewer extends SirenEntityMixin(LitElement) {
         </style>
         <div>
 			${ isHtml ? html`<iframe src="${link}" class="content-iframe"></iframe>` : null }
-			${ isImage ? html`<d2l-image image-url="${link}" token="${token}"></d2l-image>` : null }
+			${ isImage ? html`<d2l-image imageUrl="${link}" token="${token}"></d2l-image>` : null }
         </div>
 `;
 	}

@@ -24,7 +24,7 @@ class UserImageTop extends SirenEntityMixin(LitElement) {
                 object-fit: cover;
             }
         </style>
-        ${isDefault ? html`<img src="${imageHref}"></img>` : html`<d2l-image image-url="${imageHref}" token="${token}"></d2l-image>`}
+        ${isDefault ? html`<img src="${imageHref}"></img>` : html`<d2l-image imageUrl="${imageHref}" token="${token}"></d2l-image>`}
 `;
 	}
 

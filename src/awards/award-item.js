@@ -55,7 +55,7 @@ class AwardItem extends SirenEntityMixin(LitElement) {
         <paper-card is-active="">
             ${ isAwarded ? html`<paper-tooltip position="top">Congratulations! You have this award!</paper-tooltip>` : null }
             <div>
-                <d2l-image class="award-image" image-url="${imageHref}" token="${token}"></d2l-image>
+                <d2l-image class="award-image" imageUrl="${imageHref}" token="${token}"></d2l-image>
                 <paper-tooltip>${description}</paper-tooltip>
             </div>
             <div>
