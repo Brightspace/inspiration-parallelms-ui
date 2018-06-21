@@ -3,11 +3,13 @@ import '@polymer/paper-button/paper-button.js';
 import '../shared-styles.js';
 import '../search-results-page.js';
 import './calendar-item.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
 class D2LCalendar extends LitElement {
 	_render({ data }) {
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }

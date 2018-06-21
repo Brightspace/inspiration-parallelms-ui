@@ -1,12 +1,14 @@
 import '@polymer/paper-item/paper-item.js';
 import '../shared-styles.js';
 import './calendar-item.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
 
 class CalendarWeek extends LitElement {
 	_render({ days }) {
 		return html`
-		<style include="shared-styles">
+		<style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }

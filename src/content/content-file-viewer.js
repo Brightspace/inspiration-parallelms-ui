@@ -2,6 +2,7 @@ import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import 'd2l-image/d2l-image.js';
 import '@polymer/paper-card/paper-card.js';
 import '../shared-styles.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
 class ContentFileViewer extends SirenEntityMixin(LitElement) {
@@ -38,7 +39,8 @@ class ContentFileViewer extends SirenEntityMixin(LitElement) {
 			}
 		}
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }
