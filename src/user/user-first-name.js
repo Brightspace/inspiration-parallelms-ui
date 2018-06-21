@@ -1,24 +1,19 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes SirenEntityMixin */
-class UserFirstName extends SirenEntityMixin(PolymerElement) {
-	static get template() {
+class UserFirstName extends SirenEntityMixin(LitElement) {
+	_render({ entity }) {
+		let name;
+		if (entity) {
+			const firstName = entity.getSubEntityByRel('https://api.brightspace.com/rels/first-name');
+			name = firstName.properties.name;
+		}
 		return html`
-        {{firstName.properties.name}}
+        ${name}
 `;
 	}
 
 	static get is() { return 'd2l-user-first-name'; }
-
-	static get properties() {
-		return {
-			firstName: {
-				type: Object,
-				computed: '_getSubEntityByRel(entity, "https://api.brightspace.com/rels/first-name")'
-			}
-		};
-	}
 }
 
 window.customElements.define(UserFirstName.is, UserFirstName);
