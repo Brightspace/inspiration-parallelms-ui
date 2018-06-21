@@ -24,6 +24,7 @@ import './courses/courses-drawer.js';
 import './my-app-main-page.js';
 import './my-login-page.js';
 import './my-welcome-page.js';
+import './my-virtual-notebook.js';
 import './my-view1.js';
 import './my-view2.js';
 import './my-view3.js';
@@ -93,6 +94,7 @@ class MyApp extends PolymerElement {
                 <div id="drawercontents" class="drawer-contents">
                     <a href="./app-main-page" class="title">ParalleLMS</a>
                     <a href="view1" class="title">Organization Home</a>
+                    <a href="virtual-notebook" class="title">Virtual Notebook</a>
                     <d2l-courses-drawer href="{{rootHref}}" token="{{token}}" scroller="[[\$.drawercontents]]"></d2l-courses-drawer>
                 </div>
             </app-drawer>
@@ -118,6 +120,7 @@ class MyApp extends PolymerElement {
                         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
                             <my-app-main-page name="app-main-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-app-main-page>
                             <my-view1 name="view1" token="{{token}}" href="{{rootHref}}"></my-view1>
+                            <my-virtual-notebook name="virtual-notebook" token="{{token}}" href="http://inspiration-notes.s3-website.ca-central-1.amazonaws.com/notes.json"></my-virtual-notebook>
                             <my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
                             <my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
                             <my-view2 name="view2"></my-view2>
