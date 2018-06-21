@@ -1,25 +1,26 @@
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-item/paper-item-body.js';
 import './discussions-topic-post-reply-item.js';
+import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '../shared-styles.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { LitElement, html } from '@polymer/lit-element';
 /* @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class DiscussionsTopicPostReplyList extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
-	static get template() {
+class DiscussionsTopicPostReplyList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+	_render({ entity, token }) {
+		const replies = entity && entity.entities || [];
 		return html`
-        <style include="shared-styles">
+        <style>
+			${cssFromModules('shared-styles')}
             :host {
                 display: block;
             }
         </style>
         <div class="basic-left-padding">
-            <template is="dom-repeat" items="[[replies]]">
-                <d2l-discussions-topic-post-reply-item href="{{_getHref(item)}}" token="{{token}}"></d2l-discussions-topic-post-reply-item>
-            </template>
+			${replies.map(item => html`
+				<d2l-discussions-topic-post-reply-item href="${this._getHref(item)}" token="${token}"></d2l-discussions-topic-post-reply-item>`)}
         </div>
         <slot></slot>
 `;
@@ -51,19 +52,8 @@ class DiscussionsTopicPostReplyList extends PrefetchMixin(SirenEntityMixin(Polym
 		};
 	}
 
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
-	_changed(entity) {
-		this.post = entity;
-		this.replies = this.post.entities;
-	}
-
 	_getHref(item) {
-		return item.getLinkByRel('self') && item.getLinkByRel('self').href;
+		return item && item.hasLinkByRel('self') && item.getLinkByRel('self').href;
 	}
 }
 
