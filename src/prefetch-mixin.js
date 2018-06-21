@@ -1,11 +1,11 @@
-import './entity-store.js';
+import { EntityStore } from './entity-store.js';
 import { idlePeriod } from '@polymer/polymer/lib/utils/async.js';
 let prefetching = 0;
 const concurrency = 100;
 
 /*
     @polymerMixin
-    Calls D2L.EntityStore.fetch for relevant subentities to be prefetched
+    Calls EntityStore.fetch for relevant subentities to be prefetched
     and listens for changes on subsequent subentities, prefetching as required
 
     The class needs to have the static property interesting defined
@@ -40,7 +40,7 @@ export const PrefetchMixin = function(superClass) {
 			}
 
 			// actually do the fetch
-			const fetchResult = D2L.EntityStore.fetch(href, token);
+			const fetchResult = EntityStore.fetch(href, token);
 
 			if (fetchResult.status === 'fetching') { // Wait for the entity, then prefetch for each element
 				prefetching++;
@@ -51,7 +51,7 @@ export const PrefetchMixin = function(superClass) {
 
 				interestingListener.listener = (interestingEntity) => {
 					interestingListeners.delete(interestingListener);
-					D2L.EntityStore.removeListener(href, token, interestingListener.listener);
+					EntityStore.removeListener(href, token, interestingListener.listener);
 					prefetching--;
 					if (interestingEntity) {
 						this._prefetchForElements(interestingEntity, token, elements);
@@ -59,7 +59,7 @@ export const PrefetchMixin = function(superClass) {
 				};
 
 				interestingListeners.add(interestingListener);
-				D2L.EntityStore.addListener(href, token, interestingListener.listener);
+				EntityStore.addListener(href, token, interestingListener.listener);
 			} else if (fetchResult.status !== 'error') { // We have the entity. Just prefetch for each element
 				this._prefetchForElements(fetchResult.entity, token, elements);
 			}
