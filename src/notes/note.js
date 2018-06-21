@@ -37,6 +37,7 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	}
 
 	_changed(entity) {
+		if (!entity.properties) return;
 		this.text = entity.properties.text;
 		this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
 	}

@@ -7,7 +7,7 @@ import '@polymer/paper-button/paper-button.js';
 
 /* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
-class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
+class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	static get template() {
 		return html`
 		<style>
@@ -31,18 +31,17 @@ class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 
         </style>
         <template is="dom-if" if="[[!showTextArea]]">
-            <paper-button style=""
-            class="add-note-button" on-tap="_toggleInput" id="loginButton">Take Note</paper-button>
+            <paper-button class="add-note-button" on-tap="_toggleInput">Take Note</paper-button>
         </template>
         <template is="dom-if" if="[[showTextArea]]">
             <paper-textarea label="Write a note"></paper-textarea>
-            <paper-button class="text-area-button" on-tap="_saveNote" id="loginButton">Save</paper-button>
-            <paper-button class="text-area-button" on-tap="_toggleInput" id="loginButton">Cancel</paper-button>
+            <paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
+            <paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
         </template>
 `;
 	}
 
-	static get is() { return 'd2l-add-note'; }
+	static get is() { return 'd2l-note-create'; }
 
 	static get properties() {
 		return {
@@ -82,4 +81,4 @@ class AddNote extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	}
 }
 
-window.customElements.define(AddNote.is, AddNote);
+window.customElements.define(NoteCreate.is, NoteCreate);
