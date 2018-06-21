@@ -34,7 +34,7 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 	}
 
 	_changed(entity) {
-		if( entity && entity.entities ) {
+		if (entity && entity.entities) {
 			this.notes = entity.entities.map(subEntity => subEntity.href);
 		}
 	}
