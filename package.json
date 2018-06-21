@@ -59,7 +59,7 @@
     "@polymer/paper-tooltip": "^3.0.0-pre.18",
     "@polymer/polymer": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
-    "d2l-image": "git+https://github.com/Brightspace/d2l-image.git#polymer-3-upgrade",
+    "d2l-image": "git+https://github.com/Brightspace/d2l-image.git#polymer-3.x",
     "file-saver": "^1.3.8",
     "web-animations-js": "^2.3.1"
   }
