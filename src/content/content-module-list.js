@@ -27,7 +27,7 @@ class ContentModuleList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
         <paper-card class="medium-card-size">
             <div class="card-header">
                 <h2 class="card-header-text">Content</h2>
-                <paper-tabs on-iron-activate=${e => this.selected = e.detail.selected} scrollable="" --paper-tabs-selection-bar-color="white">
+                <paper-tabs selected=${selected} on-iron-activate=${e => this.selected = e.detail.selected} scrollable="" --paper-tabs-selection-bar-color="white">
                     ${items.map(item => html`
 						<paper-tab>${item.properties.title}</paper-tab>`)}
                 </paper-tabs>
@@ -53,7 +53,10 @@ class ContentModuleList extends PrefetchMixin(SirenEntityMixin(LitElement)) {
 
 	static get properties() {
 		return {
-			selected: Number
+			selected: {
+				type: Number,
+				value: 0
+			}
 		};
 	}
 
