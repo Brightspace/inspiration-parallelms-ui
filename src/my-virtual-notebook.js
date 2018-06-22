@@ -7,14 +7,20 @@ class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 
 	static get template() {
 		return html`
+<style>
+.search-bar {
+                width: 25%;
+            }
+</style>
 <h1>My Virtual Notebook</h1>
+<paper-input label="Search" value="{{query}}" class="search-bar"></paper-input>
 Sort By:
 <select id="orderBy" on-change="_updateOrder">
-  <option value={{const.DATE_DESC}}>Recent</option>
-  <option value={{const.DATE_ASC}}>Oldest</option>
+  <option value=[[const.DATE_DESC]]>Recent</option>
+  <option value=[[const.DATE_ASC]]>Oldest</option>
 </select>
-<template id="tt" is="dom-repeat" items="[[notes]]" as="note" >
-	<d2l-note id="note{{index}}" href="{{note}}" token="{{token}}"></d2l-note>
+<template is="dom-repeat" items="[[notes]]" as="note">
+	<d2l-note href="[[note]]" search="[[query]]" token="{{token}}"></d2l-note>
 </template>
 `;
 	}
@@ -28,6 +34,7 @@ Sort By:
 				type: Array,
 				value: []
 			},
+			query: String,
 			const: {
 				type: Object,
 				value: {
@@ -62,7 +69,6 @@ Sort By:
 
 		this.href = url.toString();
 	}
-
 }
 
 window.customElements.define(MyVirtualNotebook.is, MyVirtualNotebook);
