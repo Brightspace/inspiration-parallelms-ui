@@ -51,7 +51,7 @@ class WelcomePage extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
             <h2 class="welcome-message invisible" id="welcome">Welcome, <d2l-user-first-name href="{{whoami.href}}" token="{{token}}"></d2l-user-first-name></h2>
             <d2l-user-image id="image" class="user-image invisible" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
             <paper-button id="go" class="go-button invisible" on-tap="_goToLandingPage">I'm Ready</paper-button>
-        </div>
+		</div>
         <slot></slot>
 `;
 	}

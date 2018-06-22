@@ -1,19 +1,20 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
+import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import './note.js';
 import './notes-count.js';
 
 /* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
-class NotesByResource extends SirenEntityMixin(PolymerElement) {
+class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	static get template() {
 		return html`
 		<style>
             :host {
                 display: block;
             }
-        </style>
+		</style>
 		<d2l-notes-count on-tap="_showNotes" href="[[href]]" token="[[token]]"></d2l-notes-count>
 		<template is="dom-if" if="[[showNotes]]">
 			<ul>

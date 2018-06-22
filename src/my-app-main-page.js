@@ -6,6 +6,8 @@ import { PrefetchMixin } from './prefetch-mixin.js';
 import './search-result-item.js';
 import './shared-styles.js';
 import './siren-entity.js';
+import './notes/notes-by-resource.js';
+import './notes/note-create.js';
 import { SirenEntityMixin } from './siren-entity-mixin.js';
 import './calendar/calendar.js';
 import './my-view1.js';
@@ -40,7 +42,8 @@ class AppMainPage extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
         <div class="layout">
             <paper-card class="calendar">
                 <d2l-calendar data="{{events}}"></d2l-calendar>
-            </paper-card>
+			</paper-card>
+			<d2l-note-create subject-href="https://4c909c3c-8b29-4449-9b8b-6c71c6ce27d9.organizations.api.brightspace.com/10101" href="https://notes.api.dev.brightspace.com/" token="[[token]]"></d2l-note-create>
         </div>
 `;
 	}
