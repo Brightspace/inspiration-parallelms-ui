@@ -30,9 +30,6 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
             }
 
 		</style>
-		[[href]]
-		[[token]]
-
         <template is="dom-if" if="[[!showTextArea]]">
             <paper-button class="add-note-button" on-tap="_toggleInput">Take Note</paper-button>
 		</template>
@@ -65,31 +62,18 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 		};
 	}
 
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
-	}
-
 	_toggleInput() {
 		this.showTextArea = !this.showTextArea;
 	}
 
 	_saveNote() {
-		// Save new note, link with this.resourceLink
-		console.log("PRESSED SAVE")
-		console.log(this.entity)
-		console.log(this.href)
-		console.log(this.token)
-
-
 		var self = this;
 		var action = this.entity.getActionByName('add-note');
-		console.log(action)
 		if (action) {
 			var fields = this.getSirenFields(action);
 			fields.has('subject') && fields.set('subject', this.subjectHref);
 			fields.has('text') && fields.set('text', this.shadowRoot.querySelector('#notetext').value);
+
 			this.performSirenAction(action, fields).then(function() {
 				self.shadowRoot.querySelector('#notetext').value = '';
 				self.showSaved = true;
@@ -99,11 +83,6 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 				}, 3000, self);
 			});
 		}
-	}
-
-	_changed(entity) {
-		console.log("THIS IS MY ENTIY")
-		console.log(entity)
 	}
 }
 
