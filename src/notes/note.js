@@ -16,8 +16,10 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
                 display: block;
             }
         </style>
+        <template is="dom-if" if="[[isVisible]]">
         "[[text]]"
         - [[date]]
+        </template>
 `;
 	}
 
@@ -26,7 +28,15 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	static get properties() {
 		return {
 			text: String,
-			date: String
+			date: String,
+			search: {
+				type: String,
+				observer: '_searchChanged'
+			},
+			isVisible: {
+				type: Boolean,
+				value: true
+			}
 		};
 	}
 
@@ -34,6 +44,21 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		return [
 			'_changed(entity)'
 		];
+	}
+
+	_searchChanged(query) {
+		if (!query) {
+			this.isVisible = true;
+		}
+		else if (!this.text) {
+			this.isVisible = false;
+		}
+		else {
+			const queryIgnoreCase = query.toLowerCase();
+			const textIgnoreCase = this.text.toLowerCase();
+
+			this.isVisible = textIgnoreCase.includes(queryIgnoreCase);
+		}
 	}
 
 	_changed(entity) {
