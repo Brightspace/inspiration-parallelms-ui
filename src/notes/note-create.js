@@ -77,7 +77,7 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 			this.performSirenAction(action, fields).then(function() {
 				self.shadowRoot.querySelector('#notetext').value = '';
 				self.showSaved = true;
-				setTimeout( function() {
+				setTimeout(function() {
 					self.showSaved = false;
 					self.showTextArea = false;
 				}, 3000, self);
