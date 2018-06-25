@@ -16,8 +16,10 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
                 display: block;
             }
         </style>
+        <template is="dom-if" if="[[isVisible]]">
         "[[text]]"
         - [[date]]
+        </template>
 `;
 	}
 
@@ -26,7 +28,15 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	static get properties() {
 		return {
 			text: String,
-			date: String
+			date: String,
+			search: {
+				type: String,
+				observer: '_setVisibility'
+			},
+			isVisible: {
+				type: Boolean,
+				value: true
+			}
 		};
 	}
 
@@ -36,10 +46,26 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		];
 	}
 
+	_setVisibility(query) {
+		if (!query) {
+			this.isVisible = true;
+		}
+		else if (!this.text) {
+			this.isVisible = false;
+		}
+		else {
+			const queryIgnoreCase = query.toLowerCase();
+			const textIgnoreCase = this.text.toLowerCase();
+
+			this.isVisible = textIgnoreCase.includes(queryIgnoreCase);
+		}
+	}
+
 	_changed(entity) {
 		if (!entity.properties) return;
 		this.text = entity.properties.text;
 		this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
+		this._setVisibility(this.search);
 	}
 
 	_getHrefByRel(entity, rel) {
