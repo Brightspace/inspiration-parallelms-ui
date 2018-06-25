@@ -2,7 +2,8 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-button/paper-button.js';
 import { SirenEntityMixin } from './siren-entity-mixin.js';
 import './user/user-first-name.js';
-import './notes/note-create.js';
+import './user/user-image.js';
+import './notes/note.js';
 import './my-app-main-page.js';
 import { PrefetchMixin } from './prefetch-mixin.js';
 import './shared-styles.js';
@@ -52,10 +53,14 @@ class WelcomePage extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
             <d2l-user-image id="image" class="user-image invisible" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
             <paper-button id="go" class="go-button invisible" on-tap="_goToLandingPage">I'm Ready</paper-button>
 		</div>
-		<d2l-note-create subject-href="https://4c909c3c-8b29-4449-9b8b-6c71c6ce27d9.sequences.api.brightspace.com/14945/activity/9999"
-		href="https://notes.api.dev.brightspace.com/"
-		token="[[token]]">
-		</d2l-note-create>
+		<d2l-note href="https://notes.api.dev.brightspace.com/notes/c431840b-e939-4d87-a3e7-19649b765bdd"
+		token="[[token]]"></d2l-note>
+		<d2l-note href="https://notes.api.dev.brightspace.com/notes/58f8c32c-2334-49a1-a459-ba97f9f33871"
+		token="[[token]]"></d2l-note>
+		<d2l-note href="https://notes.api.dev.brightspace.com/notes/eeab8d84-a9b0-49e6-88a3-f936b07a12a0"
+		token="[[token]]"></d2l-note>
+		<d2l-note href="https://notes.api.dev.brightspace.com/notes/ddc0a2dd-5926-4594-8e83-a4813f534ca3"
+		token="[[token]]"></d2l-note>
         <slot></slot>
 `;
 	}
