@@ -3,6 +3,7 @@ import { LocalizationMixin } from '../localization-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import './note-delete.js';
 
 /* @mixes LocalizationMixin
    @mixes SirenEntityMixin
@@ -15,9 +16,12 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
             :host {
                 display: block;
             }
-        </style>
+		</style>
         "[[text]]"
-        - [[date]]
+		- [[date]]
+		<d2l-note-delete href="[[href]]"
+		token="[[token]]">
+		</d2l-note-delete>
 `;
 	}
 
