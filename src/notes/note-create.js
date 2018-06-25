@@ -38,7 +38,7 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 				Note saved!
 			</template>
 			<template is="dom-if" if="[[!showSaved]]">
-				<paper-textarea id="notetext" label="Write a note"></paper-textarea>
+				<paper-textarea label="Write a note" value="{{noteText}}"></paper-textarea>
 				<paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
 				<paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
 			</template>			
@@ -54,6 +54,10 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 			showTextArea: {
 				type: Boolean,
 				value: false
+			},
+			noteText: {
+				type: String,
+				value: ""
 			},
 			showSaved: {
 				type: Boolean,
@@ -72,10 +76,10 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 		if (action) {
 			var fields = this.getSirenFields(action);
 			fields.has('subject') && fields.set('subject', this.subjectHref);
-			fields.has('text') && fields.set('text', this.shadowRoot.querySelector('#notetext').value);
+			fields.has('text') && fields.set('text', self.noteText);
 
 			this.performSirenAction(action, fields).then(function() {
-				self.shadowRoot.querySelector('#notetext').value = '';
+				self.noteText = '';
 				self.showSaved = true;
 				setTimeout(function() {
 					self.showSaved = false;
