@@ -46,15 +46,6 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		const link = entity && entity.getLinkByRel && entity.getLinkByRel(rel);
 		return link && link.href || '';
 	}
-
-	// Leaving this guy in case we need it in the future
-	_getActions(entity) {
-		if (entity.entities[0] !== undefined) {
-			return entity.entities[0].actions;
-		} else {
-			return [];
-		}
-	}
 }
 
 window.customElements.define(Note.is, Note);
