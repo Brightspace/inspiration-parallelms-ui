@@ -29,14 +29,19 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
                 margin: 0px;
             }
 
-        </style>
+		</style>
         <template is="dom-if" if="[[!showTextArea]]">
             <paper-button class="add-note-button" on-tap="_toggleInput">Take Note</paper-button>
-        </template>
-        <template is="dom-if" if="[[showTextArea]]">
-            <paper-textarea label="Write a note"></paper-textarea>
-            <paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
-            <paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
+		</template>
+		<template is="dom-if" if="[[showTextArea]]">
+			<template is="dom-if" if="[[showSaved]]">
+				Note saved!
+			</template>
+			<template is="dom-if" if="[[!showSaved]]">
+				<paper-textarea label="Write a note" value="{{noteText}}"></paper-textarea>
+				<paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
+				<paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
+			</template>			
         </template>
 `;
 	}
@@ -45,18 +50,20 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 
 	static get properties() {
 		return {
-			resourceLink: String,
+			subjectHref: String,
 			showTextArea: {
+				type: Boolean,
+				value: false
+			},
+			noteText: {
+				type: String,
+				value: ""
+			},
+			showSaved: {
 				type: Boolean,
 				value: false
 			}
 		};
-	}
-
-	static get observers() {
-		return [
-			'_changed(entity)'
-		];
 	}
 
 	_toggleInput() {
@@ -64,19 +71,21 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	}
 
 	_saveNote() {
-		// Save new note, link with this.resourceLink
-	}
+		var self = this;
+		var action = this.entity.getActionByName('add-note');
+		if (action) {
+			var fields = this.getSirenFields(action);
+			fields.has('subject') && fields.set('subject', this.subjectHref);
+			fields.has('text') && fields.set('text', self.noteText);
 
-	_changed(entity) {
-		this.resourceLink = entity.getLinkByRel('self');
-	}
-
-	// Leaving this guy in case we need it in the future
-	_getActions(entity) {
-		if (entity.entities[0] !== undefined) {
-			return entity.entities[0].actions;
-		} else {
-			return [];
+			this.performSirenAction(action, fields).then(function() {
+				self.noteText = '';
+				self.showSaved = true;
+				setTimeout(function() {
+					self.showSaved = false;
+					self.showTextArea = false;
+				}, 3000, self);
+			});
 		}
 	}
 }

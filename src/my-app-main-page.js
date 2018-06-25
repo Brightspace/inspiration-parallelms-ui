@@ -40,7 +40,7 @@ class AppMainPage extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
         <div class="layout">
             <paper-card class="calendar">
                 <d2l-calendar data="{{events}}"></d2l-calendar>
-            </paper-card>
+			</paper-card>
         </div>
 `;
 	}
