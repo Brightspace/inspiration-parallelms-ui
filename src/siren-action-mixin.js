@@ -35,13 +35,9 @@ export const SirenActionMixin = function(superClass) {
 			}
 			var headers = new Headers();
 			this.token && headers.append('Authorization', `Bearer ${this.token}`);
-			var token = this.token;
+
 			var url = new URL(action.href, window.location.origin);
 			var body;
-
-			if (action.method === 'DELETE') {
-				return this._makeFetch(url.href, action.method, headers, token);
-			}
 
 			fields = fields || this.getSirenFields(action);
 			if (action.method === 'GET' || action.method === 'HEAD') {
@@ -63,23 +59,22 @@ export const SirenActionMixin = function(superClass) {
 				headers.set('Content-Type', action.type);
 				body = JSON.stringify(json);
 			}
-			return this._makeFetch(url.href, action.method, headers, token, body);
-		}
 
-		_makeFetch(url, method, headers, token, body) {
-			return fetch(url, {
-				method: method,
+			var token = this.token;
+
+			return fetch(url.href, {
+				method: action.method,
 				body: body,
 				headers: headers
 			})
 				.then(function(res) {
 					if (!res.ok) {
-						throw new Error(`${ res.statusText } response executing ${ method } on ${ url }.`);
+						throw new Error(`${ res.statusText } response executing ${ action.method } on ${ url.href }.`);
 					}
 					return res.json();
 				})
 				.then(function(json) {
-					return EntityStore.update(url, token, json);
+					return EntityStore.update(url.href, token, json);
 				});
 		}
 	};
