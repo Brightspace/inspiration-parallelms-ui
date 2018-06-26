@@ -39,20 +39,8 @@ export const SirenActionMixin = function(superClass) {
 			var url = new URL(action.href, window.location.origin);
 			var body;
 
-			if(action.method === 'DELETE') {
-				return fetch(url, {
-					method: 'delete',
-					headers: headers
-				  })
-				  .then(function(res) {
-					if (!res.ok) {
-						throw new Error(`${ res.statusText } response executing ${ action.method } on ${ url.href }.`);
-					}
-					return res.json();
-				})
-				.then(function(json) {
-					return EntityStore.update(url.href, token, json);
-				});
+			if (action.method === 'DELETE') {
+				return this._makeFetch(url.href, action.method, headers, token);
 			}
 
 			fields = fields || this.getSirenFields(action);
@@ -75,20 +63,23 @@ export const SirenActionMixin = function(superClass) {
 				headers.set('Content-Type', action.type);
 				body = JSON.stringify(json);
 			}
+			return this._makeFetch(url.href, action.method, headers, token, body);
+		}
 
-			return fetch(url.href, {
-				method: action.method,
+		_makeFetch(url, method, headers, token, body) {
+			return fetch(url, {
+				method: method,
 				body: body,
 				headers: headers
 			})
 				.then(function(res) {
 					if (!res.ok) {
-						throw new Error(`${ res.statusText } response executing ${ action.method } on ${ url.href }.`);
+						throw new Error(`${ res.statusText } response executing ${ method } on ${ url }.`);
 					}
 					return res.json();
 				})
 				.then(function(json) {
-					return EntityStore.update(url.href, token, json);
+					return EntityStore.update(url, token, json);
 				});
 		}
 	};

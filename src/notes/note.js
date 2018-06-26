@@ -19,7 +19,7 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		<template is="dom-if" if="[[!deleted]]">
 			"[[text]]"
 			- [[date]]
-			<span on-tap="_deleteNote">Delete</span>
+			<button on-tap="_deleteNote">Delete</button>
 		</template>
 		<template is="dom-if" if="[[deleted]]">
 			Note deleted.
@@ -54,13 +54,13 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	}
 
 	_deleteNote() {
-        var self = this;
-        var action = this.entity.getActionByName('delete-note');
-        if (action) {
-            this.performSirenAction(action).then(function() {
+		var self = this;
+		var action = this.entity.getActionByName('delete-note');
+		if (action) {
+			this.performSirenAction(action).then(function() {
 				self.deleted = true;
 			});
-        }
+		}
 	}
 
 	_getHrefByRel(entity, rel) {
