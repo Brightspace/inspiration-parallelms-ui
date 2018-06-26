@@ -57,8 +57,7 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 		var self = this;
 		var action = this.entity.getActionByName('delete-note');
 		if (action) {
-			var fields = new URLSearchParams();
-			this.performSirenAction(action, fields).then(function() {
+			this.performSirenAction(action).then(function() {
 				self.deleted = true;
 			});
 		}
