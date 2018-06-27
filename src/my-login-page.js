@@ -153,7 +153,7 @@ class LoginPage extends PolymerElement {
 			link.setAttribute('href', this.lmsUrl);
 			var lmsHost = link.protocol + '//' + link.hostname;
 			var port = link.port || ((link.protocol === 'https:') ? 443 : 80);
-			var url = 'http://resource-invalidator.api.dev.brightspace.com:3000/sendtoauth?host=' + encodeURIComponent(lmsHost) + '&port=' + port + '&callback=' + encodeURIComponent(window.location.href);
+			var url = 'https://resource-invalidator.api.dev.brightspace.com:3000/sendtoauth?host=' + encodeURIComponent(lmsHost) + '&port=' + port + '&callback=' + encodeURIComponent(window.location.href);
 			window.location = url;
 		}
 	}
