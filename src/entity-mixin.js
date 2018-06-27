@@ -20,19 +20,20 @@ export const EntityMixin = function(superClass) {
 			return {
 				href: {
 					type: String,
-					observer: '_hrefChanged',
-					reflectToAttribute: true,
-					notify: true
+					reflectToAttribute: true
 				},
-				token: {
-					type: String,
-					observer: '_tokenChanged'
-				},
+				token: String,
 				entity: Object
 			};
 		}
 
 		_propertiesChanged(props, changedProps, prevProps) {
+			if (changedProps && changedProps.href !== undefined) {
+				this._hrefChanged(this.href);
+			}
+			if (changedProps && changedProps.token !== undefined) {
+				this._tokenChanged(this.token);
+			}
 			if (
 				changedProps &&
 				(changedProps.href !== undefined || changedProps.token !== undefined) &&
