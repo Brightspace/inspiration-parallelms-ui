@@ -116,6 +116,15 @@ if ('PerformanceLongTaskTiming' in window) {
 		<script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 		<script src="./node_modules/web-animations-js/web-animations-next-lite.min.js"></script>
 
+		<script>
+			// TODO: Use production redux bundle (either dist or uglified) later.
+			// Will either need to integrate loose-envify into build process or
+			// figure out some other way.
+			window.process = window.process || {};
+			window.process.env = window.process.env || {};
+			window.process.env.NODE_ENV = 'development';
+		</script>
+
 		<!-- Load your application shell -->
 		<script type="module" src="./src/my-app.js"></script>
 

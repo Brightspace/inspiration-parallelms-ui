@@ -6,6 +6,10 @@ import { EntityMixin } from './entity-mixin.js';
 export const SirenEntityMixin = function(superClass) {
 	return class extends EntityMixin(superClass) {
 		_entityChanged(entity) {
+			if (entity === this._rawEntity) {
+				return;
+			}
+			this._rawEntity = entity;
 			this.entity = window.D2L.Hypermedia.Siren.Parse(entity);
 		}
 

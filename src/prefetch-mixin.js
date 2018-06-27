@@ -1,4 +1,5 @@
-import { EntityStore } from './entity-store.js';
+import { EntityStore } from './redux-entity-store.js';
+import { fetchEntityIfNeeded } from './redux-entity-fetch.js';
 import { idlePeriod } from '@polymer/polymer/lib/utils/async.js';
 let prefetching = 0;
 const concurrency = 100;
@@ -23,7 +24,6 @@ const concurrency = 100;
     }
 */
 export const PrefetchMixin = function(superClass) {
-	const interestingListeners = new Set();
 	return class extends superClass {
 		static _prefetchForElements(entity, token, elements) {
 			for (const interestingElement of elements) {
@@ -40,29 +40,17 @@ export const PrefetchMixin = function(superClass) {
 			}
 
 			// actually do the fetch
-			const fetchResult = EntityStore.fetch(href, token);
-
-			if (fetchResult.status === 'fetching') { // Wait for the entity, then prefetch for each element
-				prefetching++;
-				const interestingListener = {
-					href: href,
-					token: token
-				};
-
-				interestingListener.listener = (interestingEntity) => {
-					interestingListeners.delete(interestingListener);
-					EntityStore.removeListener(href, token, interestingListener.listener);
+			prefetching++;
+			EntityStore.dispatch(fetchEntityIfNeeded(href, token))
+				.then(() => {
 					prefetching--;
-					if (interestingEntity) {
-						this._prefetchForElements(interestingEntity, token, elements);
+					const state = EntityStore.getState();
+					const entitiesByToken = state.entitiesByHref[href];
+					const entity = entitiesByToken && entitiesByToken[token];
+					if (entity && !entity.isFetching) {
+						this._prefetchForElements(entity.entity, token, elements);
 					}
-				};
-
-				interestingListeners.add(interestingListener);
-				EntityStore.addListener(href, token, interestingListener.listener);
-			} else if (fetchResult.status !== 'error') { // We have the entity. Just prefetch for each element
-				this._prefetchForElements(fetchResult.entity, token, elements);
-			}
+				});
 		}
 
 		static beginPrefetch(entity, token) {

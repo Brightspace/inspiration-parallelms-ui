@@ -30,6 +30,7 @@ import './my-view2.js';
 import './my-view3.js';
 import './my-view404.js';
 import './my-course-page.js';
+import './resource-invalidator.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 window.performance && performance.mark && performance.mark('parallelms-app.beforeRegister');
 
