@@ -8,15 +8,15 @@ class NotesShim extends PolymerElement {
 	static get template() {
 		return html`
 		<style>
-            :host {
-                display: block;
-								position: relative;
-            }
-						.notes {
-							position: absolute;
-							right: 1em;
-							top: -2.25em;
-						}
+			:host {
+				display: block;
+				position: relative;
+			}
+			.notes {
+				position: absolute;
+				right: 1em;
+				top: -2.25em;
+			}
 		</style>
 		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{notes}}"></d2l-siren-entity>
 		<span class="notes">
