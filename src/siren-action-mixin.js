@@ -13,6 +13,9 @@ export const SirenActionMixin = function(superClass) {
 		}
 
 		getSirenFields(action) {
+			if (!action.fields) {
+				return null;
+			}
 			var url = new URL(action.href, window.location.origin);
 			var fields;
 			if (action.method === 'GET' || action.method === 'HEAD') {

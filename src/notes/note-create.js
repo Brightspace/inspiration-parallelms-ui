@@ -57,7 +57,7 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 			},
 			noteText: {
 				type: String,
-				value: ""
+				value: ''
 			},
 			showSaved: {
 				type: Boolean,
