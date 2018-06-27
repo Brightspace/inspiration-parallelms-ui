@@ -19,7 +19,10 @@ function fetchMessages() {
 				}
 			}
 			fetchMessages();
-		}).catch(fetchMessages);
+		}).catch(() => {
+			// give some break between failures
+			setTimeout(fetchMessages, 3000);
+		});
 }
 
 const registryPromise = new Promise((resolve) => {
@@ -29,7 +32,10 @@ const registryPromise = new Promise((resolve) => {
 			method: 'POST',
 			credentials: 'include'
 		})
-			.then(() =>{
+			.then((response) =>{
+				if (response.status !== 200) {
+					return setTimeout(connect, 2000);
+				}
 				resolve();
 				fetchMessages();
 			}, () => {
@@ -54,7 +60,7 @@ function listenForChanges(resource, token)  {
 		fetch(`${updateService}/listen`, {
 			method: 'POST',
 			credentials: 'include',
-			body: JSON.stringify({resource: resource}), // must match 'Content-Type' header
+			body: JSON.stringify({resource: resource}),
 			headers: {
 				'content-type': 'application/json'
 			},
