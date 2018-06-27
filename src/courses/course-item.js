@@ -9,15 +9,18 @@ import '../siren-entity.js';
 import { LocalizationMixin } from '../localization-mixin.js';
 import '../content/content-module-list.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-/* @mixes LocalizationMixin
+import { NoteMixin } from '../notes/note-mixin.js';
+/* @mixes NoteMixin
+   @mixes LocalizationMixin
    @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class CourseItem extends LocalizationMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
+class CourseItem extends NoteMixin(LocalizationMixin(PrefetchMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style>
             :host {
                 display: block;
+				position: relative;
                 --adjusting-background: whitesmoke;
             }
             :host([is-active]) {
