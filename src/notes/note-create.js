@@ -41,7 +41,7 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 				<paper-textarea label="Write a note" value="{{noteText}}"></paper-textarea>
 				<paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
 				<paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
-			</template>			
+			</template>
         </template>
 `;
 	}

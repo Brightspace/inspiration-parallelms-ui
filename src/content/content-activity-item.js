@@ -6,10 +6,12 @@ import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { LitElement, html } from '@polymer/lit-element';
-/* @mixes SirenEntityMixin
+import { NoteMixin } from '../notes/note-mixin.js';
+/* @mixes NoteMixin
+ 	 @mixes SirenEntityMixin
    @mixes PrefetchMixin
    @mixes SirenActionMixin */
-class ContentActivityItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(LitElement))) {
+class ContentActivityItem extends NoteMixin(SirenActionMixin(PrefetchMixin(SirenEntityMixin(LitElement)))) {
 	_render({ entity, token, showChild }) {
 		const title = entity ? entity.properties.title : null;
 		return html`
