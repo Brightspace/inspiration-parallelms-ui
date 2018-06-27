@@ -32,7 +32,6 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 
 	static get properties() {
 		return {
-			resourceLink: String,
 			notes: Object,
 			showNotes: {
 				type: Boolean,
@@ -49,12 +48,11 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 
 	_changed(entity) {
 		if (!entity.properties) return;
-		this.resourceLink = entity.getLinkByRel('self');
 		this.notes = entity.getSubEntitiesByRel('https://api.brightspace.com/rels/note');
 	}
 
 	_showNotes() {
-		this.showNotes = true;
+		this.showNotes = !this.showNotes;
 	}
 }
 
