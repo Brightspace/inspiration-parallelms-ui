@@ -16,7 +16,7 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
             }
 		</style>
 		<d2l-notes-count on-tap="_toggleNotes" href="[[href]]" token="[[token]]"></d2l-notes-count>
-		<template is="dom-if" if="[[toggleNotes]]">
+		<template is="dom-if" if="[[showNotes]]">
 			<ul>
 			<template is="dom-repeat" items="[[notes]]">
 				<li>
@@ -33,7 +33,7 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 	static get properties() {
 		return {
 			notes: Object,
-			toggleNotes: {
+			showNotes: {
 				type: Boolean,
 				value: false
 			}
@@ -52,7 +52,7 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 	}
 
 	_toggleNotes() {
-		this.toggleNotes = !this.toggleNotes;
+		this.showNotes = !this.showNotes;
 	}
 }
 
