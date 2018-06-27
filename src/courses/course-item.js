@@ -20,6 +20,7 @@ class CourseItem extends NoteMixin(LocalizationMixin(PrefetchMixin(SirenEntityMi
         <style>
             :host {
                 display: block;
+				position: relative;
                 --adjusting-background: whitesmoke;
             }
             :host([is-active]) {
