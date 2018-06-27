@@ -1,8 +1,7 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-/* @mixes SirenEntityMixin */
-class NotesCount extends PolymerElement {
+class NotesShim extends PolymerElement {
 	static get template() {
 		return html`
 		<style>
@@ -27,4 +26,4 @@ class NotesCount extends PolymerElement {
 	}
 }
 
-window.customElements.define(NotesCount.is, NotesCount);
+window.customElements.define(NotesShim.is, NotesShim);

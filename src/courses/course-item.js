@@ -10,7 +10,7 @@ import { LocalizationMixin } from '../localization-mixin.js';
 import '../content/content-module-list.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import { NoteMixin } from '../notes/note-mixin.js';
-/* @mixes NotesMixin
+/* @mixes NoteMixin
    @mixes LocalizationMixin
    @mixes PrefetchMixin
    @mixes SirenEntityMixin */

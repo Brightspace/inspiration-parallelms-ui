@@ -1,10 +1,9 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
-import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
 /* @mixes SirenEntityMixin */
-class NotesCount extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
+class NotesCount extends SirenEntityMixin(PolymerElement) {
 	static get template() {
 		return html`
 		<style>
