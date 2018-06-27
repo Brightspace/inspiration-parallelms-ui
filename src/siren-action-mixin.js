@@ -1,4 +1,5 @@
-import { EntityStore } from './entity-store.js';
+import { EntityStore } from './redux-entity-store.js';
+import { updateEntity } from './redux-entity-update.js';
 /*
     @polymerMixin
 */
@@ -77,7 +78,7 @@ export const SirenActionMixin = function(superClass) {
 					return res.json();
 				})
 				.then(function(json) {
-					return EntityStore.update(url.href, token, json);
+					EntityStore.dispatch(updateEntity(url.href, token, json));
 				});
 		}
 	};

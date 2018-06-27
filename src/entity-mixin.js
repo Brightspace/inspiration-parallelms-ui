@@ -1,5 +1,7 @@
-import { microTask } from '@polymer/polymer/lib/utils/async.js';
-import { EntityStore } from './entity-store.js';
+import { connectToRedux } from './redux-connector.js';
+import { fetchEntityIfNeeded } from './redux-entity-fetch.js';
+import { EntityStore } from './redux-entity-store.js';
+
 /*
     @polymerMixin
     A component mixin for HM entity with support for callback for updates
@@ -10,12 +12,6 @@ import { EntityStore } from './entity-store.js';
 */
 export const EntityMixin = function(superClass) {
 	return class extends superClass {
-
-		constructor() {
-			super();
-			this._entityChanged = this._entityChanged.bind(this);
-		}
-
 		static get properties() {
 			return {
 				href: {
@@ -27,79 +23,34 @@ export const EntityMixin = function(superClass) {
 			};
 		}
 
+		constructor() {
+			super();
+			connectToRedux(this);
+		}
+
+		stateReceiver(state) {
+			const entitiesByToken = state.entitiesByHref[this.href];
+			const entity = entitiesByToken && entitiesByToken[this.token];
+			if (entity && !entity.isFetching) {
+				this._entityChanged(entity.entity);
+			}
+		}
+
 		_propertiesChanged(props, changedProps, prevProps) {
-			if (changedProps && changedProps.href !== undefined) {
-				this._hrefChanged(this.href);
-			}
-			if (changedProps && changedProps.token !== undefined) {
-				this._tokenChanged(this.token);
-			}
+			super._propertiesChanged(props, changedProps, prevProps);
 			if (
 				changedProps &&
 				(changedProps.href !== undefined || changedProps.token !== undefined) &&
 				this.href !== undefined &&
 				this.token !== undefined
 			) {
-				this._fetch(this.href, this.token);
-			}
-			super._propertiesChanged(props, changedProps, prevProps);
-		}
-
-		connectedCallback() {
-			if (super.connectedCallback) {
-				super.connectedCallback();
-			}
-		}
-
-		disconnectedCallback() {
-			if (super.disconnectedCallback) {
-				super.disconnectedCallback();
-			}
-			if (this.href && typeof this.token === 'string') {
-				EntityStore.removeListener(this.href, this.token, this._entityChanged);
-			}
-		}
-
-		_hrefChanged(href, oldhref) {
-			if (typeof this.token !== 'string') {
-				return;
-			}
-			if (oldhref) {
-				EntityStore.removeListener(oldhref, this.token, this._entityChanged);
-			}
-			if (!href) {
-				return;
-			}
-			EntityStore.addListener(href, this.token, this._entityChanged);
-		}
-
-		_tokenChanged(token, oldToken) {
-			if (!this.href) {
-				return;
-			}
-			if (oldToken) {
-				EntityStore.removeListener(this.href, oldToken, this._entityChanged);
-			}
-			if (typeof token !== 'string') {
-				return;
-			}
-			EntityStore.addListener(this.href, token, this._entityChanged);
-		}
-
-		_fetch(href, token) {
-			if (!href || typeof token !== 'string') {
-				return;
-			}
-			var entity = EntityStore.fetch(this.href, token);
-			if (entity.status !== 'fetching') {
-				// Allows class/mixin to override _entityChanged
-				microTask.run(() => this._entityChanged(entity.entity));
+				EntityStore.dispatch(fetchEntityIfNeeded(this.href, this.token))
+					.then(() => this.stateReceiver(EntityStore.getState()));
 			}
 		}
 
 		_entityChanged(entity) {
 			this.entity = entity;
 		}
-
 	};
 };

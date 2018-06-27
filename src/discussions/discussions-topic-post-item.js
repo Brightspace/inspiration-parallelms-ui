@@ -56,7 +56,7 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
                     <div class="flex-parent">
                         <h5 class="flex-1">[[post.properties.subject]]</h5>
                         <span class="flex-right">
-                            <d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name>
+                            <d2l-user-name href="[[_getAuthorHref(entity)]]" token="[[token]]"></d2l-user-name>
                         </span>
                     </div>
                     <div class="flex-parent">
@@ -67,7 +67,7 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
                 </paper-item-body>
             </paper-item>
             <template is="dom-if" if="{{!hideReplies}}">
-                <d2l-discussions-topic-post-reply-list href="[[repliesHref]]" token="{{token}}"></d2l-discussions-topic-post-reply-list>
+                <d2l-discussions-topic-post-reply-list href="[[_getRepliesHref(entity)]]" token="[[token]]"></d2l-discussions-topic-post-reply-list>
                 <div hidden="{{!canReply}}" class="flex-parent new-thread-container basic-left-padding">
                     <paper-input class="flex-1" style="width: 100%" label="Reply to this thread" value="{{reply}}"></paper-input>
                     <paper-button style="background-color: cornflowerblue; color: white; height: 100%; margin-top: 20px;" on-tap="_sendReply">
@@ -119,10 +119,6 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 				type: Boolean,
 				value: true
 			},
-			authorHref: {
-				type: String,
-				value: ''
-			},
 			reply: String,
 			canReply: {
 				type: String,
@@ -161,6 +157,14 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 		// THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
 		this.$.message.innerHTML = this.get('entity.properties.message');
 		// I MEAN IT!! THIS IS NOT SAFE. YOU WILL DIE. DO NOT SHIP THIS.
+	}
+
+	_getAuthorHref(entity) {
+		return entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
+	}
+
+	_getRepliesHref(entity) {
+		entity.getActionByName('get-all-posts') && entity.getActionByName('get-all-posts').href;
 	}
 
 	toggleHideReplies() {

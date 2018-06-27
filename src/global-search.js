@@ -2,6 +2,8 @@
 /*eslint no-undef: "error"*/
 /*eslint no-invalid-this: "error"*/
 
+import { EntityStore } from './redux-entity-store';
+
 const _index = elasticlunr(/* @this */ function() {
 	this.setRef('key');
 	this.addField('type');
@@ -262,11 +264,11 @@ export const GlobalSearch = {
             function() {
         */
 
-		if (entity.status === 'fetching' || entity.status === 'error') {
+		if (!entity) {
 			return;
 		}
 		for (const handler of _handlers) {
-			const result = handler(href, token, entity.entity);
+			const result = handler(href, token, entity);
 			if (result) {
 				_index.addDoc(result);
 				break;
@@ -301,3 +303,17 @@ export const GlobalSearch = {
 			});
 	}
 };
+
+let lastUpdated = 0;
+EntityStore.subscribe(() => {
+	const state = EntityStore.getState();
+	Object.keys(state.entitiesByHref).forEach(href => {
+		Object.keys(state.entitiesByHref[href]).forEach(token => {
+			const entity = state.entitiesByHref[href][token];
+			if (!entity.isFetching && entity.lastUpdated && entity.lastUpdated > lastUpdated) {
+				GlobalSearch.update(href, token, entity.entity);
+			}
+		});
+	});
+	lastUpdated = Date.now();
+});
