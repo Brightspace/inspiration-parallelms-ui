@@ -120,7 +120,7 @@ class MyApp extends PolymerElement {
                         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
                             <my-app-main-page name="app-main-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-app-main-page>
                             <my-view1 name="view1" token="{{token}}" href="{{rootHref}}"></my-view1>
-                            <my-virtual-notebook name="virtual-notebook" token="{{token}}" href="http://inspiration-notes.s3-website.ca-central-1.amazonaws.com/notes.json"></my-virtual-notebook>
+                            <my-virtual-notebook name="virtual-notebook" token="{{token}}" href="https://notes.api.dev.brightspace.com/"></my-virtual-notebook>
                             <my-login-page name="login-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-login-page>
                             <my-welcome-page name="welcome-page" href="{{rootHref}}" token="{{token}}" route="{{route}}"></my-welcome-page>
                             <my-view2 name="view2"></my-view2>

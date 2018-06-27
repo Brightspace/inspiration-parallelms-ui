@@ -15,9 +15,15 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
             :host {
                 display: block;
             }
-        </style>
-        "[[text]]"
-        - [[date]]
+		</style>
+		<template is="dom-if" if="[[!deleted]]">
+			"[[text]]"
+			- [[date]]
+			<button on-tap="_deleteNote">Delete</button>
+		</template>
+		<template is="dom-if" if="[[deleted]]">
+			Note deleted.
+		</template>
 `;
 	}
 
@@ -26,7 +32,11 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	static get properties() {
 		return {
 			text: String,
-			date: String
+			date: String,
+			deleted: {
+				type: Boolean,
+				value: false
+			}
 		};
 	}
 
@@ -37,9 +47,20 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 	}
 
 	_changed(entity) {
-		if (!entity.properties) return;
+		// Checking for class note, because delete returns the collection
+		if (!entity  || !entity.hasClass('note') || !entity.properties) return;
 		this.text = entity.properties.text;
 		this.date = this._formatDate(entity.getSubEntityByClass('create-date').properties.date, this.locale);
+	}
+
+	_deleteNote() {
+		var self = this;
+		var action = this.entity.getActionByName('delete-note');
+		if (action) {
+			this.performSirenAction(action).then(function() {
+				self.deleted = true;
+			});
+		}
 	}
 
 	_getHrefByRel(entity, rel) {

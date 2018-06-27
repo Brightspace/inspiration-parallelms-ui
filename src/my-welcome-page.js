@@ -2,7 +2,7 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-button/paper-button.js';
 import { SirenEntityMixin } from './siren-entity-mixin.js';
 import './user/user-first-name.js';
-import './notes/note-create.js';
+import './user/user-image.js';
 import './my-app-main-page.js';
 import { PrefetchMixin } from './prefetch-mixin.js';
 import './shared-styles.js';
@@ -52,10 +52,6 @@ class WelcomePage extends PrefetchMixin(SirenEntityMixin(PolymerElement)) {
             <d2l-user-image id="image" class="user-image invisible" href="{{whoami.href}}" token="{{token}}"></d2l-user-image>
             <paper-button id="go" class="go-button invisible" on-tap="_goToLandingPage">I'm Ready</paper-button>
 		</div>
-		<d2l-note-create subject-href="https://4c909c3c-8b29-4449-9b8b-6c71c6ce27d9.sequences.api.brightspace.com/14945/activity/9999"
-		href="https://notes.api.dev.brightspace.com/"
-		token="[[token]]">
-		</d2l-note-create>
         <slot></slot>
 `;
 	}
