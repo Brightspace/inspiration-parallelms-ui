@@ -111,10 +111,6 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 				type: String,
 				value: ''
 			},
-			repliesHref: {
-				type: String,
-				value: ''
-			},
 			hideReplies: {
 				type: Boolean,
 				value: true
@@ -148,8 +144,6 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 			var uglyAssDate = dateEntity.properties.date;
 			this.date = new Intl.DateTimeFormat(this.locale, { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }).format(new Date(uglyAssDate));
 		}
-		this.repliesHref = this.post.getActionByName('get-all-posts') && this.post.getActionByName('get-all-posts').href;
-		this.authorHref = entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
 		this.canReply = this.post.hasActionByName('reply');
 		if (this.post.properties && this.post.properties.unread > 0) this.readClass = 'unread';
 		else this.readClass = 'read';
