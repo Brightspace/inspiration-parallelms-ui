@@ -1,6 +1,9 @@
+export const REQUEST_ENTITY = 'REQUEST_ENTITY';
+export const RECEIVE_ENTITY = 'RECEIVE_ENTITY';
+
 function requestEntity(href, token, bypassCache = false) {
 	return {
-		type: 'REQUEST_ENTITY',
+		type: REQUEST_ENTITY,
 		href,
 		token,
 		bypassCache
@@ -9,7 +12,7 @@ function requestEntity(href, token, bypassCache = false) {
 
 function receiveEntity(href, token, entity, receivedAt) {
 	return {
-		type: 'RECEIVE_ENTITY',
+		type: RECEIVE_ENTITY,
 		href,
 		token,
 		entity,

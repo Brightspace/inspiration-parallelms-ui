@@ -1,6 +1,9 @@
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger/src';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { REQUEST_ENTITY, RECEIVE_ENTITY } from './redux-entity-fetch.js';
+import { UPDATE_ENTITY } from './redux-entity-update.js';
+import { START_PREFETCH } from './redux-prefetch.js';
 
 const loggerMiddleware = createLogger();
 
@@ -10,24 +13,19 @@ const entity = (state = {
 	entity: null
 }, action) => {
 	switch (action.type) {
-		case 'INVALIDATE_ENTITY': {
-			return Object.assign({}, state, {
-				didInvalidate: true
-			});
-		}
-		case 'REQUEST_ENTITY':
+		case REQUEST_ENTITY:
 			return Object.assign({}, state, {
 				isFetching: true,
 				didInvalidate: false
 			});
-		case 'RECEIVE_ENTITY':
+		case RECEIVE_ENTITY:
 			return Object.assign({}, state, {
 				isFetching: false,
 				didInvalidate: false,
 				entity: action.entity,
 				lastUpdated: action.receivedAt
 			});
-		case 'UPDATE_ENTITY':
+		case UPDATE_ENTITY:
 			return Object.assign({}, state, {
 				isFetching: false,
 				didInvalidate: false,
@@ -41,9 +39,9 @@ const entity = (state = {
 
 const entitiesByToken = (state = {}, action) => {
 	switch (action.type) {
-		case 'INVALIDATE_ENTITY':
-		case 'REQUEST_ENTITY':
-		case 'RECEIVE_ENTITY':
+		case REQUEST_ENTITY:
+		case RECEIVE_ENTITY:
+		case UPDATE_ENTITY:
 			return Object.assign({}, state, {
 				[action.token]: entity(state[action.token], action)
 			});
@@ -54,9 +52,9 @@ const entitiesByToken = (state = {}, action) => {
 
 const entitiesByHref = (state = {}, action) => {
 	switch (action.type) {
-		case 'INVALIDATE_ENTITY':
-		case 'REQUEST_ENTITY':
-		case 'RECEIVE_ENTITY':
+		case REQUEST_ENTITY:
+		case RECEIVE_ENTITY:
+		case UPDATE_ENTITY:
 			return Object.assign({}, state, {
 				[action.href]: entitiesByToken(state[action.href], action)
 			});
@@ -67,11 +65,11 @@ const entitiesByHref = (state = {}, action) => {
 
 const prefetcher = (state = { needsPrefetch: false }, action) => {
 	switch (action.type) {
-		case 'START_PREFETCH':
+		case START_PREFETCH:
 			return Object.assign({}, state, {
 				needsPrefetch: false
 			});
-		case 'REQUEST_ENTITY':
+		case REQUEST_ENTITY:
 			if (action.bypassCache) {
 				return Object.assign({}, state, {
 					needsPrefetch: true
