@@ -15,8 +15,8 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
                 display: block;
             }
 		</style>
-		<d2l-notes-count on-tap="_showNotes" href="[[href]]" token="[[token]]"></d2l-notes-count>
-		<template is="dom-if" if="[[showNotes]]">
+		<d2l-notes-count on-tap="_toggleNotes" href="[[href]]" token="[[token]]"></d2l-notes-count>
+		<template is="dom-if" if="[[toggleNotes]]">
 			<ul>
 			<template is="dom-repeat" items="[[notes]]">
 				<li>
@@ -33,7 +33,7 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 	static get properties() {
 		return {
 			notes: Object,
-			showNotes: {
+			toggleNotes: {
 				type: Boolean,
 				value: false
 			}
@@ -51,8 +51,8 @@ class NotesByResource extends SirenActionMixin(SirenEntityMixin(PolymerElement))
 		this.notes = entity.getSubEntitiesByRel('https://api.brightspace.com/rels/note');
 	}
 
-	_showNotes() {
-		this.showNotes = !this.showNotes;
+	_toggleNotes() {
+		this.toggleNotes = !this.toggleNotes;
 	}
 }
 
