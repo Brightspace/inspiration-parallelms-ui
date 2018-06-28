@@ -310,7 +310,7 @@ EntityStore.subscribe(() => {
 	Object.keys(state.entitiesByHref).forEach(href => {
 		Object.keys(state.entitiesByHref[href]).forEach(token => {
 			const entity = state.entitiesByHref[href][token];
-			if (!entity.isFetching && entity.lastUpdated && entity.lastUpdated > lastUpdated) {
+			if (!entity.isFetching && entity.lastUpdated && entity.lastUpdated >= lastUpdated) {
 				GlobalSearch.update(href, token, entity.entity);
 			}
 		});

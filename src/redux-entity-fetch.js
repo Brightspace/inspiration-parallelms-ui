@@ -20,14 +20,14 @@ function receiveEntity(href, token, entity, receivedAt) {
 	};
 }
 
-function dispatchSubEntities(dispatch, entity, token, date) {
+function dispatchSubEntities(dispatch, entity, token) {
 	if (!entity) {
 		return;
 	}
 	if (entity.links) {
 		const selfLink = entity.links.find(link => link.rel.includes('self'));
 		if (selfLink && selfLink.href) {
-			dispatch(receiveEntity(selfLink.href, token, entity, date));
+			dispatch(receiveEntity(selfLink.href, token, entity, Date.now()));
 		}
 	}
 	if (!entity.entities) {
@@ -53,9 +53,8 @@ function fetchEntity(href, token, bypassCache) {
 		})
 			.then((res) => res.json())
 			.then((json) => {
-				const date = Date.now();
-				dispatch(receiveEntity(href, token, json, date));
-				dispatchSubEntities(dispatch, json, token, date);
+				dispatch(receiveEntity(href, token, json, Date.now()));
+				dispatchSubEntities(dispatch, json, token);
 			})
 			.catch(err => {
 				console.error(err);
