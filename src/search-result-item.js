@@ -95,8 +95,9 @@ class SearchResultItem extends PolymerElement {
 
 	_resultChanged(result) {
 		this.isAMystery = false;
-		this.isThread = this.isForum = this.isTopic = this.isCourseOffering
-          = this.isUser = this.isActivity = this.isPost = false;
+		this.isThread = this.isForum = this.isTopic = this.isCourseOffering =
+		this.isUser = this.isActivity = this.isPost = this.isGrade = this.isNews =
+		this.isContent = this.isModule = this.isNote = false;
 		switch (result.type) {
 			case 'thread':
 				this.isThread = true;
