@@ -56,6 +56,9 @@ class SearchResultItem extends PolymerElement {
             <template is="dom-if" if="{{isContent}}">
                 <d2l-content-activity-item href="{{result.href}}" token="{{result.token}}"><!--<d2l-content-activity-item -->
             </d2l-content-activity-item></template>
+			<template is="dom-if" if="{{isNote}}">
+                <d2l-note href="{{result.href}}" token="{{result.token}}"><!--<d2l-note -->
+            </d2l-note></template>
             <template is="dom-if" if="{{isAMystery}}">
                 What the HYPERMEDIA is this?
             </template>
@@ -79,6 +82,7 @@ class SearchResultItem extends PolymerElement {
 			isNews: Boolean,
 			isContent: Boolean,
 			isModule: Boolean,
+			isNote: Boolean,
 			isAMystery: Boolean
 		};
 	}
@@ -126,6 +130,9 @@ class SearchResultItem extends PolymerElement {
 				break;
 			case 'module':
 				this.isModule = true;
+				break;
+			case 'note':
+				this.isNote = true;
 				break;
 			default:
 				this.isAMystery = true;
