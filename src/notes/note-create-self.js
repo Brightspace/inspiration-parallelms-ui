@@ -7,7 +7,7 @@ import '@polymer/paper-button/paper-button.js';
 
 /* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
-class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
+class NoteCreateSelf extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	static get template() {
 		return html`
 		<style>
@@ -46,7 +46,7 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 `;
 	}
 
-	static get is() { return 'd2l-note-create'; }
+	static get is() { return 'd2l-note-create-self'; }
 
 	static get properties() {
 		return {
@@ -75,7 +75,6 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 		var action = this.entity.getActionByName('add-note');
 		if (action) {
 			var fields = this.getSirenFields(action);
-			fields.has('subject') && fields.set('subject', this.subjectHref);
 			fields.has('text') && fields.set('text', self.noteText);
 
 			this.performSirenAction(action, fields).then(function() {
@@ -90,4 +89,4 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 	}
 }
 
-window.customElements.define(NoteCreate.is, NoteCreate);
+window.customElements.define(NoteCreateSelf.is, NoteCreateSelf);
