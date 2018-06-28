@@ -4,9 +4,11 @@ import '../course-name.js';
 import './activity-card.js';
 import '@polymer/paper-item/paper-item.js';
 import { LitElement, html } from '@polymer/lit-element';
-/* @mixes PrefetchMixin
+import { NoteMixin } from '../notes/note-mixin.js';
+/* @mixes NoteMixin
+   @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class UserActivityUsage extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+class UserActivityUsage extends NoteMixin(PrefetchMixin(SirenEntityMixin(LitElement))) {
 	_render({ entity, locale, token }) {
 		let dueDate, activityHref, organizationHref;
 		let complete = false;

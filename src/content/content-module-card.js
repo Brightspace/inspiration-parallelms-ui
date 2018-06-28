@@ -2,9 +2,11 @@ import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import './content-activity-list.js';
 import { LitElement, html } from '@polymer/lit-element';
-/* @mixes PrefetchMixin
+import { NoteMixin } from '../notes/note-mixin.js';
+/* @mixes NoteMixin
+   @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class ContentModuleCard extends PrefetchMixin(SirenEntityMixin(LitElement)) {
+class ContentModuleCard extends NoteMixin(PrefetchMixin(SirenEntityMixin(LitElement))) {
 	_render({ entity, token }) {
 		let selfLink;
 		if (entity) {
