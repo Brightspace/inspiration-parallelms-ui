@@ -158,7 +158,7 @@ class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntit
 	}
 
 	_getRepliesHref(entity) {
-		entity.getActionByName('get-all-posts') && entity.getActionByName('get-all-posts').href;
+		return entity.getActionByName('get-all-posts') && entity.getActionByName('get-all-posts').href;
 	}
 
 	toggleHideReplies() {
