@@ -8,7 +8,6 @@ import '@polymer/paper-checkbox/paper-checkbox.js';
 import './siren-entity.js';
 import './shared-styles.js';
 import './courses/courses-drawer.js';
-import './my-welcome-page.js';
 import { EntityStore } from './redux-entity-store.js';
 import { startPrefetch } from './redux-prefetch.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
@@ -244,7 +243,7 @@ class LoginPage extends PolymerElement {
 				this._unsubscribeStore = null;
 			}
 			// The courses-drawer is always shown
-			import('./courses/courses-drawer.js').then(() => window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token));
+			window.customElements.get('d2l-courses-drawer').beginPrefetch(entrypoint, token);
 			// We link to the welcome-page
 			import('./my-welcome-page.js').then(() => window.customElements.get('my-welcome-page').beginPrefetch(entrypoint, token));
 
