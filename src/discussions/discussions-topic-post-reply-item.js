@@ -10,11 +10,13 @@ import '../user/user-image.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '../shared-styles.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-/* @mixes SirenActionMixin */
-/* @mixes PrefetchMixin
+/* @mixes NoteMixin
+   @mixes SirenActionMixin
+   @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class DiscussionsTopicPostReplyItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
+class DiscussionsTopicPostReplyItem extends NoteMixin(SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style include="shared-styles">
@@ -44,10 +46,10 @@ class DiscussionsTopicPostReplyItem extends SirenActionMixin(PrefetchMixin(Siren
         <paper-item two-line="" class="left-border reply-item" on-tap="_toggleShowReply">
             <div style="width: 100%;" class="flex-parent">
                 <!-- <span style="padding-right: 5px;" style="flex: 1;">↳</span> -->
-                <d2l-user-image href="{{authorHref}}" token="{{token}}" class="reply-image"></d2l-user-image>
+                <d2l-user-image href="[[_getAuthorHref(entity)]]" token="[[token]]" class="reply-image"></d2l-user-image>
                 <div class="flex-2 basic-left-padding">
                     <div style="font-weight: bold">
-                        <d2l-user-name href="{{authorHref}}" token="{{token}}"></d2l-user-name> - [[date]]
+                        <d2l-user-name href="[[_getAuthorHref(entity)]]" token="[[token]]"></d2l-user-name> - [[date]]
                     </div>
                     <div id="message">[[entity.properties.message]]</div>
                 </div>
@@ -101,10 +103,6 @@ class DiscussionsTopicPostReplyItem extends SirenActionMixin(PrefetchMixin(Siren
 				type: String,
 				value: ''
 			},
-			authorHref: {
-				type: String,
-				value: ''
-			},
 			canReply: {
 				type: Boolean,
 				value: false
@@ -134,8 +132,11 @@ class DiscussionsTopicPostReplyItem extends SirenActionMixin(PrefetchMixin(Siren
 		];
 	}
 
+	_getAuthorHref(entity) {
+		return entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
+	}
+
 	_changed(entity) {
-		this.authorHref = entity.getLinkByRel('author') && entity.getLinkByRel('author').href;
 		var dateEntity = this.entity.getSubEntityByClass('date');
 		if (dateEntity) {
 			var uglyAssDate = dateEntity.properties.date;

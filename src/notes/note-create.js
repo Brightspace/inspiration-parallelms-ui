@@ -4,6 +4,7 @@ import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 import '@polymer/paper-input/paper-textarea.js';
 import '@polymer/paper-button/paper-button.js';
+import '@polymer/paper-card/paper-card.js';
 
 /* @mixes SirenEntityMixin
    @mixes SirenActionMixin */
@@ -29,19 +30,29 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
                 margin: 0px;
             }
 
+			paper-card {
+				z-index: 1;
+				padding-top: .25em;
+				padding-bottom: .25em;
+				padding-left:	.65em;
+				padding-right: .65em;
+			}
+
 		</style>
         <template is="dom-if" if="[[!showTextArea]]">
             <paper-button class="add-note-button" on-tap="_toggleInput">Take Note</paper-button>
 		</template>
 		<template is="dom-if" if="[[showTextArea]]">
-			<template is="dom-if" if="[[showSaved]]">
-				Note saved!
-			</template>
-			<template is="dom-if" if="[[!showSaved]]">
-				<paper-textarea label="Write a note" value="{{noteText}}"></paper-textarea>
-				<paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
-				<paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
-			</template>			
+			<paper-card>
+				<template is="dom-if" if="[[showSaved]]">
+					Note saved!
+				</template>
+				<template is="dom-if" if="[[!showSaved]]">
+					<paper-textarea label="Write a note" value="{{noteText}}"></paper-textarea>
+					<paper-button class="text-area-button" on-tap="_saveNote">Save</paper-button>
+					<paper-button class="text-area-button" on-tap="_toggleInput">Cancel</paper-button>
+				</template>
+			</paper-card>
         </template>
 `;
 	}

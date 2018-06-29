@@ -4,11 +4,13 @@ import '@polymer/paper-button/paper-button.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { LocalizationMixin } from '../localization-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-/* @mixes SirenEntityMixin
+/* @mixes NoteMixin
+   @mixes SirenEntityMixin
    @mixes SirenActionMixin
    @mixes LocalizationMixin */
-class UpdateItem extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerElement))) {
+class UpdateItem extends NoteMixin(LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style>

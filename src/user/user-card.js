@@ -4,8 +4,11 @@ import './user-image.js';
 import '../shared-styles.js';
 import { cssFromModules } from '@polymer/polymer/lib/utils/style-gather.js';
 import { LitElement, html } from '@polymer/lit-element';
+import { NoteMixin } from '../notes/note-mixin.js';
+import { SirenEntityMixin } from '../siren-entity-mixin.js';
+/* @mixes NoteMixin */
 /* @mixes SirenEntityMixin */
-class UserCard extends LitElement {
+class UserCard extends NoteMixin(SirenEntityMixin(LitElement)) {
 	_render({ href, token }) {
 		return html`
         <style>

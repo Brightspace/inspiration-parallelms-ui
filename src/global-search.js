@@ -120,6 +120,21 @@ const _userSearchHandler = function(href, token, entity) {
 	}
 	return null;
 };
+const _notesSearchHandler = function(href, token, entity) {
+	if (entity.class) {
+		if (entity.class.indexOf('note') !== -1) {
+			const text = entity.properties.text;
+			return _formatResult(
+				href,
+				token,
+				text,
+				null,
+				'note'
+			);
+		}
+	}
+	return null;
+};
 
 const _discussionsSearchHandler = function(href, token, entity) {
 	if (entity.class) {
@@ -252,7 +267,8 @@ const _handlers = [
 	_activitySearchHandler,
 	_userSearchHandler,
 	_courseOfferingSearchHandler,
-	_discussionsSearchHandler
+	_discussionsSearchHandler,
+	_notesSearchHandler,
 ];
 
 export const GlobalSearch = {
@@ -310,7 +326,7 @@ EntityStore.subscribe(() => {
 	Object.keys(state.entitiesByHref).forEach(href => {
 		Object.keys(state.entitiesByHref[href]).forEach(token => {
 			const entity = state.entitiesByHref[href][token];
-			if (!entity.isFetching && entity.lastUpdated && entity.lastUpdated > lastUpdated) {
+			if (!entity.isFetching && entity.lastUpdated && entity.lastUpdated >= lastUpdated) {
 				GlobalSearch.update(href, token, entity.entity);
 			}
 		});

@@ -19,13 +19,21 @@ export const NoteMixin = function(superClass) {
 			if (this._addedNotesShim || !this.shadowRoot || !entity || !token) {
 				return;
 			}
+			const self = entity.getLinkByRel('self');
+			if (!self) {
+				return;
+			}
+			const link = { href: `https://notes.api.dev.brightspace.com/?source=${ encodeURIComponent(self.href) }`};
+			/*
 			const link = entity.getLinkByRel('https://api.brightspace.com/rels/note');
 			if (!link) {
 				return;
 			}
+			*/
 			const notesShim = document.createElement('d2l-notes-shim');
 			notesShim.token = this.token;
 			notesShim.href = link.href;
+			notesShim.source = self.href;
 			this.shadowRoot.appendChild(notesShim);
 			this._addedNotesShim = true;
 		}
