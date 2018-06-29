@@ -2,7 +2,7 @@ import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {SirenEntityMixin} from './siren-entity-mixin.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 import './notes/note.js';
-import './notes/note-create-self.js'
+import './notes/note-create-self.js';
 
 class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
 

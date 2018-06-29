@@ -50,7 +50,6 @@ class NoteCreateSelf extends SirenActionMixin(SirenEntityMixin(PolymerElement)) 
 
 	static get properties() {
 		return {
-			subjectHref: String,
 			showTextArea: {
 				type: Boolean,
 				value: false
