@@ -11,6 +11,7 @@ class NotesShim extends PolymerElement {
 			:host {
 				display: block;
 				position: relative;
+				z-index: 3;
 			}
 			.notes {
 				position: absolute;
@@ -21,9 +22,15 @@ class NotesShim extends PolymerElement {
 		<d2l-siren-entity href="[[href]]" token="[[token]]" entity="{{notes}}"></d2l-siren-entity>
 		<span class="notes">
 			<template is="dom-if" if="[[hasNotes]]">
-				<d2l-notes-count href="[[href]]" token="[[token]]"></d2l-notes-count>
+				<d2l-notes-count on-tap="_toggleNotes" href="[[href]]" token="[[token]]"></d2l-notes-count>
 			</template>
 			<template is="dom-if" if="[[!hasNotes]]">
+				<d2l-note-create href="[[href]]" subject-href="[[source]]" token="[[token]]"></d2l-note-create>
+			</template>
+			<template is="dom-if" if="[[showNotes]]">
+				<template is="dom-repeat" items="[[notes.entities]]">
+					<d2l-note href="[[item.href]]" token="[[token]]"></d2l-note>
+				</template>
 				<d2l-note-create href="[[href]]" subject-href="[[source]]" token="[[token]]"></d2l-note-create>
 			</template>
 		</span>
@@ -38,6 +45,10 @@ class NotesShim extends PolymerElement {
 			href: String,
 			token: String,
 			source: String,
+			showNotes: {
+				type: Boolean,
+				value: false
+			},
 			hasNotes: {
 				type: Boolean,
 				computed: '_hasNotes(notes)'
@@ -47,6 +58,10 @@ class NotesShim extends PolymerElement {
 
 	_hasNotes(entity) {
 		return (entity && entity.properties && entity.properties.count && entity.properties.count > 0) || false;
+	}
+
+	_toggleNotes() {
+		this.showNotes = !this.showNotes;
 	}
 }
 
