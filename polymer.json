@@ -9,7 +9,8 @@
     "src/my-view2.js",
     "src/my-view3.js",
     "src/my-view404.js",
-    "src/my-course-page.js"
+    "src/my-course-page.js",
+    "src/my-virtual-notebook.js"
   ],
   "sources": [
     "src/**/*",
