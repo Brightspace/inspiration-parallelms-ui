@@ -2,12 +2,14 @@ import { PolymerElement } from '@polymer/polymer/polymer-element.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { PaginateMixin } from '../paginate-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import './discussions-topic.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-/* @mixes PrefetchMixin
+/* @mixes NoteMixin
+   @mixes PrefetchMixin
    @mixes PaginateMixin
    @mixes SirenEntityMixin */
-class DiscussionsForumItem extends PrefetchMixin(PaginateMixin('topics', SirenEntityMixin(PolymerElement))) {
+class DiscussionsForumItem extends NoteMixin(PrefetchMixin(PaginateMixin('topics', SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style>

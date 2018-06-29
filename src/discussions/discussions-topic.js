@@ -7,13 +7,15 @@ import '@polymer/paper-spinner/paper-spinner-lite.js';
 import { PrefetchMixin } from '../prefetch-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import '../shared-styles.js';
 import './discussions-topic-post-list.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+/* @mixes NoteMixin */
 /* @mixes SirenActionMixin */
 /* @mixes PrefetchMixin */
 /* @mixes SirenEntityMixin */
-class DiscussionsTopic extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
+class DiscussionsTopic extends NoteMixin(SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style include="shared-styles">

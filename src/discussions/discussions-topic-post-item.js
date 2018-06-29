@@ -8,13 +8,15 @@ import { PrefetchMixin } from '../prefetch-mixin.js';
 import '../user/user-name.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import './discussions-topic-post-reply-list.js';
 import '../shared-styles.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+/* @mixes NoteMixin */
 /* @mixes SirenActionMixin */
 /* @mixes PrefetchMixin */
 /* @mixes SirenEntityMixin */
-class DiscussionsTopicPostItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
+class DiscussionsTopicPostItem extends NoteMixin(SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style include="shared-styles">

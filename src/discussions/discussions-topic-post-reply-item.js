@@ -10,11 +10,13 @@ import '../user/user-image.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import '../shared-styles.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
+import { NoteMixin } from '../notes/note-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
-/* @mixes SirenActionMixin */
-/* @mixes PrefetchMixin
+/* @mixes NoteMixin
+   @mixes SirenActionMixin
+   @mixes PrefetchMixin
    @mixes SirenEntityMixin */
-class DiscussionsTopicPostReplyItem extends SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement))) {
+class DiscussionsTopicPostReplyItem extends NoteMixin(SirenActionMixin(PrefetchMixin(SirenEntityMixin(PolymerElement)))) {
 	static get template() {
 		return html`
         <style include="shared-styles">
