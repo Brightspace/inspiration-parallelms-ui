@@ -25,7 +25,17 @@ export const EntityMixin = function(superClass) {
 
 		constructor() {
 			super();
-			connectToRedux(this);
+		}
+
+		connectedCallback() {
+			super.connectedCallback();
+			this._unsubscribe = connectToRedux(this);
+		}
+
+		disconnectedCallback() {
+			super.disconnectedCallback();
+			this._unsubscribe && this._unsubscribe();
+			this._unsubscribe = null;
 		}
 
 		stateReceiver(state) {
