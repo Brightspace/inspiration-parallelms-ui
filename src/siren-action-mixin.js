@@ -79,6 +79,7 @@ export const SirenActionMixin = function(superClass) {
 				})
 				.then(function(json) {
 					EntityStore.dispatch(updateEntity(url.href, token, json));
+					return url.href;
 				});
 		}
 	};
