@@ -14,6 +14,14 @@
 
 	<!-- Import the element to test -->
 	<script src="https://s.brightspace.com/lib/siren-parser/6.2.0/siren-parser.js"></script>
+	<script>
+		// TODO: Use production redux bundle (either dist or uglified) later.
+		// Will either need to integrate loose-envify into build process or
+		// figure out some other way.
+		window.process = window.process || {};
+		window.process.env = window.process.env || {};
+		window.process.env.NODE_ENV = 'development';
+	</script>
 </head>
 
 <body>
