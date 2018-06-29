@@ -2,7 +2,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger/src';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { REQUEST_ENTITY, RECEIVE_ENTITY } from './redux-entity-fetch.js';
-import { UPDATE_ENTITY } from './redux-entity-update.js';
+import { UPDATE_ENTITY, INVALIDATE_ENTITY } from './redux-entity-update.js';
 import { START_PREFETCH } from './redux-prefetch.js';
 
 const loggerMiddleware = createLogger();
@@ -32,6 +32,10 @@ const entity = (state = {
 				entity: action.entity,
 				lastUpdated: action.updatedAt
 			});
+		case INVALIDATE_ENTITY:
+			return Object.assign({}, state, {
+				didInvalidate: true
+			});
 		default:
 			return state;
 	}
@@ -42,6 +46,7 @@ const entitiesByToken = (state = {}, action) => {
 		case REQUEST_ENTITY:
 		case RECEIVE_ENTITY:
 		case UPDATE_ENTITY:
+		case INVALIDATE_ENTITY:
 			return Object.assign({}, state, {
 				[action.token]: entity(state[action.token], action)
 			});
@@ -55,6 +60,7 @@ const entitiesByHref = (state = {}, action) => {
 		case REQUEST_ENTITY:
 		case RECEIVE_ENTITY:
 		case UPDATE_ENTITY:
+		case INVALIDATE_ENTITY:
 			return Object.assign({}, state, {
 				[action.href]: entitiesByToken(state[action.href], action)
 			});
@@ -76,6 +82,27 @@ const prefetcher = (state = { needsPrefetch: false }, action) => {
 				});
 			}
 			return state;
+		case INVALIDATE_ENTITY:
+			return Object.assign({}, state, {
+				needsPrefetch: true
+			});
+		default:
+			return state;
+	}
+};
+
+const entitiesByNoQueryHref = (state = {}, action) => {
+	let noQueryHref;
+	switch (action.type) {
+		case REQUEST_ENTITY:
+		case RECEIVE_ENTITY:
+		case UPDATE_ENTITY:
+		case INVALIDATE_ENTITY:
+			noQueryHref = new URL(action.href, window.location.href);
+			noQueryHref.search = '';
+			return Object.assign({}, state, {
+				[noQueryHref]: entitiesByHref(state[noQueryHref], action)
+			});
 		default:
 			return state;
 	}
@@ -83,6 +110,7 @@ const prefetcher = (state = { needsPrefetch: false }, action) => {
 
 const rootReducer = combineReducers({
 	entitiesByHref,
+	entitiesByNoQueryHref,
 	prefetcher
 });
 
