@@ -3,6 +3,9 @@ import { LocalizationMixin } from '../localization-mixin.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import '../shared-styles.js';
+import '@polymer/iron-icons/iron-icons.js';
+import '@polymer/paper-icon-button/paper-icon-button.js';
 
 /* @mixes LocalizationMixin
    @mixes SirenEntityMixin
@@ -11,19 +14,23 @@ class Note extends LocalizationMixin(SirenActionMixin(SirenEntityMixin(PolymerEl
 
 	static get template() {
 		return html`
-		<style>
+		<style include="shared-styles">
+			@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
             :host {
-                display: block;
-            }
+				display: block;
+				font-family: 'Permanent Marker', cursive;
+			}
 		</style>
-		<template is="dom-if" if="[[!deleted]]">
-			"[[text]]"
-			- [[date]]
-			<button on-tap="_deleteNote">Delete</button>
-		</template>
-		<template is="dom-if" if="[[deleted]]">
-			Note deleted.
-		</template>
+		<div class="noteBox">
+			<template is="dom-if" if="[[!deleted]]">
+				"[[text]]"
+				- [[date]]
+				<paper-icon-button on-tap="_deleteNote" icon="delete" style="color: orange;"></paper-icon-button>
+			</template>
+			<template is="dom-if" if="[[deleted]]">
+				Note deleted.
+			</template>
+		</div>
 `;
 	}
 
