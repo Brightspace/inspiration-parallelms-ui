@@ -26,7 +26,6 @@ class ContextualNote extends LocalizationMixin(SirenActionMixin(SirenEntityMixin
             display: block;
         }
 		</style>
-		sourceLink: [[sourceLink]]
 		<d2l-siren-entity href="[[sourceLink]]" token="[[token]]" entity="{{source}}"></d2l-siren-entity>
 		<div class="contextual note">
 			<d2l-note href="[[href]]" token="[[token]]" ></d2l-note>
