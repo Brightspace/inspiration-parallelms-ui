@@ -1,9 +1,10 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {SirenActionMixin} from './siren-action-mixin.js';
 import {SirenEntityMixin} from './siren-entity-mixin.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 import './notes/note.js';
 
-class MyVirtualNotebook extends SirenEntityMixin(PolymerElement) {
+class MyVirtualNotebook extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 
 	static get template() {
 		return html`
@@ -56,11 +57,13 @@ Sort By:
 
 	_updateOrder() {
 		const sortOrder = this.$.orderBy.value;
-
-		const url = new URL(this.href);
-		url.searchParams.set('sortBy', sortOrder);
-
-		this.href = url.toString();
+		const fields = new URLSearchParams();
+		fields.set('sortBy', sortOrder);
+		const searchAction = this.entity.getActionByName('search');
+		if (searchAction) {
+			this.performSirenAction(searchAction, fields)
+				.then((href) => this.href = href);
+		}
 	}
 
 }
