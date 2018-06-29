@@ -1,6 +1,4 @@
 import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { EntityStore } from '../redux-entity-store.js';
-import { fetchEntityIfNeeded } from '../redux-entity-fetch.js';
 import { SirenEntityMixin } from '../siren-entity-mixin.js';
 import { SirenActionMixin } from '../siren-action-mixin.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
@@ -92,9 +90,6 @@ class NoteCreate extends SirenActionMixin(SirenEntityMixin(PolymerElement)) {
 			fields.has('text') && fields.set('text', self.noteText);
 
 			this.performSirenAction(action, fields).then(function() {
-				const noQueryHref = new URL(self.href);
-				noQueryHref.search = '';
-				EntityStore.dispatch(fetchEntityIfNeeded(noQueryHref.href, self.token, true));
 				self.noteText = '';
 				self.showSaved = true;
 				setTimeout(function() {
