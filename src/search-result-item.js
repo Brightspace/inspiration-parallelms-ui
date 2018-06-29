@@ -12,6 +12,7 @@ import './activities/user-activity-usage.js';
 import './discussions/discussions-topic-post-reply-item.js';
 import './updates/update-item.js';
 import './updates/update-item-grades.js';
+import './notes/contextual-note.js';
 import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 class SearchResultItem extends PolymerElement {
 	static get template() {
@@ -57,8 +58,8 @@ class SearchResultItem extends PolymerElement {
                 <d2l-content-activity-item href="{{result.href}}" token="{{result.token}}"><!--<d2l-content-activity-item -->
             </d2l-content-activity-item></template>
 			<template is="dom-if" if="{{isNote}}">
-                <d2l-note href="{{result.href}}" token="{{result.token}}"><!--<d2l-note -->
-            </d2l-note></template>
+                <d2l-contextual-note href="{{result.href}}" token="{{result.token}}"><!--<d2l-contextual-note -->
+            </d2l-contextual-note></template>
             <template is="dom-if" if="{{isAMystery}}">
                 What the HYPERMEDIA is this?
             </template>
