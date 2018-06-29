@@ -51,7 +51,7 @@ class ContextualNote extends LocalizationMixin(SirenActionMixin(SirenEntityMixin
 	}
 	static get observers() {
 		return [
-			'_createInlineHandler(sourceType)'
+			'_createInlineHandler(sourceType, sourceLink)'
 		];
 	}
 
@@ -88,14 +88,14 @@ class ContextualNote extends LocalizationMixin(SirenActionMixin(SirenEntityMixin
 			}
 		}
 	}
-	_createInlineHandler(sourceType) {
+	_createInlineHandler(sourceType, sourceLink) {
 		const hook = this.shadowRoot.querySelector('.source-hook');
 		hook.innerHTML = '';
 		if (!sourceType) {
 			return;
 		}
 		const el = document.createElement(sourceType);
-		el.href = this.sourceLink;
+		el.href = sourceLink;
 		el.token = this.token;
 
 		hook.appendChild(el);
